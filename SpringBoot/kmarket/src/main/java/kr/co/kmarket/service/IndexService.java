@@ -16,6 +16,8 @@ public class IndexService {
     private IndexDAO dao;
 
     public List<CateVO> selectCate(int cate1){
+        log.info("1");
+        log.info("cate1 : " + cate1);
         return dao.selectCate(cate1);
     }
 }

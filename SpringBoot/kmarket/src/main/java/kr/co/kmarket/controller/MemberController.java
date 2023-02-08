@@ -15,4 +15,19 @@ public class MemberController {
     public String join(){
         return "member/join";
     }
+
+    @GetMapping("member/register")
+    public String register(){
+        return "member/register";
+    }
+
+    @GetMapping("member/registerSeller")
+    public String registerSeller(){
+        return "member/registerSeller";
+    }
+
+    @GetMapping("member/signup")
+    public String signup(){
+        return "member/signup";
+    }
 }

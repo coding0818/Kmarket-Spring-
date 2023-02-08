@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
+
 import java.util.List;
 
 @Controller
@@ -25,9 +25,10 @@ public class ProductController {
     private IndexService inservice;
 
     @GetMapping("admin/product/register")
-    public String register(int cate1, Model model){
-        List<CateVO> cate = inservice.selectCate(cate1);
-        model.addAttribute("cate", cate);
+    public String register(){
+        //List<CateVO> cate =inservice.selectCate(cate1);
+        //model.addAttribute("cate", cate);
+
         return "admin/product/register";
     }
 
