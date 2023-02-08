@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{/_header}"/>
+<th:block th:replace="~{/member/_header}"/>
         <main id="member">
             <div class="login">
                 <nav>
@@ -33,10 +33,10 @@
                         <a href="#">회원가입</a>
                     </span>
                     <a href="#" class="banner">
-                        <img src="./img/member_login_banner.jpg" alt="1만원 할인 쿠폰 받기">
+                        <img th:src="@{/img/member_login_banner.jpg}" alt="1만원 할인 쿠폰 받기">
                     </a>
                 </form>
-                <img src="./img/member_certifi_logo.gif" alt="banner">
+                <img th:src="@{/img/member_certifi_logo.gif}" alt="banner">
             </div>
         </main>
-<th:block th:replace="~{/_footer}"/>
+<th:block th:replace="~{/member/_footer}"/>

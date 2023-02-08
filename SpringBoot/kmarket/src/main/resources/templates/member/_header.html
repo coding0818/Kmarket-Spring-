@@ -11,7 +11,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-  <link rel="stylesheet" href="./css/member.css">
+  <link rel="stylesheet" th:href="@{/css/member.css}">
 </head>
 <body>
 <div id="wrapper">
@@ -30,7 +30,7 @@
     <div class="logo">
       <div>
         <a href="#">
-          <img th:src="@{/member/img/header_logo.png}" alt="로고">
+          <img th:src="@{/img/header_logo.png}" alt="로고">
         </a>
       </div>
     </div>
