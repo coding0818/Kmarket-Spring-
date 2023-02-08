@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <title>케이마켓 고객센터</title>
-    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/img/favicon.ico}"/>
+    <link type="text/css" th:href="@{/cs/css/style.css}"/>
   </head>
   <body>
     <div id="wrapper">
@@ -163,7 +163,7 @@
             </article>
 
           </section>
-        
+        </div>
       </section>
 
       <footer>
