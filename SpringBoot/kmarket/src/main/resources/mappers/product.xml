@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.farmstory.dao.ArticleDAO">
+    <!-- 상품 등록 -->
+    <insert id="registerProduct">
+        insert into `km_product` set
+        `prodCate1`=#{prodCate1},
+        `prodCate2`=#{prodCate2},
+        `prodName`=#{prodName},
+        `descript`=#{descript},
+        `company`=#{company},
+        `price`=#{price},
+        `discount`=#{discount},
+        `point`=#{point},
+        `stock`=#{stock},
+        `delivery`=#{delivery},
+        `thumb1`=#{},
+        `thumb2`=#{},
+        `thumb3`=#{},
+        `detail`=#{},
+        `status`=#{},
+        `duty`=#{},
+        `receipt`=#{},
+        `bizType`=#{},
+        `origin`=#{},
+        `seller`=#{},
+        `sellPrice`=#{},
+        `ip`=#{},
+        `rdate`=NOW();
+
+    </insert>
+</mapper>
