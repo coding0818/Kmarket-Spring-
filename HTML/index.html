@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>케이마켓::대한민국 1등 온라인 쇼핑몰</title>
+    <link rel="shorcut icon" type="image/x-icon" href="./img/favicon.ico">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
@@ -10,11 +11,38 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".slider > ul").bxSlider({
+                easing: "linear",
+            });
+        });
+
+        $(function(){
+            var best = $("aside > .best");
+
+            $(window).scroll(function(){
+                var t = $(this).scrollTop();
+
+                if(t > 620){
+                    best.css({
+                        position: "fixed",
+                        top: "0",
+                    });
+                } else {
+                    best.css({ position: "static" });
+                }
+            });
+        });
+
+    </script>
     <style>
         /*** 공통 ***/
         * {margin: 0; padding: 0; font:normal 12px "Noto Sans CJK KR";}
+        ul, ol {list-style: none;}
         #wrppaer {width: 100%;}
         a {text-decoration: none; color: #111;}
+        input, textarea {outline: none;}
 
         /*** 헤더 ***/
         header {
@@ -41,6 +69,7 @@
             color: #646464;
         }
         header > .top > div > a:hover {color: #333; border-bottom: 1px solid #444;}
+        header > .top > div > a:last-child {border-right: 1px solid #e9e9e9;}
         header > .logo {
             height: 115px;
             border-bottom: 1px solid #e9e9e9;
@@ -99,9 +128,10 @@
         }
         header > .menu > div > ul {display: inline-block; margin-top: 16px;}
         header > .menu > div > ul:nth-child(1) {float: left;}
-        header > .menu > div > ul:nth-child(1) {float: right;}
+        header > .menu > div > ul:nth-child(2) {float: right;}
         header > .menu > div > ul > li {float: left;}
         header > .menu > div > ul > li > a {border-left: 1px solid #e9e9e9; padding: 0 10px;}
+        header > .menu > div > ul > li:last-child > a {border-right: 1px solid #e9e9e9;}
 
         /*** 메인 공통 ***/
         main {
@@ -155,6 +185,7 @@
             font-size: 1em;
         }
         main > aside > .category > li > a:hover {background: #2b313f; color: #fff;}
+        main > aside > .category > li > a:hover + ol {display: block;}
         main > aside > .category ol {
             position: absolute;
             left: 215px;
@@ -167,6 +198,7 @@
             box-sizing: border-box;
             z-index: 10000;
         }
+        main > aside > .category ol:hover {display: block;}
         main > aside > .category ol > li {
             width: 100%;
             height: 24px;
@@ -288,6 +320,7 @@
             padding: 10px;
             box-sizing: border-box;
         }
+        main > section > section > article > a:hover > p {text-decoration: underline;}
         main > section > section > article .thumb {
             width: 100%;
             height: 230px;
@@ -340,36 +373,6 @@
             box-shadow: none;
             border: none;
             background: #fff;
-        }
-        .bx-wrpper img {max-width: 100%; display: block;}
-        .bx-wrpper .bx-controls-direction a {
-            position: absolute;
-            top: 50%;
-            margin-top: -16px;
-            outline: 0;
-            width: 32px;
-            height: 32px;
-            text-indent: -9999px;
-            z-index: 9999;
-        }
-        .bx-wrpper .bx-pager {
-            text-align: center;
-            font-size: .85em;
-            font-family: Arial;
-            font-weight: bold;
-            color: #666;
-            padding-top: 20px;
-        }
-        .bx-wrpper .bx-pager-item {font-size: 0; line-height: 0;}
-        .bx-wrpper .bx-pager.bx-default-pager a {
-            background: #666;
-            text-indent: -9999px;
-            display: block;
-            width: 10px;
-            height: 10px;
-            margin: 0 5px;
-            outline: 0;
-            border-radius: 5px;
         }
 
         /*** 푸터 ***/
@@ -456,7 +459,7 @@
             <div class="logo">
                 <div>
                     <a href="#">
-                        <img src="/member/img/header_logo.png" alt="로고">
+                        <img src="./img/header_logo.png" alt="로고">
                     </a>
                     <form action="#">
                         <input type="text" name="search">
@@ -508,7 +511,7 @@
                     </li>
                     <li>
                         <a href="#">
-                            <i class="fas fa-latop" aria-hidden="true"></i>
+                            <i class="fas fa-laptop" aria-hidden="true"></i>
                             가전·디지털
                             <i class="fas fa-angle-right" aria-hidden="true"></i>
                         </a>
@@ -647,42 +650,42 @@
             <section>
                 <!-- 슬라이더 영역 -->
                 <section class="slider">
-                    <div class="bx-wrapper">
-                        <div class="bx-viewport">
-                            <ul>
-                                <li>
+                    <div class="bx-wrapper" style="max-width: 100%;">
+                        <div class="bx-viewport" aria-live="polite" style="width: 100%; overflow: hidden; position: relative; height: 447px;">
+                            <ul style="width: 5215%; position: relative; transition-timing-function: linear; transition-duration: 0s; transform: translate3d(-985px, 0px, 0px);">
+                                <li style="float: left; list-style: none; position: relative; width: 985px;" class="bx-clone" aria-hidden="true">
                                     <a href="#">
                                         <img src="https://via.placeholder.com/985x447" alt="item5">
                                     </a>
                                 </li>
-                                <li>
+                                <li style="float: left; list-style: none; position: relative; width: 985px;" aria-hidden="false">
+                                    <a href="#">
+                                        <img src="https://via.placeholder.com/985x447" alt="item1">
+                                    </a>
+                                </li>
+                                <li aria-hidden="true" style="float: left; list-style: none; position: relative; width: 985px;">
+                                    <a href="#">
+                                        <img src="https://via.placeholder.com/985x447" alt="item2">
+                                    </a>
+                                </li>
+                                <li aria-hidden="true" style="float: left; list-style: none; position: relative; width: 985px;">
+                                    <a href="#">
+                                        <img src="https://via.placeholder.com/985x447" alt="item3">
+                                    </a>
+                                </li>
+                                <li aria-hidden="true" style="float: left; list-style: none; position: relative; width: 985px;">
+                                    <a href="#">
+                                        <img src="https://via.placeholder.com/985x447" alt="item4">
+                                    </a>
+                                </li>
+                                <li style="float: left; list-style: none; position: relative; width: 985px;" aria-hidden="true">
                                     <a href="#">
                                         <img src="https://via.placeholder.com/985x447" alt="item5">
                                     </a>
                                 </li>
-                                <li>
+                                <li style="float: left; list-style: none; position: relative; width: 985px;" class="bx-clone" aria-hidden="true">
                                     <a href="#">
-                                        <img src="https://via.placeholder.com/985x447" alt="item5">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="https://via.placeholder.com/985x447" alt="item5">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="https://via.placeholder.com/985x447" alt="item5">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="https://via.placeholder.com/985x447" alt="item5">
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <img src="https://via.placeholder.com/985x447" alt="item5">
+                                        <img src="https://via.placeholder.com/985x447" alt="item1">
                                     </a>
                                 </li>
                             </ul>
@@ -694,19 +697,19 @@
                             </div>
                             <div class="bx-pager bx-default-pager">
                                 <div class="bx-pager-item">
-                                    <a href>1</a>
+                                    <a href data-slide-index="0" class="bx-pager-link active">1</a>
                                 </div>
                                 <div class="bx-pager-item">
-                                    <a href>2</a>
+                                    <a href data-slide-index="1" class="bx-pager-link">2</a>
                                 </div>
                                 <div class="bx-pager-item">
-                                    <a href>3</a>
+                                    <a href data-slide-index="2" class="bx-pager-link">3</a>
                                 </div>
                                 <div class="bx-pager-item">
-                                    <a href>4</a>
+                                    <a href data-slide-index="3" class="bx-pager-link">4</a>
                                 </div>
                                 <div class="bx-pager-item">
-                                    <a href>5</a>
+                                    <a href data-slide-index="4" class="bx-pager-link">5</a>
                                 </div>
                             </div>
                         </div>
@@ -1283,7 +1286,7 @@
             </ul>
             <div>
                 <p>
-                    <img src="./member/img/footer_logo.png" alt="로고">
+                    <img src="./img/footer_logo.png" alt="로고">
                 </p>
                 <p>
                     <strong>(주)KMARKET</strong>
