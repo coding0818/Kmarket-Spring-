@@ -178,7 +178,7 @@
     height: 90px;
     box-sizing: border-box;
     text-align: center;
-    background-image: url("../images/cs_sprites.png");
+    background-image: url("../img/cs_sprites.png");
     background-repeat: no-repeat;
     background-size: 750px auto;
   }
