@@ -29,6 +29,8 @@
         `sellPrice`=#{},
         `ip`=#{},
         `rdate`=NOW();
-
     </insert>
+    <select id="selectProdNo" resultType="kr.co.kmarket.vo.ProductVO">
+        SELECT MAX(`prodNo`) FROM `km_product`;
+    </select>
 </mapper>

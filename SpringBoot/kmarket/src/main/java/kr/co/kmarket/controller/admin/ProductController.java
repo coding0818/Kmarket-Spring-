@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.List;
 
 @Controller
@@ -32,6 +34,18 @@ public class ProductController {
 
     @PostMapping("admin/product/register")
     public String register(ProductVO vo, HttpServletRequest req){
+
+        // 로컬 경로 저장
+        ServletContext ctx = req.getServletContext();
+        String path = ctx.getRealPath("/home/prodImg");
+        File Dir = new File(path);
+
+        // file 폴더 생성
+        if(!Dir.exists()) {
+            Dir.mkdirs();
+        }
+
+
         vo.setRegip(req.getRemoteAddr());
         service.registerProduct(vo);
         return "admin/product/register";
