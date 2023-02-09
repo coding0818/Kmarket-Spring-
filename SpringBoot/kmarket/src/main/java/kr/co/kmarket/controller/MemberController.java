@@ -41,7 +41,7 @@ public class MemberController {
     public String registerSeller(SellerVO vo, HttpServletRequest req){
         vo.setRegip(req.getRemoteAddr());
         int result = service.insertSeller(vo);
-        return "redirect:/index"+result;
+        return "redirect:/index?result="+result;
     }
 
 
