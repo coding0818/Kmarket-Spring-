@@ -1,6 +1,7 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.MemberService;
+import kr.co.kmarket.vo.MemberVO;
 import kr.co.kmarket.vo.SellerVO;
 import kr.co.kmarket.vo.TermsVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,13 @@ public class MemberController {
     @GetMapping("member/register")
     public String register(){
         return "member/register";
+    }
+
+    @PostMapping("member/register")
+    public String register(MemberVO vo, HttpServletRequest req){
+        vo.setRegip(req.getRemoteAddr());
+        int result = service.insertMember(vo);
+        return "redirect:/index?result="+result;
     }
 
     @GetMapping("member/registerSeller")
