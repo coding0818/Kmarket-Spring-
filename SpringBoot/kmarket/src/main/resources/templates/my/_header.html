@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Kmarket::product-list</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" th:href="@{/css/my.css}">
+  <!--
+      날짜 : 2023/02/07
+      이름 : 이원정
+      내용 : Kmarket myPage 쿠폰 화면 구현
+  -->
+</head>
+<body>
+<div id="wrapper">
+  <header>
+    <div class="top">
+      <div>
+        <a href="">로그인</a>
+        <a href="">회원가입</a>
+        <a href="">마이페이지</a>
+        <a href="">
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          장바구니
+        </a>
+      </div>
+    </div>
+    <div class="logo">
+      <div>
+        <a href="#">
+          <img th:src="@{/img/header_logo.png}" alt="헤더로고">
+        </a>
+        <form action="#">
+          <input type="text" name="search">
+          <button>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </header>
