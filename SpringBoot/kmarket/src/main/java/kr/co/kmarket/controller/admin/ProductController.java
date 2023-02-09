@@ -27,8 +27,8 @@ public class ProductController {
 
     @GetMapping("admin/product/register")
     public String register(){
-        //List<CateVO> cate =inservice.selectCate1();
-        //model.addAttribute("cate", cate);
+        List<CateVO> cate =inservice.selectCate1();
+        model.addAttribute("cate", cate);
 
         return "admin/product/register";
     }
@@ -48,7 +48,7 @@ public class ProductController {
 
 
         vo.setRegip(req.getRemoteAddr());
-        service.registerProduct(vo);
+        //service.registerProduct(vo);
         return "admin/product/register";
     }
 
