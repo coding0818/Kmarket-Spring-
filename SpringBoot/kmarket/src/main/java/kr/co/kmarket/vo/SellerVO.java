@@ -1,19 +1,17 @@
-package kr.co.kmarket.entity;
+package kr.co.kmarket.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name="km_member_seller")
-public class SellerEntity {
+@ToString
+public class SellerVO {
 
     @Id
     private String uid;
@@ -28,9 +26,9 @@ public class SellerEntity {
     private String ceo;
     private String bizRegNum;
     private String tel;
-    private String email;
     private String manager;
     private String fax;
+    private String email;
     private String regip;
     private String wdate;
     private String rdate;
