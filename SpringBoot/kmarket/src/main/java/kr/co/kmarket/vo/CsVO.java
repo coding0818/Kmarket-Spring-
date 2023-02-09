@@ -32,4 +32,5 @@ public class CsVO {
     public String getRdate() {
         return rdate.substring(2, 10);
     }
+    public String getUid() {return uid.replaceAll("(?<=.{3}).", "*");}
 }
