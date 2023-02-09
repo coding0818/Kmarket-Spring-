@@ -38,8 +38,12 @@ public class AdminProdController {
     // 상품 등록하기 '화면'
     @GetMapping("admin/product/register")
     public String register(Model model){
-        List<CateVO> cate =inservice.selectCate1();
-        model.addAttribute("cate", cate);
+        List<CateVO> cates =inservice.selectCate1();
+
+        System.out.println(cates);
+
+
+        model.addAttribute("cates", cates);
 
         return "admin/product/register";
     }
