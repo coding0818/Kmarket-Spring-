@@ -5,7 +5,6 @@ package kr.co.kmarket.controller.admin;
  * 내용: 관리자 상품 컨트롤러
  */
 
-import kr.co.kmarket.entity.SellerEntity;
 import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.admin.AdminProdService;
@@ -46,14 +45,14 @@ public class AdminProdController {
     // 상품 등록하기
     @PostMapping("admin/product/register")
     public String register(@AuthenticationPrincipal MySellerDetails mySeller, Model model, ProductVO vo, HttpServletRequest req, MultipartFile thumb1) throws  Exception{
-        SellerEntity seller = null;
+        //SellerEntity seller = null;
 
-        if(mySeller != null){ seller = mySeller.getUser(); }
-        model.addAttribute("seller", seller);
-
-        vo.setRegip(req.getRemoteAddr());
-
-        service.registerProduct(vo, thumb1);
+//        if(mySeller != null){ seller = mySeller.getUser(); }
+//        model.addAttribute("seller", seller);
+//
+//        vo.setRegip(req.getRemoteAddr());
+//
+//        service.registerProduct(vo, thumb1);
 
         return "admin/product/register";
     }

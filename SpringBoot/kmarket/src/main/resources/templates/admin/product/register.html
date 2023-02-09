@@ -40,10 +40,7 @@
                             <td>
                                 <select name="prodCate1" id="prodCate1">
                                     <option value="0">1차 분류 선택</option>
-                                <th:block th:forEach="cate:${cate}">
-                                <th:block th:set="i:${i+1}"/>
-                                    <option value="${i+9}">[[${cate.c1Name}]]</option>
-                                </th:block>
+
                                 </select>
                             </td>
                         </tr>

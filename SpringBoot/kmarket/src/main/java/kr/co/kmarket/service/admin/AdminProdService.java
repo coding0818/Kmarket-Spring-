@@ -9,16 +9,14 @@ import kr.co.kmarket.dao.admin.AdminProdDAO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
 
-@Service
+
 @Slf4j
+@Service
 public class AdminProdService {
 
     @Autowired
@@ -31,23 +29,24 @@ public class AdminProdService {
         int result = dao.registerProduct(vo);
 
         // 파일
-        String oName = thumb1.getOriginalFilename();
-        String imgName = "";
+        //String oName = thumb1.getOriginalFilename();
+        //String imgName = "";
 
         // 시스템 경로
-        String path = System.getProperty("user.dir") + "/src/main/resources/static/files/";
+        //String path = System.getProperty("user.dir") + "/src/main/resources/static/files/";
 
         // 파일명 새로 생성
-        UUID uuid = UUID.randomUUID();
-        String nName = uuid.toString()+oName.substring(oName.lastIndexOf("."));
+        //UUID uuid = UUID.randomUUID();
+        //String nName = uuid.toString()+oName.substring(oName.lastIndexOf("."));
 
-        imgName = nName;
+        //imgName = nName;
 
         // 파일 저장
-        thumb1.transferTo(new File(path, imgName));
-        ProductVO.builder().thumb1(nName).build();
+        //thumb1.transferTo(new File(path, imgName));
+        //ProductVO.builder().thumb1(nName).build();
 
         return result;
+
     }
     // 상품 목록
     public List<ProductVO> selectProducts(int start){
@@ -62,9 +61,7 @@ public class AdminProdService {
         return dao.deleteProduct(prodNo);
     }
 
-    // 상품 등록 시 이미지 파일
-    @Value("${spring.servlet.multipart.location}")
-    private String uploadPath;
+
 
 
 
