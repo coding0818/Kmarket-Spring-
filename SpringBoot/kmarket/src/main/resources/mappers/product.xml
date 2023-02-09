@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.admin.AdminProdDAO">
     <!-- 상품 등록 -->
     <insert id="registerProduct">
@@ -83,9 +83,9 @@
         JOIN	`km_member_seller` AS B ON A.`seller` = B.`uid`
         WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `rdate` DESC LIMIT ?, 10;
     </select>
+
     <!-- 페이징 -->
     <select id="selectCountTotal" resultType="int">
         select count(`prodNo`) from `km_product` where `cate1`=#{cate1} and `cate2`=#{cate2};
-
     </select>
 </mapper>

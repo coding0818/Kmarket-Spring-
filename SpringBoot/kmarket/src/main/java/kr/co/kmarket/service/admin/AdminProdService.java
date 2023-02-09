@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +65,7 @@ public class AdminProdService {
 
         }
 
-       
+        // 파일 저장
         // nName1~4(String) -> vo의 thumb1~3,detail(Multipart)으로 변환
         String imgName1 = "";
         String imgName2 = "";
