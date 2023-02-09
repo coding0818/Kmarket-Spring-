@@ -26,7 +26,7 @@ public class ProductController {
 
     @GetMapping("admin/product/register")
     public String register(){
-        //List<CateVO> cate =inservice.selectCate(cate1);
+        //List<CateVO> cate =inservice.selectCate1();
         //model.addAttribute("cate", cate);
 
         return "admin/product/register";
