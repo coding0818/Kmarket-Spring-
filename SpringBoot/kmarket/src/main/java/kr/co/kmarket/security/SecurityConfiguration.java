@@ -37,12 +37,12 @@ public class SecurityConfiguration {
 		
 		// 로그인 설정
 		http.formLogin()
-		.loginPage("/user/login")
+		.loginPage("/member/login")
 		.defaultSuccessUrl("/index")
-		.failureUrl("/user/login?success=100")
+		.failureUrl("/member/login?success=111")
 		.usernameParameter("uid")
 		.passwordParameter("pass");
-		
+
 		// 로그아웃 설정
 		http.logout()
 		.invalidateHttpSession(true)
