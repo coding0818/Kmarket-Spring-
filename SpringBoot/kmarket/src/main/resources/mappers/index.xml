@@ -9,5 +9,8 @@
         ON a.cate1 = b.cate1 WHERE a.`cate1`=#{cate1};
     </select>
 
+    <select id="selectCate1" resultType="kr.co.kmarket.vo.CateVO">
+        SELECT * FROM `km_product_cate1`;
+    </select>
 
 </mapper>

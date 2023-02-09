@@ -20,4 +20,8 @@ public class IndexService {
         log.info("cate1 : " + cate1);
         return dao.selectCate(cate1);
     }
+
+    public List<CateVO> selectCate1(){
+        return dao.selectCate1();
+    }
 }
