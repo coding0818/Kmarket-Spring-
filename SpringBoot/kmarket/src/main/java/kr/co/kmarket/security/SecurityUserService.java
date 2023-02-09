@@ -1,16 +1,15 @@
 package kr.co.kmarket.security;
 
 import kr.co.kmarket.entity.SellerEntity;
+import kr.co.kmarket.entity.UserEntity;
 import kr.co.kmarket.repository.SellerRepo;
+import kr.co.kmarket.repository.UserRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import kr.co.kmarket.entity.UserEntity;
-import kr.co.kmarket.repository.UserRepo;
 
 @Slf4j
 @Service
@@ -29,46 +28,53 @@ public class SecurityUserService implements UserDetailsService{
 
 		log.info("SecurityUserService...0 : " + username);
 
-		UserEntity user = null;
 		UserDetails myUser = null;
+		boolean isPresentUser = repo.findById(username).isPresent();
 
-		boolean isPresent = repo.findById(username).isPresent();
+		log.info("SecurityUserService...1 : " + isPresentUser);
 
-		log.info("SecurityUserService...1 : " + isPresent);
-
-		if(isPresent){
-			user = repo.findById(username).get();
+		if(isPresentUser){
+			UserEntity user = repo.findById(username).get();
 			log.info("here1 : "+user.getUid());
-		}
 
-		if(user == null) {
-			// 일반 계정이 없는 경우
-			SellerEntity seller = srepo.findById(username).get();
-
-			log.info("here2"+seller.getUid());
-
-			if(seller == null){
-				// 판매자 계정도 없는 경우
-				log.info("here3");
+			if(user == null){
 				throw new UsernameNotFoundException(username);
-			}else{
-				// 판매자 계정 있는 경우
-				log.info("here4");
-				myUser = MySellerDetails.builder()
-						.user(seller)
-						.build();
 			}
 
-		}else{
-			// security가 세션에 등록하는 객체(빌드 패턴, 빌드 초기화)
-			log.info("here5");
 			myUser = MyUserDetails.builder()
 					.user(user)
 					.build();
+
+		}else {
+			log.info("SecurityUserService...2");
+
+			boolean isPresentSeller = srepo.findById(username).isPresent();
+
+			log.info("SecurityUserService...3 : " + isPresentSeller);
+
+			if(isPresentSeller){
+
+				SellerEntity seller = srepo.findById(username).get();
+
+				log.info("here2 : "+seller.getUid());
+
+				if(seller == null){
+					throw new UsernameNotFoundException(username);
+				}
+
+				log.info("here3");
+
+				myUser = MySellerDetails.builder()
+						.user(seller)
+						.build();
+
+				log.info("here4");
+			}
 		}
-		log.info("here6");
-		
+
+		log.info("here5");
 		return myUser;
+
 	}
 
 }

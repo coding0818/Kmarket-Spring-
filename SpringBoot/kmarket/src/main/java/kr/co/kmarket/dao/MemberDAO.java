@@ -1,5 +1,6 @@
 package kr.co.kmarket.dao;
 
+import kr.co.kmarket.vo.MemberVO;
 import kr.co.kmarket.vo.SellerVO;
 import kr.co.kmarket.vo.TermsVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,5 +12,6 @@ public interface MemberDAO {
 
     public TermsVO selectTerms();
 
+    public int insertMember(MemberVO vo);
     public int insertSeller(SellerVO vo);
 }

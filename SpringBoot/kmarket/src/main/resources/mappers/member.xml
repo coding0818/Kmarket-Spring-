@@ -25,6 +25,23 @@
             `regip`=#{regip},
             `rdate`=NOW();
     </insert>
+    <insert id="insertMember">
+        insert into `km_member_general` set
+            `uid`=#{uid},
+            `pass`=#{pass},
+            `name`=#{name},
+            `gender`=#{gender},
+            `hp`=#{hp},
+            `email`=#{email},
+            `type`=1,
+            `point`=#{point},
+            `level`=1,
+            `zip`=#{zip},
+            `addr1`=#{addr1},
+            `addr2`=#{addr2},
+            `regip`=#{regip},
+            `rdate`=NOW();
+    </insert>
     <select id="selectTerms" resultType="kr.co.kmarket.vo.TermsVO">
         select * from `km_member_terms`;
     </select>

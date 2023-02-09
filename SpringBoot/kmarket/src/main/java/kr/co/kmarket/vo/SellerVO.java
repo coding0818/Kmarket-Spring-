@@ -5,15 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Id;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class SellerVO {
 
-    @Id
     private String uid;
     private String pass;
     private int type;
