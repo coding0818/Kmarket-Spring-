@@ -1,9 +1,10 @@
 package kr.co.kmarket.vo;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+/*
+* 날짜: 2023/02/08
+* 이름: 이원정
+* 내용: 상품 VO
+* */
+import lombok.*;
 
 @Data
 @AllArgsConstructor
@@ -11,17 +12,22 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProductVO {
 
+    private int prodNo;
     private String prodCate1;
     private String prodCate2;
+    private String seller;
     private String prodName;
     private String descript;
     private String company;
-    private String seller;
     private int price;
     private int discount;
     private int point;
     private int stock;
+    private int sold;
     private int delivery;
+    private int hit;
+    private int score;
+    private int review;
     private String thumb1;
     private String thumb2;
     private String thumb3;
@@ -32,16 +38,16 @@ public class ProductVO {
     private String bizType;
     private String origin;
     private String regip;
+    private String rdate;
+
+
     private int sellPrice;
-    private int prodNo;
     private int prodnum;
     private int count;
     private int total;
-    private int hit;
     private String c1Name;
     private String c2Name;
     private int level;
-    private int score;
     private String uid;
     private int cartNo;
     private int totalcount;
@@ -52,7 +58,7 @@ public class ProductVO {
     private int totalPrice;
     private String content;
     private int rating;
-    private String rdate;
+
 
 
 }
