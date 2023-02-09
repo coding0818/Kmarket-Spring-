@@ -2,13 +2,21 @@
 <th:block th:replace="~{/member/_header}"/>
 <script>
     $(function(){
-        $('input[type:button]').click(function(){
+        $('input[type=button]').click(function(){
             let agree1 = $('input[name=agree1]').is(':checked');
             let agree2 = $('input[name=agree2]').is(':checked');
             let agree3 = $('input[name=agree3]').is(':checked');
 
+            let type = $('input[name=type]').val();
+
             if(agree1 && agree2 && agree3){
-                location.href="/kmarket/";
+                if(type == "seller"){
+                    location.href="/kmarket/member/registerSeller";
+                }else{
+                    location.href="/kmarket/member/register";
+                }
+            }else{
+                alert("필수 항목을 체크해주시기 바랍니다.");
             }
         });
     });
@@ -59,6 +67,7 @@
                     </label>
                 </section>
                 <div>
+                    <input type="hidden" name="type" th:value="${type}">
                     <input type="button" class="agree" value="동의하기">
                 </div>
             </div>

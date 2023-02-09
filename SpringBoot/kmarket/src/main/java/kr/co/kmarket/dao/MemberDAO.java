@@ -1,5 +1,6 @@
 package kr.co.kmarket.dao;
 
+import kr.co.kmarket.vo.SellerVO;
 import kr.co.kmarket.vo.TermsVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface MemberDAO {
 
     public TermsVO selectTerms();
+
+    public int insertSeller(SellerVO vo);
 }
