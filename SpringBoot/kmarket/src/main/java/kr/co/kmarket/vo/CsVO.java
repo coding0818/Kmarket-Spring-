@@ -28,4 +28,8 @@ public class CsVO {
     private String rdate;
     private int hit;
     private String comment;
+
+    public String getRdate() {
+        return rdate.substring(2, 10);
+    }
 }
