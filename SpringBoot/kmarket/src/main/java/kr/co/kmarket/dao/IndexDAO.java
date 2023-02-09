@@ -13,4 +13,5 @@ import java.util.List;
 public interface IndexDAO {
 
     public List<CateVO> selectCate(int cate1);
+    public List<CateVO> selectCate1();
 }
