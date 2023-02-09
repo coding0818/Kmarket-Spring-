@@ -22,11 +22,7 @@
     $(function(){
         $('select[id=category1]').change(function(){
 
-            console.log("1");
-
             let cate1 = $(this).val();
-
-            console.log("2");
 
             $.ajax({
                     url:'/kmarket/admin/product/select',
@@ -40,16 +36,11 @@
 
                             let tags = "<option value='0'>2차 분류 선택</option>";
 
-
-
                             $(data).each(function(){
 
 							    tags += "<option value='"+this.cate2+"'>"+this.c2Name+"</option>";
 
-                                console.log("tags1 : "+tags);
 						    });
-
-                               console.log("tags : "+tags);
 
 						    $('select[name=category2]').append(tags);
 

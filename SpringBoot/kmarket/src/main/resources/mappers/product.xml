@@ -82,6 +82,7 @@
         SELECT A.*, B.`level` FROM `km_product` AS A
         JOIN	`km_member_seller` AS B ON A.`seller` = B.`uid`
         WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `rdate` DESC LIMIT ?, 10;
+    </select>
 
     <!-- 페이징 -->
     <select id="selectCountTotal" resultType="int">
