@@ -17,9 +17,51 @@
 
     참고 사이트: https://dev-jwblog.tistory.com/34
 -->
-
-
 <th:block layout:fragment="main">
+    <script>
+    $(function(){
+        $('select[id=category1]').change(function(){
+
+            console.log("1");
+
+            let cate1 = $(this).val();
+
+            console.log("2");
+
+            $.ajax({
+                    url:'/kmarket/admin/product/select',
+                    method:'get',
+                    data:{"cate1":cate1},
+                    dataType:'json',
+                    success: function(data){
+                        console.log("data : "+data);
+                        if(data != ""){
+                            $('select[name=category2]').empty();
+
+                            let tags = "<option value='0'>2차 분류 선택</option>";
+
+
+
+                            $(data).each(function(){
+
+							    tags += "<option value='"+this.cate2+"'>"+this.c2Name+"</option>";
+
+                                console.log("tags1 : "+tags);
+						    });
+
+                               console.log("tags : "+tags);
+
+						    $('select[name=category2]').append(tags);
+
+                        }
+
+                    }
+
+
+            });
+        });
+    });
+</script>
     <section id="admin-product-register">
         <nav>
             <h3>상품등록</h3>
@@ -41,7 +83,7 @@
                         <tr>
                             <td>1차 분류</td>
                             <td>
-                                <select name="prodCate1" id="prodCate1">
+                                <select name="prodCate1" id="category1">
                                     <option value="0">1차 분류 선택</option>
                                     <th:block th:each="cate:${cates}">
                                         <option th:value="${cate.cate1}">[[${cate.c1Name}]]</option>
@@ -54,10 +96,7 @@
                             <td>
                                 <select name="category2">
                                     <option value="cate0">2차 분류 선택</option>
-                                    <option value="cate21">남성의류</option>
-                                    <option value="cate22">여성의류</option>
-                                    <option value="cate23">잡화</option>
-                                    <option value="cate24">뷰티</option>
+
                                 </select>
                             </td>
                         </tr>
