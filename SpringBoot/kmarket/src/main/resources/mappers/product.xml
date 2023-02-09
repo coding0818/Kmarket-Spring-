@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.farmstory.dao.ArticleDAO">
+<mapper namespace="kr.co.kmarket.dao.admin.AdminProdDAO">
     <!-- 상품 등록 -->
     <insert id="registerProduct">
         insert into `km_product` set
@@ -26,7 +26,7 @@
         `bizType`=#{bizType},
         `origin`=#{origin},
         `seller`=#{seller},
-        `sellPrice`=#{sellerPrice},
+        `sellPrice`=#{sellPrice},
         `ip`=#{ip},
         `rdate`=NOW();
     </insert>

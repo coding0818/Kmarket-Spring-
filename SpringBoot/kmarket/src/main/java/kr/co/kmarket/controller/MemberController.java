@@ -1,10 +1,17 @@
 package kr.co.kmarket.controller;
 
+import kr.co.kmarket.service.MemberService;
+import kr.co.kmarket.vo.TermsVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MemberController {
+
+    @Autowired
+    private MemberService service;
 
     @GetMapping("member/login")
     public String login(){
@@ -27,7 +34,9 @@ public class MemberController {
     }
 
     @GetMapping("member/signup")
-    public String signup(){
+    public String signup(Model model){
+        TermsVO terms = service.selectTerms();
+        model.addAttribute("terms", terms);
         return "member/signup";
     }
 }
