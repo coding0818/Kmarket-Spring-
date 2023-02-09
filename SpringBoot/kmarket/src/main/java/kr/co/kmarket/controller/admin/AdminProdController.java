@@ -8,6 +8,7 @@ package kr.co.kmarket.controller.admin;
 import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.admin.AdminProdService;
+import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class AdminProdController {
@@ -35,9 +37,9 @@ public class AdminProdController {
 
     // 상품 등록하기 '화면'
     @GetMapping("admin/product/register")
-    public String register(){
-        //List<CateVO> cate =inservice.selectCate(cate1);
-        //model.addAttribute("cate", cate);
+    public String register(Model model){
+        List<CateVO> cate =inservice.selectCate1();
+        model.addAttribute("cate", cate);
 
         return "admin/product/register";
     }
@@ -56,5 +58,6 @@ public class AdminProdController {
 
         return "admin/product/register";
     }
+
 
 }
