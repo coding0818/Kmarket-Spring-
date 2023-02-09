@@ -11,16 +11,20 @@ import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.admin.AdminProdService;
 import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+@Slf4j
 @Controller
 public class AdminProdController {
 
@@ -68,5 +72,17 @@ public class AdminProdController {
         return "admin/product/register";
     }
 
+    // 2차 카테고리 설정
+    @ResponseBody
+    @GetMapping("admin/product/select")
+    public List<CateVO> select(int cate1){
+
+        log.info("here1 : " + cate1);
+        List<CateVO> cate2s = inservice.selectCate(cate1);
+
+        log.info("here2 : " + cate2s);
+
+        return cate2s;
+    }
 
 }

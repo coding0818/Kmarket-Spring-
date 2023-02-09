@@ -66,7 +66,7 @@ public class AdminProdService {
 
         }
 
-        // 파일 저장
+       
         // nName1~4(String) -> vo의 thumb1~3,detail(Multipart)으로 변환
         String imgName1 = "";
         String imgName2 = "";
