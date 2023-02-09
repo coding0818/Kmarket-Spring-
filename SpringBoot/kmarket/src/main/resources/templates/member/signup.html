@@ -1,5 +1,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/member/_header}"/>
+<script>
+    $(function(){
+        $('input[type:button]').click(function(){
+            let agree1 = $('input[name=agree1]').is(':checked');
+            let agree2 = $('input[name=agree2]').is(':checked');
+            let agree3 = $('input[name=agree3]').is(':checked');
+
+            if(agree1 && agree2 && agree3){
+                location.href="/kmarket/";
+            }
+        });
+    });
+</script>
         <main id="member">
             <div class="signup">
                 <nav>
@@ -10,7 +23,7 @@
                         <span class="essential">(필수)</span>
                         케이마켓 이용약관
                     </h3>
-                    <textarea class="terms" readonly></textarea>
+                    <textarea class="terms" readonly>[[${terms.terms}]]</textarea>
                     <label>
                         <input type="checkbox" name="agree1"> 동의합니다.
                     </label>
@@ -20,7 +33,7 @@
                         <span class="essential">(필수)</span>
                         전자금융거래 이용약관
                     </h3>
-                    <textarea class="financial" readonly></textarea>
+                    <textarea class="financial" readonly>[[${terms.finance}]]</textarea>
                     <label>
                         <input type="checkbox" name="agree2"> 동의합니다.
                     </label>
@@ -30,17 +43,17 @@
                         <span class="essential">(필수)</span>
                         개인정보 수집동의
                     </h3>
-                    <textarea class="privacy" readonly></textarea>
+                    <textarea class="privacy" readonly>[[${terms.privacy}]]</textarea>
                     <label>
                         <input type="checkbox" name="agree3"> 동의합니다.
                     </label>
                 </section>
                 <section>
                     <h3>
-                        <span class="optional">(필수)</span>
+                        <span class="optional">(선택)</span>
                         위치정보 이용약관
                     </h3>
-                    <textarea class="location" readonly></textarea>
+                    <textarea class="location" readonly>[[${terms.location}]]</textarea>
                     <label>
                         <input type="checkbox" name="agree4"> 동의합니다.
                     </label>
