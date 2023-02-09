@@ -29,13 +29,19 @@ public class AdminProdController {
     @Autowired
     private IndexService inservice;
 
-    // 상품 리스트 불러오기
+    // ------------------------------------------ 상품 목록 ------------------------------------------
     @GetMapping("admin/product/list")
-    public String list() {
+    public String list(@AuthenticationPrincipal MySellerDetails mySeller, Model model, String cate1, String cate2, int limitstart) {
+        SellerEntity seller = null;
+        if(mySeller != null){ seller = mySeller.getUser(); }
+        model.addAttribute("seller", seller);
+
+        service.selectProducts(cate1, cate2, limitstart);
+
         return "admin/product/list";
     }
 
-    // 상품 등록하기 '화면'
+    // ------------------------------------------ 상품 등록하기 '화면' ------------------------------------------
     @GetMapping("admin/product/register")
     public String register(Model model){
         List<CateVO> cates =inservice.selectCate1();
@@ -48,7 +54,7 @@ public class AdminProdController {
         return "admin/product/register";
     }
 
-    // 상품 등록하기
+    // ------------------------------------------ 상품 등록하기 ------------------------------------------
     @PostMapping("admin/product/register")
     public String register(@AuthenticationPrincipal MySellerDetails mySeller, Model model, ProductVO vo, HttpServletRequest req) throws  Exception{
         SellerEntity seller = null;

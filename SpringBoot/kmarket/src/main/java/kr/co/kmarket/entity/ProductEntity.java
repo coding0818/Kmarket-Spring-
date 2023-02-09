@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class ProductEntity {
 
     @Id
-    private int prodNO;
+    private int prodNo;
     private int cate1;
     private int cate2;
     private String seller;
