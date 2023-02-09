@@ -10,7 +10,6 @@ import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
@@ -71,6 +70,7 @@ public class AdminProdService {
         vo.getDetail().transferTo(saveFile4);
 
         // 실제 사진은 서버의 특정 위치에 저장하도록 하고 DB에는 사진에 대한 정보만을 저장
+
         // saveFile1~4(File) -> vo의 thumb1~3,detail(Multipart)으로 변환
         ProductVO.builder()
                 .thumb1((MultipartFile) saveFile1)

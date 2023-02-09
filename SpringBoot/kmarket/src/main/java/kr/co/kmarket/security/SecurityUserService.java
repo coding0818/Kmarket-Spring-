@@ -27,13 +27,19 @@ public class SecurityUserService implements UserDetailsService{
 		// 스프링 시큐리티 인증 동작방식은 아이디/패스워드를 한 번에 조회하는 방식이 아닌
 		// 아이디만 이용해서 사용자 정보를 로딩하고 나중에 패스워드를 검증하는 방식
 
-		log.info("SecurityUserService...0");
+		log.info("SecurityUserService...0 : " + username);
 
-		UserEntity user = repo.findById(username).get();
-
-		log.info("here1"+user.getUid());
-
+		UserEntity user = null;
 		UserDetails myUser = null;
+
+		boolean isPresent = repo.findById(username).isPresent();
+
+		log.info("SecurityUserService...1 : " + isPresent);
+
+		if(isPresent){
+			user = repo.findById(username).get();
+			log.info("here1 : "+user.getUid());
+		}
 
 		if(user == null) {
 			// 일반 계정이 없는 경우

@@ -25,8 +25,10 @@ public class SellerVO {
     private String company;
     private String ceo;
     private String bizRegNum;
+    private String comRegNum;
     private String tel;
     private String manager;
+    private String managerHp;
     private String fax;
     private String email;
     private String regip;
