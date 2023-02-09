@@ -29,9 +29,18 @@
         `ip`=#{ip},
         `rdate`=NOW();
     </insert>
+
+    <!-- 상품 목록 -->
+    <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
+        select A.*, B.`level` from `km_product` as A
+        join `km_member_seller` as B on A.`seller`=B.`uid`
+        where `cate1`=#{cate1} and `cate2`=#{cate2} limit #{start}, 10;
+    </select>
+
     <select id="selectProdNo" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT MAX(`prodNo`) FROM `km_product`;
     </select>
+
 
     <!--판매량-->
     <select id="selectProductsSold" resultType="kr.co.kmarket.vo.ProductVO">
@@ -73,5 +82,10 @@
         SELECT A.*, B.`level` FROM `km_product` AS A
         JOIN	`km_member_seller` AS B ON A.`seller` = B.`uid`
         WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `rdate` DESC LIMIT ?, 10;
+
+    <!-- 페이징 -->
+    <select id="selectCountTotal" resultType="int">
+        select count(`prodNo`) from `km_product` where `cate1`=#{cate1} and `cate2`=#{cate2};
+
     </select>
 </mapper>

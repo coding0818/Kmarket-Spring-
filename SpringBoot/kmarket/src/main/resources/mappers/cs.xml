@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket.dao.CsDAO">
+
+    <insert id="insertCsArticle" useGeneratedKeys="true" keyProperty="no">
+    </insert>
+    
+    <select id="selectCsArticle" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs` WHERE `csNo`=#{csNo};
+    </select>
+
+    <select id="selectCsArticles" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs` WHERE `cate1`=#{cate1} ;
+    </select>
+
+    <select id="selectCsArticlesAll" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs`
+            WHERE `cate1`=#{cate1}
+            ORDER BY `csNo`
+            DESC LIMIT 0, 10;
+    </select>
+
+    <delete id="deleteCsArticle">
+    </delete>
+
+</mapper>

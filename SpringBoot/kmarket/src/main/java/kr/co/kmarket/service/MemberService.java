@@ -1,6 +1,7 @@
 package kr.co.kmarket.service;
 
 import kr.co.kmarket.dao.MemberDAO;
+import kr.co.kmarket.vo.MemberVO;
 import kr.co.kmarket.vo.SellerVO;
 import kr.co.kmarket.vo.TermsVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class MemberService {
 
     public TermsVO selectTerms(){
         return dao.selectTerms();
+    }
+
+    public int insertMember(MemberVO vo){
+        vo.setPass(encoder.encode(vo.getPass()));
+        return dao.insertMember(vo);
     }
 
     public int insertSeller(SellerVO vo){
