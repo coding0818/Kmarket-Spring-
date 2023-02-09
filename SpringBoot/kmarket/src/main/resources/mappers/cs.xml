@@ -11,11 +11,11 @@
         SELECT * FROM `km_cs` WHERE `csNo`=#{csNo};
     </select>
 
-    <select id="selectCsArticles" resultType="kr.co.kmarket.vo.CateVO">
+    <select id="selectCsArticles" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs` WHERE `cate1`=#{cate1} ;
     </select>
 
-    <select id="selectCsArticlesAll" resultType="kr.co.kmarket.vo.CateVO">
+    <select id="selectCsArticlesAll" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs`
             WHERE `cate1`=#{cate1}
             ORDER BY `csNo`
