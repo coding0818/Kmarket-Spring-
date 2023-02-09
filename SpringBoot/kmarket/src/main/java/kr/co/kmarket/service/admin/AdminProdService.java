@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 
 @Slf4j
@@ -23,27 +25,37 @@ public class AdminProdService {
     private AdminProdDAO dao;
 
     // 상품 등록
-    public int registerProduct(ProductVO vo, MultipartFile thumb1) throws Exception{
+    public int registerProduct(ProductVO vo) throws Exception{
 
         // 상품 등록하기
         int result = dao.registerProduct(vo);
 
-        // 파일
-        //String oName = thumb1.getOriginalFilename();
-        //String imgName = "";
+        //
 
-        // 시스템 경로
-        //String path = System.getProperty("user.dir") + "/src/main/resources/static/files/";
+        // 파일 ( 각각 thumb1, thumb2, thumb3, detail )
+        String oName1 = vo.getThumb1().getOriginalFilename();
+        String oName2 = vo.getThumb2().getOriginalFilename();
+        String oName3 = vo.getThumb3().getOriginalFilename();
+        String oName4 = vo.getDetail().getOriginalFilename();
 
-        // 파일명 새로 생성
-        //UUID uuid = UUID.randomUUID();
-        //String nName = uuid.toString()+oName.substring(oName.lastIndexOf("."));
+        // 시스템 경로 (Java로 현재 작업 디렉토리를 얻는 방법(절대 경로) - getProperty(“user.dir”))
+        String path = System.getProperty("user.dir") + "/src/main/resources/file";
 
-        //imgName = nName;
+        // 파일명 새로 생성 ( 각각 thumb1, thumb2, thumb3, detail )
+        UUID uuid = UUID.randomUUID();
+        String nName1 = uuid.toString()+oName1.substring(oName1.lastIndexOf("."));
+        String nName2 = uuid.toString()+oName2.substring(oName2.lastIndexOf("."));
+        String nName3 = uuid.toString()+oName3.substring(oName3.lastIndexOf("."));
+        String nName4 = uuid.toString()+oName4.substring(oName4.lastIndexOf("."));
 
         // 파일 저장
-        //thumb1.transferTo(new File(path, imgName));
-        //ProductVO.builder().thumb1(nName).build();
+        vo.getThumb1().transferTo(new File(path, nName1));
+        vo.getThumb2().transferTo(new File(path, nName2));
+        vo.getThumb3().transferTo(new File(path, nName3));
+        vo.getDetail().transferTo(new File(path, nName4));
+
+        // 실제 사진은 서버의 특정 위치에 저장하도록 하고 DB에는 사진에 대한 정보만을 저장
+        ProductVO.builder().thumb1(nName1).build();
 
         return result;
 

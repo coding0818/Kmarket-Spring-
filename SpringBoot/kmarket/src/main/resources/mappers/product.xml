@@ -6,8 +6,9 @@
     <!-- 상품 등록 -->
     <insert id="registerProduct">
         insert into `km_product` set
-        `prodCate1`=#{prodCate1},
-        `prodCate2`=#{prodCate2},
+        `cate1`=#{cate1},
+        `cate2`=#{cate2},
+        `seller`=#{seller},
         `prodName`=#{prodName},
         `descript`=#{descript},
         `company`=#{company},
@@ -25,8 +26,6 @@
         `receipt`=#{receipt},
         `bizType`=#{bizType},
         `origin`=#{origin},
-        `seller`=#{seller},
-        `sellPrice`=#{sellPrice},
         `ip`=#{ip},
         `rdate`=NOW();
     </insert>
