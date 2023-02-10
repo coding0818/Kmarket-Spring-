@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,15 +27,32 @@ public class AdminProdService {
     @Autowired
     private AdminProdDAO dao;
 
+    // ------------------------------------------ 상품 등록 ------------------------------------------
+    public void registerProduct(ProductVO vo) throws Exception{
+
+        // vo의 thumb1~3 가져오기
+        MultipartFile thumb1 = vo.getThumb1();
+        MultipartFile thumb2 = vo.getThumb2();
+        MultipartFile thumb3 = vo.getThumb3();
+        MultipartFile detail = vo.getDetail();
+
+        // 파일 업로드
+        ProductVO file = fileUpload(thumb1, thumb2, thumb3, detail, vo);
+        vo.setNewThumb1(file.getNewThumb1());
+        vo.setNewThumb2(file.getNewThumb2());
+        vo.setNewThumb3(file.getNewThumb3());
+        vo.setNewDetail(file.getNewDetail());
+
+        // 상품 등록하기
+        dao.registerProduct(vo);
+
+    }
+
     // ------------------------------------------  파일 ----------------------------------------------
     @Value("${spring.servlet.multipart.location}")
     private String uploadPath;
 
-    // ------------------------------------------ 상품 등록 ------------------------------------------
-    public int registerProduct(ProductVO vo) throws Exception{
-
-        // 상품 등록하기
-        int result = dao.registerProduct(vo);
+    public ProductVO fileUpload(MultipartFile thumb1, MultipartFile thumb2, MultipartFile thumb3, MultipartFile detail, ProductVO vo){
 
         // 시스템 경로 지정
         String cate1 = vo.getProdCate1();
@@ -49,13 +67,14 @@ public class AdminProdService {
 
         // 파일명 새로 생성 ( 각각 thumb1, thumb2, thumb3, detail )
         UUID uuid = UUID.randomUUID();
-        String nName1 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName1.substring(oName1.lastIndexOf("."));
-        String nName2 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName2.substring(oName2.lastIndexOf("."));
-        String nName3 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName3.substring(oName3.lastIndexOf("."));
-        String nName4 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName4.substring(oName4.lastIndexOf("."));
+        String newThumb1 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName1.substring(oName1.lastIndexOf("."));
+        String newThumb2 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName2.substring(oName2.lastIndexOf("."));
+        String newThumb3 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName3.substring(oName3.lastIndexOf("."));
+        String newDetail = cate1 + "-" + cate2 + "-" + uuid.toString()+oName4.substring(oName4.lastIndexOf("."));
 
-        // file 폴더 생성
+        // 외부 저장 폴더 자동 생성
         File checkFolder = new File(path);
+
         if(!checkFolder.exists()){
             try {
                 Files.createDirectories(checkFolder.toPath());
@@ -66,36 +85,25 @@ public class AdminProdService {
         }
 
         // 파일 저장
-        // nName1~4(String) -> vo의 thumb1~3,detail(Multipart)으로 변환
-        String imgName1 = "";
-        String imgName2 = "";
-        String imgName3 = "";
-        String imgName4 = "";
-
-        imgName1 = nName1;
-        imgName2 = nName2;
-        imgName3 = nName3;
-        imgName4 = nName4;
-
-        // 저장할 파일, 생성자로 경로와 이름을 지정
-        File saveFile1 = new File(path, imgName1);
-        File saveFile2 = new File(path, imgName2);
-        File saveFile3 = new File(path, imgName3);
-        File saveFile4 = new File(path, imgName4);
-
         // transferTo : 업로드한 파일 데이터를 지정한 파일에 저장
         try{
-            vo.getThumb1().transferTo(saveFile1);
-            vo.getThumb2().transferTo(saveFile2);
-            vo.getThumb3().transferTo(saveFile3);
-            vo.getDetail().transferTo(saveFile4);
+            thumb1.transferTo(new File(path, newThumb1));
+            thumb2.transferTo(new File(path, newThumb2));
+            thumb3.transferTo(new File(path, newThumb3));
+            detail.transferTo(new File(path, newDetail));
         }catch(IllegalArgumentException e){
             e.printStackTrace();
         }catch (IOException e){
             e.printStackTrace();
         }
 
-        return result;
+        ProductVO file = new ProductVO();
+        file.setNewThumb1(newThumb1);
+        file.setNewThumb2(newThumb2);
+        file.setNewThumb3(newThumb3);
+        file.setNewDetail(newDetail);
+
+        return file;
 
     }
 

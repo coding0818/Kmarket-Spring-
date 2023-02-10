@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface AdminProdDAO {
     // ------------------------------------------ 상품 등록 ------------------------------------------
-    public int registerProduct(ProductVO vo);
+    public void registerProduct(ProductVO vo);
     // ------------------------------------------ 상품 목록 ------------------------------------------
     public List<ProductVO> selectProducts(@Param("cate1") String cate1, @Param("cate2") String cate2, @Param("limitstart") int limitstart);
     // ------------------------------------------ 상품 업데이트 ------------------------------------------
