@@ -37,12 +37,14 @@ public class AdminProdService {
         MultipartFile thumb3 = vo.getThumb3();
         MultipartFile detail = vo.getDetail();
 
+
         // 파일 업로드
         ProductVO file = fileUpload(thumb1, thumb2, thumb3, detail, vo);
         vo.setNewThumb1(file.getNewThumb1());
         vo.setNewThumb2(file.getNewThumb2());
         vo.setNewThumb3(file.getNewThumb3());
         vo.setNewDetail(file.getNewDetail());
+
 
         // 상품 등록하기
         dao.registerProduct(vo);
@@ -56,22 +58,26 @@ public class AdminProdService {
     public ProductVO fileUpload(MultipartFile thumb1, MultipartFile thumb2, MultipartFile thumb3, MultipartFile detail, ProductVO vo){
 
         // 시스템 경로 지정
-        String cate1 = vo.getProdCate1();
-        String cate2 = vo.getProdCate2();
+        String cate1 = vo.getCate1();
+        String cate2 = vo.getCate2();
         String path = new File(uploadPath+cate1+"/"+cate2).getAbsolutePath();
 
         // 파일 ( 각각 thumb1, thumb2, thumb3, detail ) - getOriginalFilename(): 업로드한 파일의 이름 구하기
-        String oName1 = vo.getThumb1().getOriginalFilename();
-        String oName2 = vo.getThumb2().getOriginalFilename();
-        String oName3 = vo.getThumb3().getOriginalFilename();
-        String oName4 = vo.getDetail().getOriginalFilename();
+        String oriThumb1 = thumb1.getOriginalFilename();
+        String oriThumb2 = thumb2.getOriginalFilename();
+        String oriThumb3 = thumb3.getOriginalFilename();
+        String oriDetail = detail.getOriginalFilename();
 
         // 파일명 새로 생성 ( 각각 thumb1, thumb2, thumb3, detail )
-        UUID uuid = UUID.randomUUID();
-        String newThumb1 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName1.substring(oName1.lastIndexOf("."));
-        String newThumb2 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName2.substring(oName2.lastIndexOf("."));
-        String newThumb3 = cate1 + "-" + cate2 + "-" + uuid.toString()+oName3.substring(oName3.lastIndexOf("."));
-        String newDetail = cate1 + "-" + cate2 + "-" + uuid.toString()+oName4.substring(oName4.lastIndexOf("."));
+        String extThumb1 = oriThumb1.substring(oriThumb1.lastIndexOf("."));
+        String extThumb2 = oriThumb2.substring(oriThumb2.lastIndexOf("."));
+        String extThumb3 = oriThumb3.substring(oriThumb3.lastIndexOf("."));
+        String extDetail = oriDetail.substring(oriDetail.lastIndexOf("."));
+
+        String newThumb1 = cate1 + "-" + cate2 + "-" + UUID.randomUUID().toString() + extThumb1;
+        String newThumb2 = cate1 + "-" + cate2 + "-" + UUID.randomUUID().toString() + extThumb2;
+        String newThumb3 = cate1 + "-" + cate2 + "-" + UUID.randomUUID().toString() + extThumb3;
+        String newDetail = cate1 + "-" + cate2 + "-" + UUID.randomUUID().toString() + extDetail;
 
         // 외부 저장 폴더 자동 생성
         File checkFolder = new File(path);
