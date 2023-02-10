@@ -41,7 +41,13 @@ public class ProductVO {
     private String regip;
     private String rdate;
 
+    // 추가
+    private String newThumb1;
+    private String newThumb2;
+    private String newThumb3;
+    private String newDetail;
 
+    // 필요 여부 판단 후 삭제 해 주십시오
     private int sellPrice;
     private int prodnum;
     private int count;

@@ -5,15 +5,12 @@ package kr.co.kmarket.controller.admin;
  * 내용: 관리자 상품 컨트롤러
  */
 
-import kr.co.kmarket.entity.SellerEntity;
-import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.admin.AdminProdService;
 import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Slf4j
@@ -35,13 +31,7 @@ public class AdminProdController {
 
     // ------------------------------------------ 상품 목록 ------------------------------------------
     @GetMapping("admin/product/list")
-    public String list(@AuthenticationPrincipal MySellerDetails mySeller, Model model, String cate1, String cate2, int limitstart) {
-        SellerEntity seller = null;
-        if(mySeller != null){ seller = mySeller.getUser(); }
-        model.addAttribute("seller", seller);
-
-        service.selectProducts(cate1, cate2, limitstart);
-
+    public String list() {
         return "admin/product/list";
     }
 
@@ -60,13 +50,8 @@ public class AdminProdController {
 
     // ------------------------------------------ 상품 등록하기 ------------------------------------------
     @PostMapping("admin/product/register")
-    public String register(@AuthenticationPrincipal MySellerDetails mySeller, Model model, ProductVO vo, HttpServletRequest req) throws  Exception{
-        SellerEntity seller = null;
-        if(mySeller != null){ seller = mySeller.getUser(); }
-        model.addAttribute("seller", seller);
-
+    public String register(ProductVO vo, HttpServletRequest req) throws Exception {
         vo.setRegip(req.getRemoteAddr());
-
         service.registerProduct(vo);
 
         return "admin/product/register";
