@@ -26,14 +26,14 @@ public class SecurityConfiguration {
 		// 사이트 위변조 요청 방지
 		http.csrf().disable();
 		
-		/*
+
 		// 자동 로그인 설정
 		http.rememberMe()
 			.key("autoUser")
 			.rememberMeParameter("autoUid")
 			.tokenValiditySeconds(600)
 			.userDetailsService(service);
-		*/	
+
 		
 		// 로그인 설정
 		http.formLogin()

@@ -7,15 +7,15 @@ package kr.co.kmarket.vo;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@ToString
 public class ProductVO {
 
-    private int prodNo;
-    private String prodCate1;
-    private String prodCate2;
+    private String cate1;
+    private String cate2;
     private String seller;
     private String prodName;
     private String descript;
