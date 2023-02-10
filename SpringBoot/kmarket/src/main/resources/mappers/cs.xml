@@ -12,7 +12,10 @@
     </select>
 
     <select id="selectCsArticles" resultType="kr.co.kmarket.vo.CsVO">
-        SELECT * FROM `km_cs` WHERE `cate1`=#{cate1} ;
+        SELECT * FROM `km_cs`
+            WHERE `cate1`=#{cate1} AND `cate2`=#{cate2}
+            ORDER BY `csNo`
+            DESC LIMIT 0, 10;
     </select>
 
     <select id="selectCsArticlesAll" resultType="kr.co.kmarket.vo.CsVO">
