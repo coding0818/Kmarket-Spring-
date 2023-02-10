@@ -72,7 +72,7 @@ public class AdminProdController {
         return "admin/product/register";
     }
 
-    // 2차 카테고리 설정
+    // --------------------------------------2차 카테고리 설정----------------------------------------------
     @ResponseBody
     @GetMapping("admin/product/select")
     public List<CateVO> select(int cate1){
