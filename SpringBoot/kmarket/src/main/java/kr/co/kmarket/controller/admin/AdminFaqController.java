@@ -13,4 +13,5 @@ public class AdminFaqController {
         return "admin/cs/faq/list";
     }
 
+
 }

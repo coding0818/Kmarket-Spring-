@@ -48,42 +48,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectProductsSold" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT A.*, B.`level` FROM `km_product` AS A
         JOIN `km_member_seller` AS B ON A.`seller` = B.`uid`
-        WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `sold` DESC LIMIT ?, 10;
+        WHERE `cate1`=#{cate1} and `cate2`=#{cate2} ORDER BY `sold` DESC LIMIT #{start}, 10;
     </select>
 
     <!--가격낮은순-->
     <select id="selectProductsSellpriceDown" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT A.*, B.`level` FROM `km_product` AS A
         JOIN `km_member_seller` AS B ON A.`seller` = B.`uid`
-        WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `sellPrice` ASC LIMIT ?, 10;
+        WHERE `cate1`=#{cate1} and `cate2`=#{cate2} ORDER BY `sellPrice` ASC LIMIT #{start}, 10;
     </select>
 
     <!--가격높은순-->
     <select id="selectProductsSellpriceUp" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT A.*, B.`level` FROM `km_product` AS A
         JOIN `km_member_seller` AS B ON A.`seller` = B.`uid`
-        WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `sellPrice` DESC LIMIT ?, 10;
+        WHERE `cate1`=#{cate1} and `cate2`=#{cate2} ORDER BY `sellPrice` DESC LIMIT #{start}, 10;
     </select>
 
     <!--평점높은순-->
     <select id="selectProductsSellpriceScore" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT A.*, B.`level` FROM `km_product` AS A
         JOIN `km_member_seller` AS B ON A.`seller` = B.`uid`
-        WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `score` DESC LIMIT ?, 10;
+        WHERE `cate1`=#{cate1} and `cate2`=#{cate2} ORDER BY `score` DESC LIMIT #{start}, 10;
     </select>
 
     <!--리뷰많은순-->
     <select id="selectProductsSellpriceReview" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT A.*, B.`level` FROM `km_product` AS A
         JOIN `km_member_seller` AS B ON A.`seller` = B.`uid`
-        WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `review` DESC LIMIT ?, 10;
+        WHERE `cate1`=#{cate1} and `cate2`=#{cate} ORDER BY `review` DESC LIMIT #{start}, 10;
     </select>
 
     <!--최근등록순-->
     <select id="selectProductsSellpriceRdate" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT A.*, B.`level` FROM `km_product` AS A
         JOIN	`km_member_seller` AS B ON A.`seller` = B.`uid`
-        WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `rdate` DESC LIMIT ?, 10;
+        WHERE `cate`=#{cate1} and `cate2`=#{cate2} ORDER BY `rdate` DESC LIMIT #{start}, 10;
     </select>
 
     <!-- 페이징 -->
