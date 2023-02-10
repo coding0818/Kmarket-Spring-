@@ -17,8 +17,8 @@ public class CsController {
 
     @GetMapping("cs/index")
     public String index(Model model) {
-        List<CsVO> notices = service.selectCSArticlesAll("notice");
-        List<CsVO> qnas = service.selectCSArticlesAll("qna");
+        List<CsVO> notices = service.selectCSArticlesAll("notice", 0);
+        List<CsVO> qnas = service.selectCSArticlesAll("qna", 0);
 
         model.addAttribute("notices", notices);
         model.addAttribute("qnas", qnas);

@@ -42,6 +42,9 @@
             `regip`=#{regip},
             `rdate`=NOW();
     </insert>
+    <insert id="insertUser">
+        insert into `km_member_uid` set `uid`=#{uid}, `type`=#{type};
+    </insert>
     <select id="selectTerms" resultType="kr.co.kmarket.vo.TermsVO">
         select * from `km_member_terms`;
     </select>
