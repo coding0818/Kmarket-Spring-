@@ -12,10 +12,10 @@
           <h2>공지사항</h2>
           <ul>
             <li class="on"><a href="#">전체</a></li>
-            <li><a href="#">고객서비스</a></li>
-            <li><a href="#">안전거래</a></li>
-            <li><a href="#">위해상품</a></li>
-            <li><a href="#">이벤트당첨</a></li>
+            <li th:classappend="${cate2}=='service' ? 'on'"><a th:href="@{/cs/list(cate1=notice, cate2=service)}">고객서비스</a></li>
+            <li th:classappend="${cate2}=='safeDeal' ? 'on'"><a th:href="@{/cs/list(cate1=notice, cate2=safeDeal)}">안전거래</a></li>
+            <li th:classappend="${cate2}=='xproduct' ? 'on'"><a th:href="@{/cs/list(cate1=notice, cate2=xproduct)}">위해상품</a></li>
+            <li th:classappend="${cate2}=='great' ? 'on'"><a th:href="@{/cs/list(cate1=notice, cate2=great)}">이벤트당첨</a></li>
           </ul>
         </aside>
 </html>
