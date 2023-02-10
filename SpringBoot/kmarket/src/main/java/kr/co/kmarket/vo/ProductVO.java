@@ -38,7 +38,7 @@ public class ProductVO {
     private String receipt;
     private String bizType;
     private String origin;
-    private String regip;
+    private String ip;
     private String rdate;
 
     // 추가

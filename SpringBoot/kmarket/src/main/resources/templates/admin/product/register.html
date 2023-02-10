@@ -32,7 +32,7 @@
                     success: function(data){
                         console.log("data : "+data);
                         if(data != ""){
-                            $('select[name=category2]').empty();
+                            $('select[name=cate2]').empty();
 
                             let tags = "<option value='0'>2차 분류 선택</option>";
 
@@ -42,7 +42,7 @@
 
 						    });
 
-						    $('select[name=category2]').append(tags);
+						    $('select[name=cate2]').append(tags);
 
                         }
 
@@ -74,7 +74,7 @@
                         <tr>
                             <td>1차 분류</td>
                             <td>
-                                <select name="prodCate1" id="category1">
+                                <select name="cate1" id="category1">
                                     <option value="0">1차 분류 선택</option>
                                     <th:block th:each="cate:${cates}">
                                         <option th:value="${cate.cate1}">[[${cate.c1Name}]]</option>
@@ -85,9 +85,8 @@
                         <tr>
                             <td>2차 분류</td>
                             <td>
-                                <select name="category2">
+                                <select name="cate2">
                                     <option value="cate0">2차 분류 선택</option>
-
                                 </select>
                             </td>
                         </tr>

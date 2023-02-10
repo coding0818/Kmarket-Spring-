@@ -51,10 +51,9 @@ public class AdminProdController {
     // ------------------------------------------ 상품 등록하기 ------------------------------------------
     @PostMapping("admin/product/register")
     public String register(ProductVO vo, HttpServletRequest req) throws Exception {
-        vo.setRegip(req.getRemoteAddr());
+        vo.setIp(req.getRemoteAddr());
         service.registerProduct(vo);
-
-        return "admin/product/register";
+        return "redirect:/admin/product/register";
     }
 
     // --------------------------------------2차 카테고리 설정----------------------------------------------
