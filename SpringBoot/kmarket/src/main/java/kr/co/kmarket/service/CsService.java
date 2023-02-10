@@ -22,13 +22,69 @@ public class CsService {
     private CsDAO dao;
 
     /*** cate1, cate2에 속하는 CS 게시물을 불러오기 ***/
-    public List<CsVO> selectCsArticles (String cate1, String cate2) {
-        return dao.selectCsArticles(cate1, cate2);
+    public List<CsVO> selectCsArticles (String cate1, String cate2, int start) {
+        return dao.selectCsArticles(cate1, cate2, start);
     }
 
     /*** cate1에 속하는 모든 CS 게시물을 불러오기 ***/
-    public List<CsVO> selectCSArticlesAll (String cate1) {
-        return dao.selectCsArticlesAll(cate1);
+    public List<CsVO> selectCSArticlesAll (String cate1, int start) {
+        return dao.selectCsArticlesAll(cate1, start);
+    }
+
+    /*** 페이지 시작 값 ***/
+    public int getLimitstart(int currentPage) {
+        return (currentPage - 1) * 10;
+    }
+
+    /*** 현재 페이지 ***/
+    public int getCurrentPage(String pg) {
+        int currentPage = 1;
+
+        if(pg != null){
+            currentPage = Integer.parseInt(pg);
+        }
+        return currentPage;
+    }
+
+    /*** 전체 게시물 갯수 ***/
+    public long getTotalCount(String cate1, String cate2) {
+        if (cate2.equals("all")){
+            return dao.selectCountTotalAll(cate1);
+        } else {
+            return dao.selectCountTotal(cate1, cate2);
+        }
+    }
+
+    /*** 마지막 페이지 번호 ***/
+    public int getLastPageNum(long total) {
+        int lastPage = 0;
+
+        if(total % 10 == 0) {
+            lastPage = (int)(total / 10);
+        } else {
+            lastPage = (int)(total / 10) + 1;
+        }
+
+        return lastPage;
+    }
+
+    /*** 페이지 시작 번호 ***/
+    public int getPageStartNum(long total, int start) {
+        return (int) (total - start);
+    }
+
+    /*** 페이지 그룹 ***/
+    public int[] getPageGroup(int currentPage, int lastPage) {
+        int groupCurrent = (int) Math.ceil(currentPage / 10.0);
+        int groupStart = (groupCurrent - 1) * 10 + 1;
+        int groupEnd = groupCurrent * 10;
+
+        if(groupEnd > lastPage) {
+            groupEnd = lastPage;
+        }
+
+        int[] groups = {groupStart, groupEnd};
+        return groups;
     }
 
 
