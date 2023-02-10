@@ -10,14 +10,20 @@
 <th:block th:fragment="admin_header">
     <header>
         <div>
-            <a th:href="@{#}" class="logo">
+            <a th:href="@{/admin/index}" class="logo">
                 <img th:src="@{/img/admin_logo.png}" alt="admin_logo">
             </a>
             <p>
-                <span>홍길동님 반갑습니다.</span>
-                <a th:href="@{/}">HOME |</a>
-                <a th:href="@{#}">로그아웃 |</a>
-                <a th:href="@{#}">고객센터</a>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/member/login}">로그인 |</a>
+                    <a th:href="@{/member/join}">회원가입 |</a>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <a href="#">[[${#authentication.principal.user.uid}]] 님 |</a>
+                    <a th:href="@{/}">HOME |</a>
+                    <a th:href="@{/member/logout}">로그아웃 |</a>
+                    <a th:href="@{#}">고객센터</a>
+                </th:block>
             </p>
         </div>
     </header>
