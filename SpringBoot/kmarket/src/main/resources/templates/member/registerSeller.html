@@ -1,9 +1,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/member/_header}"/>
 <script>
+    let isUidOk = false;
+
     $(function(){
-        var idRegExp = /^[a-zA-z0-9]{4,12}$/;
+        var idReg = /^[a-zA-z0-9]{4,12}$/;
         var pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/;
+
+        $('input[name=uid]').keydown(function(){
+            idUidOk = false;
+        });
+
+        $('input[name=uid]').focusout(function(){
+            let uid = $(this).val();
+
+            if(isUidOk){
+                return;
+            }
+
+            if(!uid.match(idReg)){
+                $('.msgSId').css('color', 'red').text('유효한 아이디가 아닙니다.');
+                isUidOk = false;
+                return;
+            }else{
+                $('.msgSId').css('color', 'green').text('사용가능한 아이디입니다.');
+            }
+        });
+
+        $('input')
     });
 </script>
         <main id="member">
