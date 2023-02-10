@@ -31,7 +31,26 @@ public class AdminProdController {
 
     // ------------------------------------------ 상품 목록 ------------------------------------------
     @GetMapping("admin/product/list")
-    public String list() {
+    public String list(Model model, String pg, String seller) {
+
+        int currentPage = service.getCurrentPage(pg);
+        int start = service.getLimitStart(currentPage);
+        long total = service.getTotalCount(seller);
+        int lastPage = service.getLastPageNum(total);
+        int pageStartNum = service.getPageStartNum(total, start);
+        int groups[] = service.getPageGroup(currentPage, lastPage);
+
+        // 이후 검색, 레벨에 맞는 상품 보이기 등등 구현
+        List<ProductVO> products = service.selectProducts(start);
+
+        System.out.println(products);
+
+        model.addAttribute("products", products);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("pageStartNum", pageStartNum);
+        model.addAttribute("groups", groups);
+
         return "admin/product/list";
     }
 
@@ -39,10 +58,7 @@ public class AdminProdController {
     @GetMapping("admin/product/register")
     public String register(Model model){
         List<CateVO> cates =inservice.selectCate1();
-
         System.out.println(cates);
-
-
         model.addAttribute("cates", cates);
 
         return "admin/product/register";
@@ -51,12 +67,15 @@ public class AdminProdController {
     // ------------------------------------------ 상품 등록하기 ------------------------------------------
     @PostMapping("admin/product/register")
     public String register(ProductVO vo, HttpServletRequest req) throws Exception {
-        vo.setSeller("admin");
+
         vo.setIp(req.getRemoteAddr());
 
-        log.info("here1 : " + vo);
+        log.warn("here1 : " + vo);
 
         service.registerProduct(vo);
+
+        log.warn("here2 : " + vo);
+
         return "redirect:/admin/product/register";
     }
 
@@ -64,12 +83,7 @@ public class AdminProdController {
     @ResponseBody
     @GetMapping("admin/product/select")
     public List<CateVO> select(int cate1){
-
-        log.info("here1 : " + cate1);
         List<CateVO> cate2s = inservice.selectCate(cate1);
-
-        log.info("here2 : " + cate2s);
-
         return cate2s;
     }
 

@@ -63,7 +63,7 @@
         </nav>
         <article>
             <form th:action="@{/admin/product/register}" method="post" enctype="multipart/form-data">
-                <!--/*<input type="text" name="seller" value="${seller.uid}">*/-->
+                <input type="text" name="seller" th:value="${#authentication.principal.user.uid}">
                 <section>
                     <h4>상품분류</h4>
                     <p>

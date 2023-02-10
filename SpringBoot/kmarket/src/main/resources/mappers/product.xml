@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.admin.AdminProdDAO">
-    <!-- 상품 등록 -->
+    <!-- 관리자 - 상품 등록 -->
     <insert id="registerProduct">
         insert into `km_product` set
         `cate1`=#{cate1},
@@ -32,11 +32,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         `rdate`=NOW();
     </insert>
 
-    <!-- 상품 목록 -->
+    <!-- 관리자 - 상품 목록 -->
     <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
-        select A.*, B.`level` from `km_product` as A
-        join `km_member_seller` as B on A.`seller`=B.`uid`
-        where `cate1`=#{cate1} and `cate2`=#{cate2} limit #{start}, 10;
+        select * from `km_product` where `seller`=#{seller} order by `prodNo` desc limit #{start},10;
+    </select>
+
+    <!-- 관리자 - 상품 목록 - 페이징 -->
+    <select id="selectCountTotal" resultType="int">
+        select count(`prodNo`) from `km_product` where `seller`=#{seller};
     </select>
 
     <select id="selectProdNo" resultType="kr.co.kmarket.vo.ProductVO">
@@ -86,8 +89,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE `prodCate1`=? and `prodCate2`=? ORDER BY `rdate` DESC LIMIT ?, 10;
     </select>
 
-    <!-- 페이징 -->
-    <select id="selectCountTotal" resultType="int">
-        select count(`prodNo`) from `km_product` where `cate1`=#{cate1} and `cate2`=#{cate2};
-    </select>
+
 </mapper>

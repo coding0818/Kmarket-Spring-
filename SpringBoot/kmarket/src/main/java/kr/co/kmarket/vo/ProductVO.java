@@ -48,23 +48,23 @@ public class ProductVO {
     private String newDetail;
 
     // 필요 여부 판단 후 삭제 해 주십시오
-    private int sellPrice;
-    private int prodnum;
-    private int count;
-    private int total;
-    private String c1Name;
-    private String c2Name;
+//    private int sellPrice;
+//    private int prodnum;
+//    private int count;
+//    private int total;
+//    private String c1Name;
+//    private String c2Name;
     private int level;
-    private String uid;
-    private int cartNo;
-    private int totalcount;
-    private int costPrice;
-    private int totalSalePrice;
-    private int totalDelivery;
-    private int totalPoint;
-    private int totalPrice;
-    private String content;
-    private int rating;
+//    private String uid;
+//    private int cartNo;
+//    private int totalcount;
+//    private int costPrice;
+//    private int totalSalePrice;
+//    private int totalDelivery;
+//    private int totalPoint;
+//    private int totalPrice;
+//    private String content;
+//    private int rating;
 
 
 

@@ -116,8 +116,8 @@ public class AdminProdService {
 
 
     // ------------------------------------------ 상품 목록 ------------------------------------------
-    public List<ProductVO> selectProducts(String cate1, String cate2, int limitstart){
-        return dao.selectProducts(cate1, cate2, limitstart);
+    public List<ProductVO> selectProducts(int start){
+        return dao.selectProducts(start);
     }
     // 상품 업데이트
     public int updateProduct(ProductVO vo){
@@ -144,8 +144,8 @@ public class AdminProdService {
     }
 
     // 전체 게시글 개수
-    public long getTotalCount(String cate1, String cate2) {
-        return dao.selectCountTotal(cate1, cate2);
+    public long getTotalCount(String seller) {
+        return dao.selectCountTotal(seller);
     }
 
     // 마지막 페이지 번호
