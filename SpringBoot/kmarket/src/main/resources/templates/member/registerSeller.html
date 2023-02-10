@@ -2,7 +2,8 @@
 <th:block th:replace="~{/member/_header}"/>
 <script>
     $(function(){
-        
+        var idRegExp = /^[a-zA-z0-9]{4,12}$/;
+        var pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,12}$/;
     });
 </script>
         <main id="member">
@@ -41,7 +42,7 @@
                                     비밀번호확인
                                 </th>
                                 <td>
-                                    <input type="password" name="pass" placeholder="비밀번호를 입력" required>
+                                    <input type="password" name="pass2" placeholder="비밀번호를 입력" required>
                                     <span class="msgPass">비밀번호 재입력</span>
                                 </td>
                             </tr>
