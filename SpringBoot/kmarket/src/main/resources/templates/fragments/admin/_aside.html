@@ -6,6 +6,26 @@
     내용 : admin fragment aside 화면 구현
 -->
 <th:block th:fragment="admin_aside">
+  <script>
+    $(document).ready(function(){
+        var gnb = $('#gnb > li > a');
+
+        gnb.click(function(e){
+          e.preventDefault();
+
+        var isOpen = $(this).next().is(':visible');
+
+        if(isOpen){
+          // 현재 서브메뉴를 닫음
+          $(this).next().slideUp(200);
+        }else{
+            // 현재 서브메뉴를 펼침
+            $(this).next().slideDown(200);
+          }
+        });
+    });
+
+  </script>
   <aside>
     <!-- Global Navigation Bar -->
     <ul id="gnb">
@@ -50,10 +70,11 @@
         </ol>
       </li>
       <li>
-        <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>게시판관리</a>
+        <a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>고객센터</a>
         <ol>
-          <li><a href="#">게시판현황</a></li>
-          <li><a href="#">고객문의</a></li>
+          <li><a th:href="@{cs/notice/list}">공지사항</a></li>
+          <li><a th:href="@{cs/faq/list}">자주묻는질문</a></li>
+          <li><a th:href="@{cs/qna/list}">문의하기</a></li>
         </ol>
       </li>
     </ul>
