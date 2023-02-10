@@ -16,20 +16,32 @@ public class BoardController {
     private CsService service;
 
     @GetMapping("cs/list")
-    public String list(Model model, String cate1, String cate2) {
+    public String list(Model model, String cate1, String cate2, String pg) {
 
         List<CsVO> articles = null;
 
-        if (cate2 == "all") {
-            articles = service.selectCSArticlesAll(cate1);
+        int currentPage = service.getCurrentPage(pg);
+        int start = service.getLimitstart(currentPage);
+        long total = service.getTotalCount(cate1, cate2);
+        int lastPage = service.getLastPageNum(total);
+        int pageStartNum = service.getPageStartNum(total, start);
+        int groups[] = service.getPageGroup(currentPage, lastPage);
+
+
+        if (cate2.equals("all")) {
+            articles = service.selectCSArticlesAll(cate1, start);
         } else {
-            articles = service.selectCsArticles(cate1, cate2);
+            articles = service.selectCsArticles(cate1, cate2, start);
         }
 
         cate1 = "_"+cate1;
         model.addAttribute("articles", articles);
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("pageStartNum", pageStartNum);
+        model.addAttribute("groups", groups);
         return "cs/board/list";
     }
 

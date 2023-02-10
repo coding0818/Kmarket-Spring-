@@ -6,19 +6,23 @@
           <th:block th:switch="${#strings.toString(cate1)}">
             <th:block th:case="_notice">
               <table>
+                <th:block th:each="art,index:${articles}">
                   <tr>
-                    <th:block th:each="art.index:${articles}">
-                      <td><a th:href="@{/cs/view(cate1=notice, cate2=${art.cate2}, csNo=${art.csNo})">[[${art.title}]]</a></td>
-                      <td>[[${art.rdate}]]</td>
-                    </th:block>
+                    <td><a th:href="@{/cs/view(cate1=notice, cate2=${art.cate2}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
+                    <td>[[${art.rdate}]]</td>
                   </tr>
+                </th:block>
               </table>
               <div class="page">
-                <a href="#" class="prev">이전</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="next">다음</a>
+                <th:block th:if="${groups[0] > 1}">
+                  <a th:href="@{/cs/list(pg=${groups[0] - 1})}" class="prev">이전</a>
+                </th:block>
+                <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+                  <a th:href="@{/cs/list(cate1=notice, cate2=${cate2}, pg=${num})}" th:class="${num==currentPage? 'num on' : 'num'}">[[${num}]]</a>
+                </th:block>
+                <th:block th:if="${groups[1] < lastPage}">
+                  <a th:href="@{/cs/list(pg=${groups[1] + 1})}" class="next">다음</a>
+                </th:block>
               </div>
             </th:block>
 
@@ -71,65 +75,26 @@
 
             <th:block th:case="_qna">
               <table>
-                <tr>
-                  <td><a href="./view.html">[가입] 가입 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
-                <tr>
-                  <td><a href="./view.html">[탈퇴] 탈퇴 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
-                <tr>
-                  <td><a href="#">[회원정보] 회원정보 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
-                <tr>
-                  <td><a href="#">[로그인] 회원정보 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
-                <tr>
-                  <td><a href="#">[로그인] 회원정보 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
-                <tr>
-                  <td><a href="#">[로그인] 회원정보 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
-                <tr>
-                  <td><a href="#">[회원정보] 회원정보 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
-                <tr>
-                  <td><a href="#">[회원정보] 회원정보 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
-                <tr>
-                  <td><a href="#">[탈퇴] 회원정보 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
-                <tr>
-                  <td><a href="#">[탈퇴] 회원정보 문의내용</a></td>
-                  <td>chh**</td>
-                  <td>2022.11.21</td>
-                </tr>
+                <th:block th:each="art,index:${articles}">
+                  <tr>
+                    <td><a th:href="@{/cs/view(cate1=qna, cate2=${art.cate2}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
+                    <td>[[${art.uid}]]</td>
+                    <td>[[${art.rdate}]]</td>
+                  </tr>
+                </th:block>
               </table>
               <div class="page">
-                <a href="#" class="prev">이전</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="next">다음</a>
+                <th:block th:if="${groups[0] > 1}">
+                  <a th:href="@{/cs/list(pg=${groups[0] - 1})}" class="prev">이전</a>
+                </th:block>
+                <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
+                  <a th:href="@{/cs/list(cate1=qna, cate2=${cate2}, pg=${num})}" th:class="${num == curentPage ? 'num on' : 'num'}">[[${num}]]</a>
+                </th:block>
+                <th:block th:if="${groups[1] < lastPage}">
+                  <a th:href="@{/cs/list(pg=${groups[1] + 1})}" class="next">다음</a>
+                </th:block>
               </div>
-              <a href="./write.html" class="btnWrite">문의하기</a>
+              <a th:href="@{/cs/write(cate1=qna)}" class="btnWrite">문의하기</a>
             </th:block>
           </th:block>
 
