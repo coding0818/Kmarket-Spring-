@@ -18,25 +18,4 @@
             <li th:classappend="${cate2}=='great' ? 'on'"><a th:href="@{/cs/list(cate1=notice, cate2=great)}">이벤트당첨</a></li>
           </ul>
         </aside>
-        <article>
-          <nav th:if="${cate2}=='all'">
-            <h1>전체</h1>
-            <h2>전체 공지사항입니다.</h2>
-          </nav>
-          <nav th:if="${cate2}=='service'">
-            <h1>고객서비스</h1>
-            <h2>고객서비스 공지사항입니다.</h2>
-          </nav>
-          <nav th:if="${cate2}=='safeDeal'">
-            <h1>안전거래</h1>
-            <h2>안전거래 공지사항입니다.</h2>
-          </nav>
-          <nav th:if="${cate2}=='xproduct'">
-            <h1>위해상품</h1>
-            <h2>위해상품 공지사항입니다.</h2>
-          </nav>
-          <nav th:if="${cate2}=='great'">
-            <h1>이벤트당첨</h1>
-            <h2>이벤트당첨 공지사항입니다.</h2>
-          </nav>
 </html>

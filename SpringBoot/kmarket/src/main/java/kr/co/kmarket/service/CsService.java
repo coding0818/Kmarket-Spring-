@@ -33,6 +33,11 @@ public class CsService {
     public List<CsVO> selectCsArticles (String cate1, String cate2, int start) {
         return dao.selectCsArticles(cate1, cate2, start);
     }
+    
+    /*** 자주묻는 질문 카테고리 불러오기 ***/
+    public List<CsVO> selectFaqArticles (String cate2) {
+        return dao.selectFaqArticles(cate2);
+    }
 
     /*** cate1에 속하는 모든 CS 게시물을 불러오기 ***/
     public List<CsVO> selectCSArticlesAll (String cate1, int start) {
