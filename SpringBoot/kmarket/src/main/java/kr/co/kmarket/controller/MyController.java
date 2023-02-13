@@ -59,5 +59,11 @@ public class MyController {
         return "my/review";
     }
 
+    @GetMapping("my/orderConfirm")
+    public String orderConfirm(int ordNo, int prodNo){
+        int result = service.updateOrdStatus(ordNo, prodNo);
+        return "redirect:/my/home?result="+result;
+    }
+
 
 }

@@ -27,6 +27,7 @@ public class MyOrderVO {
     private int ordComplete;
     private String ordDate;
     private String ordState;
+    private int ordStatus;
 
     // order_item
     private int prodNo;
@@ -41,5 +42,7 @@ public class MyOrderVO {
     private String prodName;
     private String company;
     private String thumb1;
+    private int cate1;
+    private int cate2;
 
 }

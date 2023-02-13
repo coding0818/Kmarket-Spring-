@@ -10,6 +10,9 @@
         SELECT a.*, b.prodName from `km_product_review` AS a JOIN `km_product` AS b ON a.prodNo=b.prodNo where `uid`=#{uid} order by `rdate` desc limit 5;
     </select>
     <select id="selectOrders" resultType="kr.co.kmarket.vo.MyOrderVO">
-        SELECT a.*, b.*, c.prodName, c.company, c.thumb1 FROM `km_product_order_item` AS a JOIN `km_product_order` AS b ON a.ordNo=b.ordNo JOIN `km_product` AS c ON a.prodNo=c.prodNo WHERE b.uid=#{uid} ORDER BY b.`ordDate` DESC LIMIT 5;
+        SELECT a.*, b.*, c.prodName, c.company, c.thumb1, c.cate1, c.cate2 FROM `km_product_order_item` AS a JOIN `km_product_order` AS b ON a.ordNo=b.ordNo JOIN `km_product` AS c ON a.prodNo=c.prodNo WHERE b.uid=#{uid} ORDER BY b.`ordDate` DESC LIMIT 5;
     </select>
+    <update id="updateOrdStatus">
+        UPDATE `km_product_order_item` SET `ordStatus`=3, `ordState`='구매확정' WHERE `prodNo`=#{prodNo} AND `ordNo`=#{ordNo};
+    </update>
 </mapper>
