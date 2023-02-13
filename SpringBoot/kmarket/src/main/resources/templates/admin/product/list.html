@@ -30,8 +30,8 @@
                 <input type="text" name="search">
             </div>
             <div>
-                <input type="text" name="seller" th:value="${#authentication.principal.user.uid}">
-                <input type="text" name="level" th:value="${#authentication.principal.user.level}">
+                <input type="hidden" name="seller" th:value="${#authentication.principal.user.uid}">
+                <input type="hidden" name="level" th:value="${#authentication.principal.user.level}">
                 <!--/*<input type="text" th:value="${seller.uid}">*/-->
             </div>
 
@@ -55,7 +55,7 @@
                 <th:block th:unless="${products == null}">
                     <tr th:each="product:${products}">
                         <td><input type="checkbox" name="상품코드"></td>
-                        <td>상품이미지출력</td> <!--상품 이미지 출력은 서버 설정 후 구현하겠습니다.-->
+                        <td><img th:src="|@{/}thumb/${product.cate1}/${product.cate2}/${product.thumb1}" class="thumb"></td>
                         <td th:text="${product.prodNo}">201603292</td>
                         <td th:text="${product.prodName}">FreeMovement BLUEFORCE</td>
                         <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '원'}">36,000</td>

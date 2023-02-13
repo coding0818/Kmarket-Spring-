@@ -114,10 +114,6 @@ public class AdminProdService {
 
     }
 
-    // ------------------------------------------ 관리자, 판매회원 구별 -------------------------------
-    public int selectLevel(String uid){
-        return dao.selectLevel(uid);
-    }
     // ------------------------------------------ 상품 목록 (판매자가 조회 시)-------------------------
     public List<ProductVO> selectProducts(String seller, int start){
         System.out.println("service: " + seller);

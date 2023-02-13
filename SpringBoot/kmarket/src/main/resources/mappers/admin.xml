@@ -34,10 +34,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         `rdate`=NOW();
     </insert>
 
-    <!-- 관리자, 판매회원 구별-->
-    <select id="selectLevel" resultType="kr.co.kmarket.vo.ProductVO">
-        select `uid`, `level` from `km_member_seller` where `uid`=#{uid};
-    </select>
     <!-- 관리자 - 상품 목록 (판매자가 조회 시) selectProductss -->
     <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
         select a.*, b.* from `km_product` as a

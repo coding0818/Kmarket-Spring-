@@ -49,7 +49,6 @@ public class AdminProdController {
 
         System.out.println("상품 목록 구별 전");
 
-
         // 페이징
         PagingDTO paging = new PagingUtil().getPagingDTO(pg, service.selectCountProduct(uid));
 
