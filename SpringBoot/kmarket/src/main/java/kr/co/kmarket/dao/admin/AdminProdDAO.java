@@ -7,6 +7,7 @@ package kr.co.kmarket.dao.admin;
 
 import kr.co.kmarket.vo.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,13 +18,17 @@ public interface AdminProdDAO {
     // ------------------------------------------ 상품 등록 ------------------------------------------
     public void registerProduct(ProductVO vo);
     // ------------------------------------------ 상품 목록 ------------------------------------------
-    public List<ProductVO> selectProducts(int start);
-    // ------------------------------------------ 상품 업데이트 ------------------------------------------
+    public List<ProductVO> selectProducts(@Param("seller") String seller, @Param("start") int start);
+    // ------------------------------------------ 페이징 ------------------------------------------
+    public int selectCountProduct(@Param("seller") String seller);
+
+
+
+    // ------------------------------------------ 상품 업데이트 ---------------------------------------
     public int updateProduct(ProductVO vo);
     // ------------------------------------------ 상품 삭제 ------------------------------------------
     public int deleteProduct(int prodNo);
-    // ------------------------------------------ 페이징 ------------------------------------------
-    public int selectCountTotal(String seller);
+
 
 
 

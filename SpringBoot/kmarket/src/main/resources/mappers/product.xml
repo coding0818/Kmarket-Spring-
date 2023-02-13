@@ -3,6 +3,8 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.admin.AdminProdDAO">
+    <!-- 2023/02 이원정 : 관리자 - 상품 - 등록하기 및 목록 불러오기 -->
+    <!-- 쿼리문에 따옴표 항상 주의!! -->
     <!-- 관리자 - 상품 등록 -->
     <insert id="registerProduct">
         insert into `km_product` set
@@ -31,16 +33,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         `prod_name`=null,
         `rdate`=NOW();
     </insert>
-
     <!-- 관리자 - 상품 목록 -->
     <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
-        select * from `km_product` where `seller`=#{seller} order by `prodNo` desc limit #{start},10;
+        select `thumb1`, `prodNo`, `prodName`, `price`, `discount`, `point`, `stock`, `seller`, `hit`, `cate1`, `cate2`
+        from `km_product` where `seller`=#{seller} order by `prodNo` desc limit #{start}, 10;
     </select>
 
     <!-- 관리자 - 상품 목록 - 페이징 -->
-    <select id="selectCountTotal" resultType="int">
+    <select id="selectCountProduct" resultType="int">
         select count(`prodNo`) from `km_product` where `seller`=#{seller};
     </select>
+
 
     <select id="selectProdNo" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT MAX(`prodNo`) FROM `km_product`;
@@ -88,6 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         JOIN	`km_member_seller` AS B ON A.`seller` = B.`uid`
         WHERE `cate`=#{cate1} and `cate2`=#{cate2} ORDER BY `rdate` DESC LIMIT #{start}, 10;
     </select>
+
 
 
 </mapper>
