@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT MAX(`prodNo`) FROM `km_product`;
     </select>
 
-
+<!--현재 admin에 연결되어있음 productDAO를 만들어서 옮겨야함-->
     <!--판매량-->
     <select id="selectProductsSold" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT A.*, B.`level` FROM `km_product` AS A

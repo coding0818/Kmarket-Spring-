@@ -3,41 +3,21 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
   <meta charset="UTF-8">
-  <title>케이마켓::대한민국 1등 온라인 쇼핑몰</title>
-  <link rel="shorcut icon" type="image/x-icon" href="./img/favicon.ico">
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+  <title>Kmarket::product-list</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-  <link rel="stylesheet" th:href="@{/css/index.css}">
-  <script>
-        $(document).ready(function() {
-            $(".slider > ul").bxSlider({
-                easing: "linear",
-            });
-        });
-
-        $(function(){
-            var best = $("aside > .best");
-
-            $(window).scroll(function(){
-                var t = $(this).scrollTop();
-
-                if(t > 620){
-                    best.css({
-                        position: "fixed",
-                        top: "0",
-                    });
-                } else {
-                    best.css({ position: "static" });
-                }
-            });
-        });
-
-    </script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+  <link rel="stylesheet" th:href="@{/css/common.css}">
+  <link rel="stylesheet" th:href="@{/css/product.css}">
+  <!--
+      날짜 : 2023/02/07
+      이름 : 이원정
+      내용 : Kmarket product list 화면 구현
+  -->
 </head>
 <body>
 <div id="wrapper">
@@ -60,8 +40,8 @@
     </div>
     <div class="logo">
       <div>
-        <a href="#">
-          <img src="./img/header_logo.png" alt="로고">
+        <a th:href="@{/}">
+          <img th:src="@{/img/header_logo.png}" alt="헤더로고">
         </a>
         <form action="#">
           <input type="text" name="search">
@@ -81,18 +61,17 @@
           <li><a href="#">할인상품</a></li>
         </ul>
         <ul>
-          <li><a href="#">공지사항</a></li>
-          <li><a href="#">자주묻는질문</a></li>
-          <li><a href="#">문의하기</a></li>
+          <li><a href="#">쿠폰존</a></li>
+          <li><a href="#">사용후기</a></li>
+          <li><a href="#">개인결제</a></li>
           <li><a href="#">고객센터</a></li>
+          <li><a href="#">FAQ</a></li>
         </ul>
       </div>
     </div>
   </header>
-  <main>
-    <!-- 카테고리/베스트 상품 영역 -->
+  <main id="product">
     <aside>
-      <!-- 카테고리 -->
       <ul class="category">
         <li>
           <i class="fa fa-bars" aria-hidden="true"></i>
@@ -207,29 +186,4 @@
           </ol>
         </li>
       </ul>
-      <!-- 베스트상품 배너 -->
-      <article class="best" style="position: static; top: 0px;">
-        <h1>
-          <i class="fas fa-crown" aria-hidden="true"></i>
-          베스트상품
-        </h1>
-        <ol>
-          <li th:each="best, i:${index.sold}">
-            <a th:href="@{#}">
-              <div class="thumb">
-                <i>1</i>
-                <img th:src="@{#}" alt="item1">
-              </div>
-              <h2>[[${best.prodName}]]</h2>
-              <div class="org_price">
-                <del>[[${best.price}]]</del>
-                <span>[[${best.discount + "%"}]]</span>
-              </div>
-              <div class="dis_price">
-                <ins>[[${best.price}]]</ins>
-              </div>
-            </a>
-          </li>
-        </ol>
-      </article>
     </aside>
