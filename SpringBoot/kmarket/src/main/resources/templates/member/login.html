@@ -26,7 +26,8 @@
                     <input type="submit" value="로그인">
                     <span>
                         <label>
-                            <input type="checkbox" name="autoUid" value="autoUid">
+                            <input type="checkbox" name="autoUid" id="autoUid" value="autoUid"/>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             자동 로그인
                         </label>
                         <a href="#">아이디찾기</a>
