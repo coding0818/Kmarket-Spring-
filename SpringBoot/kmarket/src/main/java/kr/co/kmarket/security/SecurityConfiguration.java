@@ -31,10 +31,9 @@ public class SecurityConfiguration {
 		http.rememberMe()
 			.key("autoUser")
 			.rememberMeParameter("autoUid")
-			.tokenValiditySeconds(600)
+			.tokenValiditySeconds(86400 * 30)
 			.userDetailsService(service);
 
-		
 		// 로그인 설정
 		http.formLogin()
 		.loginPage("/member/login")
@@ -46,7 +45,7 @@ public class SecurityConfiguration {
 		// 로그아웃 설정
 		http.logout()
 		.invalidateHttpSession(true)
-		.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+		.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")).deleteCookies("JSESSIONID", "autoUid")
 		.logoutSuccessUrl("/member/login?success=200");
 		
 		// 사용자 인증 처리 컴포넌트 서비스 등록
