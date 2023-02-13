@@ -116,9 +116,17 @@ public class AdminProdService {
 
 
     // ------------------------------------------ 상품 목록 ------------------------------------------
-    public List<ProductVO> selectProducts(int start){
-        return dao.selectProducts(start);
+    public List<ProductVO> selectProducts(String seller, int start){
+        System.out.println("service: " + seller);
+        return dao.selectProducts(seller, start);
     }
+
+    // --------------------  페이징  -----------------------
+    // 전체 게시글 개수
+    public int selectCountProduct(String seller) {
+        return dao.selectCountProduct(seller);
+    }
+
     // 상품 업데이트
     public int updateProduct(ProductVO vo){
         return dao.updateProduct(vo);
@@ -128,60 +136,7 @@ public class AdminProdService {
         return dao.deleteProduct(prodNo);
     }
 
-    // ------------------------------------------ 페이징 ------------------------------------------
-    // 페이지 시작값
-    public int getLimitStart(int currentPage) {
-        return (currentPage - 1) * 10;
-    }
 
-    // 현재 페이지
-    public int getCurrentPage(String pg) {
-        int currentPage = 1;
-        if(pg != null) {
-            currentPage = Integer.parseInt(pg);
-        }
-        return currentPage;
-    }
-
-    // 전체 게시글 개수
-    public long getTotalCount(String seller) {
-        return dao.selectCountTotal(seller);
-    }
-
-    // 마지막 페이지 번호
-    public int getLastPageNum(long total) {
-
-        int lastPage = 0;
-
-        if(total % 10 == 0) {
-            lastPage = (int) (total / 10);
-        }else {
-            lastPage = (int) (total / 10) + 1;
-        }
-
-        return lastPage;
-
-    }
-
-    // 각 페이지의 시작 번호
-    public int getPageStartNum(long total, int start) {
-        return (int) (total - start);
-    }
-
-    // 페이지 그룹 1그룹(1~10) 2그룹(11~20)
-    public int[] getPageGroup(int currentPage, int lastPage) {
-        int groupCurrent = (int) Math.ceil(currentPage/10.0);
-        int groupStart = (groupCurrent - 1) * 10 + 1;
-        int groupEnd = groupCurrent * 10;
-
-        if(groupEnd > lastPage) {
-            groupEnd = lastPage;
-        }
-
-        int[] groups = {groupStart, groupEnd};
-
-        return groups;
-    }
 
 
 

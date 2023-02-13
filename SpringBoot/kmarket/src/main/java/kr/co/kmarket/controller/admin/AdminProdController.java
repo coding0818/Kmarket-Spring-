@@ -5,8 +5,10 @@ package kr.co.kmarket.controller.admin;
  * 내용: 관리자 상품 컨트롤러
  */
 
+import kr.co.kmarket.DTO.PagingDTO;
 import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.admin.AdminProdService;
+import kr.co.kmarket.util.PagingUtil;
 import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -26,33 +29,40 @@ public class AdminProdController {
 
     @Autowired
     private AdminProdService service;
+
     @Autowired
     private IndexService inservice;
 
     // ------------------------------------------ 상품 목록 ------------------------------------------
     @GetMapping("admin/product/list")
-    public String list(Model model, String pg, String seller) {
+    public String list(Model model, Principal principal, String pg) {
 
-        int currentPage = service.getCurrentPage(pg);
-        int start = service.getLimitStart(currentPage);
-        long total = service.getTotalCount(seller);
-        int lastPage = service.getLastPageNum(total);
-        int pageStartNum = service.getPageStartNum(total, start);
-        int groups[] = service.getPageGroup(currentPage, lastPage);
+        String seller = principal.getName();
+        System.out.println("controller 1: " + seller);
 
-        // 이후 검색, 레벨에 맞는 상품 보이기 등등 구현
-        List<ProductVO> products = service.selectProducts(start);
+        // 페이징
+        PagingDTO paging = new PagingUtil().getPagingDTO(pg, service.selectCountProduct(seller));
 
+        System.out.println("controller 2: " + seller);
+
+        // 상품 목록 불러오기
+        List<ProductVO> products = service.selectProducts(seller, paging.getStart());
+
+        System.out.println("controller 3: " + seller);
+
+        // 모델 전송
+        model.addAttribute("products", products);
+        model.addAttribute("paging", paging);
+
+        // 확인용 (삭제 가능)
         System.out.println(products);
 
-        model.addAttribute("products", products);
-        model.addAttribute("currentPage", currentPage);
-        model.addAttribute("lastPage", lastPage);
-        model.addAttribute("pageStartNum", pageStartNum);
-        model.addAttribute("groups", groups);
-
+        // 리턴
         return "admin/product/list";
     }
+    // ------------------------------------------ 상품 목록 (외부 파일 이미지 불러오기) --------------------------
+
+
 
     // ------------------------------------------ 상품 등록하기 '화면' ------------------------------------------
     @GetMapping("admin/product/register")
