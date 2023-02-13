@@ -9,11 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PointVO {
+public class MyPointVO {
 
     private int pointNo;
     private String uid;
     private String ordNo;
     private int point;
     private String pointDate;
+    private String pointdes;
+    private String expireDate;
 }

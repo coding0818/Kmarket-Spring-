@@ -1,6 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/my/_header}"/>
-
             <div class="home">
 				<ul>
                     <span class="menu_else"></span>
@@ -26,10 +25,16 @@
                                 <th>상태</th>
                                 <th>확인/신청</th>
                             </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
+                            <tr th:if="${#lists.isEmpty(orderList)}">
+                                <td class="date">-</td>
+                                <td>주문내역없음</td>
+                                <td class="status">-</td>
+                                <td class="confirm">-</td>
+                            </tr>
+                            <tr th:unless="${#lists.isEmpty(orderList)}" th:each="order:${orderList}">
+                                <td class="date">[[${order.ordDate.substring(0, 10)}]]</td>
                                 <td>
-                                    <a href="#" class="thumb"><img src="https://via.placeholder.com/80x80" alt=""></a>
+                                    <a href="#" class="thumb"><img src="http://43.200.2.115:8080/Kmarket/file/${order.thumb1}" alt=""></a>
                                     <ul>
                                         <li class="company">상호명</li>
                                         <li class="prodName"><a href="#">상품명</a></li>
@@ -60,21 +65,21 @@
                                 <th>비고</th>
                                 <th>유효기간</th>
                             </tr>
-                            <tr th:if="${pointList ne null}">
-                                <td>2022-12-10</td>
-                                <td>적립</td>
-                                <td>2022121001</td>
-                                <td>340</td>
-                                <td>상품 구매확정</td>
-                                <td>2024-12-10</td>
+                            <tr th:if="${#lists.isEmpty(pointList)}">
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
                             </tr>
-                            <tr th:if="${pointList eq null}">
-                                <td></td>
-                                <td></td>
-                                <td>포인트내역이없습니다.</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr th:unless="${#lists.isEmpty(pointList)}" th:each="point:${pointList}">
+                                <td>[[${point.pointDate.substring(0, 10)}]]</td>
+                                <td>적립</td>
+                                <td>[[${point.ordNo}]]</td>
+                                <td>[[${point.point}]]</td>
+                                <td>[[${point.pointdes}]]</td>
+                                <td>[[${point.expireDate.substring(0, 10)}]]</td>
                             </tr>
                         </table>
                     </article>
@@ -89,40 +94,20 @@
                                 <th>평점</th>
                                 <th>작성일</th>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>상품명</td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td><span class="rating star1">상품평</span></td>
-                                <td>2022-12-10</td>
+                            <tr th:if="${#lists.isEmpty(reviewList)}">
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>상품명</td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td><span class="rating star2">상품평</span></td>
-                                <td>2022-12-10</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>상품명</td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td><span class="rating star3">상품평</span></td>
-                                <td>2022-12-10</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>상품명</td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td><span class="rating star4">상품평</span></td>
-                                <td>2022-12-10</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>상품명</td>
-                                <td>배송이 빠릅니다. 잘 사용하겠습니다.</td>
-                                <td><span class="rating star5">상품평</span></td>
-                                <td>2022-12-10</td>
+                            <tr th:unless="${#lists.isEmpty(reviewList)}" th:each="review,i:${reviewList}">
+                                <td>[[${i.count}]]</td>
+                                <td>[[${review.prodName}]]</td>
+                                <td>[[${review.content}]]</td>
+                                <td><span class="rating" th:classappend="star + ${review.rating}">상품평</span></td>
+                                <td>[[${review.rdate.substring(0, 10)}]]</td>
                             </tr>
                         </table>
                     </article>

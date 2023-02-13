@@ -23,7 +23,7 @@ public class IndexService {
     private CateRepo repo;
 
     // cate
-    public List<CateVO> selectCate(int cate1){
+    public List<CateVO> selectCate(String cate1){
 
         log.info("cate1 : "+cate1);
 
@@ -35,7 +35,7 @@ public class IndexService {
     }
 
     // index aside 카테고리
-    public Map<Integer, List<CateVO>> selectCates(){
+    public Map<String, List<CateVO>> selectCates(){
         List<CateVO> cate = dao.selectCates();
         return cate.stream().collect(Collectors.groupingBy(CateVO::getCate1));
     }

@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CateVO {
 
-    private int cate1;
+    private String cate1;
     private String c1Name;
-    private int cate2;
+    private String cate2;
     private String c2Name;
 }

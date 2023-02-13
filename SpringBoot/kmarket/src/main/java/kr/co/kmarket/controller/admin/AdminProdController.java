@@ -104,7 +104,7 @@ public class AdminProdController {
     // --------------------------------------2차 카테고리 설정----------------------------------------------
     @ResponseBody
     @GetMapping("admin/product/select")
-    public List<CateVO> select(int cate1){
+    public List<CateVO> select(String cate1){
         List<CateVO> cate2s = inservice.selectCate(cate1);
         return cate2s;
     }
