@@ -1,7 +1,9 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.MyService;
-import kr.co.kmarket.vo.PointVO;
+import kr.co.kmarket.vo.MyOrderVO;
+import kr.co.kmarket.vo.MyReviewVO;
+import kr.co.kmarket.vo.MyPointVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,11 +27,15 @@ public class MyController {
 
     @GetMapping("my/home")
     public String home(Principal principal, Model model){
-        List<PointVO> pointList = service.selectPoints(principal.getName());
+        List<MyPointVO> pointList = service.selectPoints(principal.getName());
+        List<MyReviewVO> reviewList = service.selectReviews(principal.getName());
+        List<MyOrderVO> orderList = service.selectOrders(principal.getName());
 
         log.info("pointList : " + pointList);
 
         model.addAttribute("pointList", pointList);
+        model.addAttribute("reviewList", reviewList);
+        model.addAttribute("orderList", orderList);
         return "my/home";
     }
 
