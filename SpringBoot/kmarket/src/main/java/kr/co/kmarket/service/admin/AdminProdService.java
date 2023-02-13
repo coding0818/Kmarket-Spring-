@@ -32,10 +32,10 @@ public class AdminProdService {
     public void registerProduct(ProductVO vo) throws Exception{
 
         // vo의 thumb1~3 가져오기
-        MultipartFile thumb1 = vo.getThumb1();
-        MultipartFile thumb2 = vo.getThumb2();
-        MultipartFile thumb3 = vo.getThumb3();
-        MultipartFile detail = vo.getDetail();
+        MultipartFile thumb1 = vo.getFile1();
+        MultipartFile thumb2 = vo.getFile2();
+        MultipartFile thumb3 = vo.getFile3();
+        MultipartFile detail = vo.getFile4();
 
 
         // 파일 업로드
@@ -114,11 +114,19 @@ public class AdminProdService {
 
     }
 
-
-    // ------------------------------------------ 상품 목록 ------------------------------------------
+    // ------------------------------------------ 관리자, 판매회원 구별 -------------------------------
+    public int selectLevel(String uid){
+        return dao.selectLevel(uid);
+    }
+    // ------------------------------------------ 상품 목록 (판매자가 조회 시)-------------------------
     public List<ProductVO> selectProducts(String seller, int start){
         System.out.println("service: " + seller);
         return dao.selectProducts(seller, start);
+    }
+    // ------------------------------------------ 상품 목록 (관리자가 조회 시)-------------------------
+    public List<ProductVO> selectProductsAdmin(int start){
+        System.out.println("service - admin");
+        return dao.selectProductsAdmin(start);
     }
 
     // --------------------  페이징  -----------------------
