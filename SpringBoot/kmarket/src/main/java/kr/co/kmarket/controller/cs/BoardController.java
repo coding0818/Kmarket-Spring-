@@ -20,6 +20,7 @@ public class BoardController {
     public String list(Model model, String cate1, String cate2, String pg) {
 
         List<CsVO> articles = null;
+        List<CsVO> faqs = null;
 
         int currentPage = service.getCurrentPage(pg);
         int start = service.getLimitstart(currentPage);
@@ -29,14 +30,21 @@ public class BoardController {
         int groups[] = service.getPageGroup(currentPage, lastPage);
 
 
+        if (cate1.equals("faq")){
+            faqs = service.selectFaqArticles(cate2);
+        }
+
         if (cate2.equals("all")) {
             articles = service.selectCSArticlesAll(cate1, start);
         } else {
             articles = service.selectCsArticles(cate1, cate2, start);
         }
 
+
+
         cate1 = "_"+cate1;
         model.addAttribute("articles", articles);
+        model.addAttribute("faqs", faqs);
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);
         model.addAttribute("currentPage", currentPage);
