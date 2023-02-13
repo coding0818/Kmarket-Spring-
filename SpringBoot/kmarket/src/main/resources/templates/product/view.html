@@ -2,6 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <th:block th:replace="~{/product/_header}"/>
+<script th:inline="javascript">
+    $(function(){
+
+        $.Commas = function (x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+
+        let num = 1;
+
+        $('button[class=increase]').click(function(){
+
+            console.log("1");
+
+            num++;
+            $('input[name=num]').val(num);
+
+            let totalPrice = [[${prod.price}]]*(num)+[[${prod.delivery}]];
+
+            $('.totalPrice').text(totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g,","));
+
+        });
+    });
+
+</script>
             <section class="view">
                 <nav>
                     <h1>상품보기</h1>
@@ -41,7 +63,12 @@
                             </div>
                         </nav>
                         <nav>
+                                <th:block th:if="${prod.delivery eq 0}">
                             <span class="delivery">무료배송</span>
+                                </th:block>
+                            <th:block th:if="${prod.delivery gt 0}">
+                                <span class="delivery">[[${prod.delivery + "원"}]]</span>
+                            </th:block>
                             <span class="arrival">모레(금) 7/8 도착예정</span>
                             <span class="desc">본 상품은 국내배송만 가능합니다.</span>
                         </nav>
@@ -63,7 +90,7 @@
                             <button class="increase">+</button>
                         </div>
                         <div class="total">
-                            <span>35,000</span>
+                            <span class="totalPrice">[[${prod.price + prod.delivery}]]</span>
                             <em>총 상품금액</em>
                         </div>
                         <div class="button">
