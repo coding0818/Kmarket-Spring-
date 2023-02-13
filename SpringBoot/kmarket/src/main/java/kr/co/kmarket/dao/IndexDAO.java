@@ -14,7 +14,7 @@ import java.util.List;
 public interface IndexDAO {
 
     // 관리자 2차 카테고리 설정
-    public List<CateVO> selectCate(int cate1);
+    public List<CateVO> selectCate(String cate1);
 
     // 관리자 1차 카테고리 설정
     public List<CateVO> selectCate1();
@@ -23,6 +23,6 @@ public interface IndexDAO {
     // index aside 카테고리 분류
     public List<CateVO> selectCates();
 
-    // index 상품분류(productDAO로 이동 시켜야함)
+    // index 상품분류
     public List<ProductVO> selectIndex();
 }

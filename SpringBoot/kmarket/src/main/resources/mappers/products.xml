@@ -2,54 +2,28 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.kmarket.dao.admin.AdminProdDAO">
-    <!-- 2023/02 이원정 : 관리자 - 상품 - 등록하기 및 목록 불러오기 -->
-    <!-- 쿼리문에 따옴표 항상 주의!! -->
-    <!-- 관리자 - 상품 등록 -->
-    <insert id="registerProduct">
-        insert into `km_product` set
-        `cate1`=#{cate1},
-        `cate2`=#{cate2},
-        `seller`=#{seller},
-        `prodName`=#{prodName},
-        `descript`=#{descript},
-        `company`=#{company},
-        `price`=#{price},
-        `discount`=#{discount},
-        `point`=#{point},
-        `stock`=#{stock},
-        `delivery`=#{delivery},
-        `thumb1`=#{newThumb1},
-        `thumb2`=#{newThumb2},
-        `thumb3`=#{newThumb3},
-        `detail`=#{newDetail},
-        `status`=#{status},
-        `duty`=#{duty},
-        `receipt`=#{receipt},
-        `bizType`=#{bizType},
-        `origin`=#{origin},
-        `ip`=#{ip},
-        `prod_no`=null,
-        `prod_name`=null,
-        `rdate`=NOW();
-    </insert>
-    <!-- 관리자 - 상품 목록 -->
-    <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
-        select `thumb1`, `prodNo`, `prodName`, `price`, `discount`, `point`, `stock`, `seller`, `hit`, `cate1`, `cate2`
-        from `km_product` where `seller`=#{seller} order by `prodNo` desc limit #{start}, 10;
+<mapper namespace="kr.co.kmarket.dao.ProductDAO">
+   <!--
+        날짜 : 2023/02/13
+        이름 : 황원진
+   -->
+
+    <!--cate별 상품리스트 조회하기-->
+    <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO" parameterType="map">
+        SELECT * FROM `km_product` WHERE `cate1`=#{cate1} AND `cate2`=#{cate2};
     </select>
 
-    <!-- 관리자 - 상품 목록 - 페이징 -->
-    <select id="selectCountProduct" resultType="int">
-        select count(`prodNo`) from `km_product` where `seller`=#{seller};
+    <!--상품번호로 상품 조회하기-->
+    <select id="selectProduct" resultType="kr.co.kmarket.vo.ProductVO">
+        select * from `km_product` where `prodNo`=#{prodNo};
     </select>
 
-
-    <select id="selectProdNo" resultType="kr.co.kmarket.vo.ProductVO">
-        SELECT MAX(`prodNo`) FROM `km_product`;
+    <!--상품 네비게이션-->
+    <select id="selectNavCate" resultType="kr.co.kmarket.vo.CateVO" parameterType="map">
+        SELECT * FROM `km_product_cate1` AS a JOIN `km_product_cate2` AS b
+        ON a.cate1 = b.cate1 WHERE a.`cate1`=#{cate1} and b.cate2=#{cate2};
     </select>
 
-<!--현재 admin에 연결되어있음 productDAO를 만들어서 옮겨야함-->
     <!--판매량-->
     <select id="selectProductsSold" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT A.*, B.`level` FROM `km_product` AS A

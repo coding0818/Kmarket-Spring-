@@ -1,7 +1,9 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.IndexService;
+import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.vo.CateVO;
+import kr.co.kmarket.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,21 +18,35 @@ public class ProductController {
     @Autowired
     private IndexService iservice;
 
+    @Autowired
+    private ProductService service;
+
     @GetMapping("product/list")
-    public String list(Model model){
+    public String list(Model model, String cate1, String cate2){
         // 카테고리 분류
-        Map<Integer, List<CateVO>> cate = iservice.selectCates();
+        Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
 
+        // cate별 상품리스트 조회하기
+        List<ProductVO> products = service.selectProducts(cate1, cate2);
+        model.addAttribute("prods", products);
+
+        // 상품 네비게이션
+        CateVO ncate = service.selectCate(cate1, cate2);
+        model.addAttribute("ncate", ncate);
 
         return "product/list";
     }
 
     @GetMapping("product/view")
-    public String view(Model model){
+    public String view(Model model, String prodNo, String cate1, String cate2){
         // 카테고리 분류
-        Map<Integer, List<CateVO>> cate = iservice.selectCates();
+        Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
+
+        // 상품번호로 상품 조회하기
+        ProductVO  prod = service.selectProduct(prodNo);
+        model.addAttribute("prod", prod);
 
         return "product/view";
     }
@@ -38,8 +54,11 @@ public class ProductController {
     @GetMapping("product/cart")
     public String cart(Model model){
         // 카테고리 분류
-        Map<Integer, List<CateVO>> cate = iservice.selectCates();
+        Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
+
+
+
 
         return "product/cart";
     }
@@ -47,7 +66,7 @@ public class ProductController {
     @GetMapping("product/order")
     public String order(Model model){
         // 카테고리 분류
-        Map<Integer, List<CateVO>> cate = iservice.selectCates();
+        Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
 
         return "product/order";
@@ -56,7 +75,7 @@ public class ProductController {
     @GetMapping("product/complete")
     public String complete(Model model){
         // 카테고리 분류
-        Map<Integer, List<CateVO>> cate = iservice.selectCates();
+        Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
 
 

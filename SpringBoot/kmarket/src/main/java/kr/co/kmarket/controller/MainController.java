@@ -24,8 +24,7 @@ public class MainController {
        // model.addAttribute("category", "main")
 
         // 카테고리 분류
-        Map<Integer, List<CateVO>> cate = service.selectCates();
-        log.info("cate : "+cate);
+        Map<String, List<CateVO>> cate = service.selectCates();
         model.addAttribute("cate", cate);
 
         // index 상품 분류

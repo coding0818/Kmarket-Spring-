@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.kmarket.dao.admin.AdminProdDAO">
+    <!-- 2023/02 이원정 : 관리자 - 상품 - 등록하기 및 목록 불러오기 -->
+    <!-- 쿼리문에 따옴표 항상 주의!! -->
+    <!-- 관리자 - 상품 등록 -->
+    <insert id="registerProduct">
+        insert into `km_product` set
+        `cate1`=#{cate1},
+        `cate2`=#{cate2},
+        `seller`=#{seller},
+        `prodName`=#{prodName},
+        `descript`=#{descript},
+        `company`=#{company},
+        `price`=#{price},
+        `discount`=#{discount},
+        `point`=#{point},
+        `stock`=#{stock},
+        `delivery`=#{delivery},
+        `thumb1`=#{newThumb1},
+        `thumb2`=#{newThumb2},
+        `thumb3`=#{newThumb3},
+        `detail`=#{newDetail},
+        `status`=#{status},
+        `duty`=#{duty},
+        `receipt`=#{receipt},
+        `bizType`=#{bizType},
+        `origin`=#{origin},
+        `ip`=#{ip},
+        `prod_no`=null,
+        `prod_name`=null,
+        `rdate`=NOW();
+    </insert>
+    <!-- 관리자 - 상품 목록 -->
+    <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
+        select `thumb1`, `prodNo`, `prodName`, `price`, `discount`, `point`, `stock`, `seller`, `hit`, `cate1`, `cate2`
+        from `km_product` where `seller`=#{seller} order by `prodNo` desc limit #{start}, 10;
+    </select>
+
+    <!-- 관리자 - 상품 목록 - 페이징 -->
+    <select id="selectCountProduct" resultType="int">
+        select count(`prodNo`) from `km_product` where `seller`=#{seller};
+    </select>
+
+
+    <select id="selectProdNo" resultType="kr.co.kmarket.vo.ProductVO">
+        SELECT MAX(`prodNo`) FROM `km_product`;
+    </select>
+
+
+
+
+</mapper>
