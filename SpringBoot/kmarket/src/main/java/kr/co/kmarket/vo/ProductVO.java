@@ -48,6 +48,8 @@ public class ProductVO {
     private String newDetail;
 
     // 필요 여부 판단 후 삭제 해 주십시오
+    private String prodNo;
+    private String type;
 //    private int sellPrice;
 //    private int prodnum;
 //    private int count;
