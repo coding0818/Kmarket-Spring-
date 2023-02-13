@@ -33,10 +33,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         `prod_name`=null,
         `rdate`=NOW();
     </insert>
-    <!-- 관리자 - 상품 목록 -->
+    <!-- 관리자, 판매회원 구별-->
+    <select id="selectLevel" resultType="kr.co.kmarket.vo.ProductVO">
+        select `uid`, `level` from `km_member_seller` where `uid`=#{uid};
+    </select>
+    <!-- 관리자 - 상품 목록 (판매자가 조회 시) selectProductss -->
     <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO">
-        select `thumb1`, `prodNo`, `prodName`, `price`, `discount`, `point`, `stock`, `seller`, `hit`, `cate1`, `cate2`
-        from `km_product` where `seller`=#{seller} order by `prodNo` desc limit #{start}, 10;
+        select a.*, b.* from `km_product` as a
+        join `km_member_seller` as b on a.`seller`=b.`uid`
+        where `seller`=#{seller} order by `prodNo` desc limit #{start}, 10;
+    </select>
+    <!-- 관리자 - 상품 목록 (관리자가 조회 시) selectProduct -->
+    <select id="selectProductsAdmin" resultType="kr.co.kmarket.vo.ProductVO">
+        select * from `km_product` as a join
+        `km_member_seller` as b on a.`seller`=b.`uid`
+        order by `prodNo` desc limit #{start}, 10;
     </select>
 
     <!-- 관리자 - 상품 목록 - 페이징 -->

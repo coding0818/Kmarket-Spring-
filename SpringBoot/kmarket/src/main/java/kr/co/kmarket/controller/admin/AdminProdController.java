@@ -6,6 +6,8 @@ package kr.co.kmarket.controller.admin;
  */
 
 import kr.co.kmarket.DTO.PagingDTO;
+import kr.co.kmarket.entity.SellerEntity;
+import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.admin.AdminProdService;
 import kr.co.kmarket.util.PagingUtil;
@@ -13,6 +15,7 @@ import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.List;
 
 @Slf4j
@@ -35,27 +37,37 @@ public class AdminProdController {
 
     // ------------------------------------------ 상품 목록 ------------------------------------------
     @GetMapping("admin/product/list")
-    public String list(Model model, Principal principal, String pg) {
+    public String list(Model model, @AuthenticationPrincipal MySellerDetails sellerDetails, String pg, HttpServletRequest req) {
 
-        String seller = principal.getName();
-        System.out.println("controller 1: " + seller);
+        SellerEntity seller = sellerDetails.getUser();
+
+        log.info("seller uid : " + seller.getUid());
+        log.info("seller level : " + seller.getLevel());
+
+        String uid = seller.getUid();
+        int level = seller.getLevel();
+
+        System.out.println("상품 목록 구별 전");
+
 
         // 페이징
-        PagingDTO paging = new PagingUtil().getPagingDTO(pg, service.selectCountProduct(seller));
+        PagingDTO paging = new PagingUtil().getPagingDTO(pg, service.selectCountProduct(uid));
 
-        System.out.println("controller 2: " + seller);
+        // 판매자, 관리자 구별
+        if(level == 7){
+            // 관리자 조회 시 전체 상품 목록
+            List<ProductVO> products = service.selectProductsAdmin(paging.getStart());
 
-        // 상품 목록 불러오기
-        List<ProductVO> products = service.selectProducts(seller, paging.getStart());
+            // 모델 전송
+            model.addAttribute("products", products);
+            model.addAttribute("paging", paging);
+        }else if(level < 7){
+            List<ProductVO> products = service.selectProducts(uid, paging.getStart());
 
-        System.out.println("controller 3: " + seller);
-
-        // 모델 전송
-        model.addAttribute("products", products);
-        model.addAttribute("paging", paging);
-
-        // 확인용 (삭제 가능)
-        System.out.println(products);
+            // 모델 전송
+            model.addAttribute("products", products);
+            model.addAttribute("paging", paging);
+        }
 
         // 리턴
         return "admin/product/list";

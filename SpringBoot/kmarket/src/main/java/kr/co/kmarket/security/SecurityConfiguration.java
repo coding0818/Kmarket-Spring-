@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -78,6 +79,11 @@ public class SecurityConfiguration {
 		jdbcTokenRepository.setDataSource(dataSource);
 
 		return jdbcTokenRepository;
+	}
+
+	// 파일 썸네일 출력
+	public void configure(WebSecurity web) throws Exception{
+		web.ignoring().antMatchers("/Users/iilhwan/Desktop/Workspace/Kmarket-Spring-/SpringBoot/file/");
 	}
 
 }

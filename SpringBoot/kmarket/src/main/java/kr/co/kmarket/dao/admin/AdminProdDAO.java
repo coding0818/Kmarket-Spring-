@@ -17,8 +17,12 @@ import java.util.List;
 public interface AdminProdDAO {
     // ------------------------------------------ 상품 등록 ------------------------------------------
     public void registerProduct(ProductVO vo);
-    // ------------------------------------------ 상품 목록 ------------------------------------------
+    // ------------------------------------------ 관리자, 판매회원 구별 ------------------------------------------
+    public int selectLevel(@Param("uid") String uid);
+    // ------------------------------------------ 상품 목록 (판매자가 조회 시)-------------------------
     public List<ProductVO> selectProducts(@Param("seller") String seller, @Param("start") int start);
+    // ------------------------------------------ 상품 목록 (관리자가 조회 시) ------------------------
+    public List<ProductVO> selectProductsAdmin(@Param("start") int start);
     // ------------------------------------------ 페이징 ------------------------------------------
     public int selectCountProduct(@Param("seller") String seller);
 

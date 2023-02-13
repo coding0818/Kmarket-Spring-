@@ -29,10 +29,15 @@ public class ProductVO {
     private int hit;
     private int score;
     private int review;
-    private MultipartFile thumb1;
-    private MultipartFile thumb2;
-    private MultipartFile thumb3;
-    private MultipartFile detail;
+    private MultipartFile file1;
+    private MultipartFile file2;
+    private MultipartFile file3;
+    private MultipartFile file4;
+    private String thumb1;
+    private String thumb2;
+    private String thumb3;
+    private String detail;
+
     private String status;
     private String duty;
     private String receipt;
