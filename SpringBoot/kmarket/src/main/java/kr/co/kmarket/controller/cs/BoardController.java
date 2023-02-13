@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -46,19 +47,31 @@ public class BoardController {
     }
 
     @GetMapping("cs/view")
-    public String view(Model model, String cate1, String cate2) {
+    public String view(Model model, String cate1, String cate2, String pg, int csNo) {
+
+        CsVO art = service.selectCsArticle(csNo);
+
         cate1 = "_"+cate1;
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);
+        model.addAttribute("pg", pg);
+        model.addAttribute("csNo", csNo);
+        model.addAttribute("art", art);
         return "cs/board/view";
     }
 
     @GetMapping("cs/write")
-    public String write(Model model, String cate1, String cate2) {
+    public String write(Model model, String cate1, String cate2, String pg) {
         cate1 = "_"+cate1;
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);
+        model.addAttribute("pg", pg);
         return "cs/board/write";
+    }
+
+    @PostMapping("cs/write")
+    public String write(CsVO vo) {
+        return "redirect:cs/board/list";
     }
 
 }

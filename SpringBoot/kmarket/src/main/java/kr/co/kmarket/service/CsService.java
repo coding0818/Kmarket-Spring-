@@ -21,6 +21,14 @@ public class CsService {
     @Autowired
     private CsDAO dao;
 
+    public int insertCsArticle (CsVO vo){
+        return dao.insertCsArticle(vo);
+    }
+
+    public CsVO selectCsArticle (int csNo) {
+        return dao.selectCsArticle(csNo);
+    }
+
     /*** cate1, cate2에 속하는 CS 게시물을 불러오기 ***/
     public List<CsVO> selectCsArticles (String cate1, String cate2, int start) {
         return dao.selectCsArticles(cate1, cate2, start);

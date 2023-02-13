@@ -3,17 +3,32 @@
 <th:block th:replace="~{/cs/_header}"/>
 <th:block th:replace="~{/cs/board/__${cate1}__}"/>
             <article>
-              <nav>
-                <h2 class="title">[가입] 가입 문의내용</h2>                
-                <p>
-                  <span>chh***</span>
-                  <span>2022-11-21</span>
-                </p>
-              </nav>
+              <th:block th:switch="${#strings.toString(cate1)}">
+                <th:block th:case="_notice">
+                  <nav>
+                    <h2 class="title">[[${art.title}]]</h2>
+                    <span class="date">[[${art.rdate}]]</span>
+                  </nav>
+                </th:block>
+                <th:block th:case="_faq">
+                  <nav>
+                    <h2 class="title"><span>Q.</span>[[${art.title}]]</a></h2>
+                  </nav>
+                </th:block>
+                <th:block th:case="_qna">
+                  <nav>
+                    <h2 class="title">[[${art.title}]]</h2>
+                    <p>
+                      <span>[[${art.uid}]]</span>
+                      <span>[[${art.rdate}]]</span>
+                    </p>
+                  </nav>
+                </th:block>
+              </th:block>
 
               <div class="content">
                 <p>
-                  개인회원에서 법인회원(사업자 회원)으로 전환은 불가하므로 법인회원(사업자 회원) 전환은 신규 가입으로 진행을 해야 합니다.
+                  [[${art.content}]]
                 </p>
                 <p>
                   ※ 피싱 관련 피해신고<br /><br />
@@ -24,7 +39,7 @@
                   감사합니다.<br />
                 </p>
               </div>
-              <a href="./list.html" class="btnList">목록보기</a>
+              <a th:href="@{/cs/list(cate1=${cate1}, cate2=${cate2}, pg=${pg})}" class="btnList">목록보기</a>
             </article>
           </section>
         </div>

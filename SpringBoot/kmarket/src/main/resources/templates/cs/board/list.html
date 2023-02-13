@@ -8,7 +8,7 @@
               <table>
                 <th:block th:each="art,index:${articles}">
                   <tr>
-                    <td><a th:href="@{/cs/view(cate1=notice, cate2=${art.cate2}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
+                    <td><a th:href="@{/cs/view(cate1=notice, cate2=${art.cate2}, csNo=${art.csNo}, pg=${pg})}">[[${art.title}]]</a></td>
                     <td>[[${art.rdate}]]</td>
                   </tr>
                 </th:block>
@@ -27,50 +27,15 @@
             </th:block>
 
             <th:block th:case="_faq">
-              <div>
-                <h3>가입</h3>
-                <ul>
-                  <li><a href="./view.html"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li><a href="#"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li><a href="#"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li><a href="#"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li><a href="#"><span>Q.</span>개인회원과 법인회원에 차이가 있나요?</a></li>
-                  <li class="more"><a href="#">더보기</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>탈퇴</h3>
-                <ul>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li><a href="#"><span>Q.</span>회원탈퇴 후 재가입이 가능한가요?</a></li>
-                  <li class="more"><a href="#">더보기</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>회원정보</h3>
-                <ul>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li><a href="#"><span>Q.</span>회원정보를 수정하고 싶어요.</a></li>
-                  <li class="more"><a href="#">더보기</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3>로그인</h3>
-                <ul>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li><a href="#"><span>Q.</span>로그인에 문제가 있어요.</a></li>
-                  <li class="more"><a href="#">더보기</a></li>
-                </ul>
-              </div>
+              <th:block th:each="art,index:${articles}">
+                <div>
+                  <h3>[[${art.type}]]</h3>
+                  <ul>
+                    <li><a th:href="@{/cs/view(cate1=notice, cate2=${art.cate2}, csNo=${art.csNo})}"><span>Q.</span>[[${art.title}]]</a></li>
+                    <li class="more"><a href="#">더보기</a></li>
+                  </ul>
+                </div>
+              </th:block>
             </th:block>
 
             <th:block th:case="_qna">

@@ -5,6 +5,15 @@
 <mapper namespace="kr.co.kmarket.dao.CsDAO">
 
     <insert id="insertCsArticle" useGeneratedKeys="true" keyProperty="no">
+        INSERT INTO `km_cs` SET
+            `uid` = ${uid},
+            `cate1` = ${cate1},
+            `cate2` = ${cate2},
+            `type` = ${type},
+            `title` = ${title},
+            `content` = ${content},
+            `regip` = ${regip},
+            `rdate` = NOW();
     </insert>
     
     <select id="selectCsArticle" resultType="kr.co.kmarket.vo.CsVO">
