@@ -24,4 +24,6 @@ public class MyService {
     }
 
     public List<MyOrderVO> selectOrders(String uid){return dao.selectOrders(uid);}
+
+    public int updateOrdStatus(int ordNo, int prodNo){ return dao.updateOrdStatus(ordNo, prodNo); }
 }

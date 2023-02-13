@@ -34,21 +34,31 @@
                             <tr th:unless="${#lists.isEmpty(orderList)}" th:each="order:${orderList}">
                                 <td class="date">[[${order.ordDate.substring(0, 10)}]]</td>
                                 <td>
-                                    <a href="#" class="thumb"><img src="http://43.200.2.115:8080/Kmarket/file/${order.thumb1}" alt=""></a>
+                                    <a href="#" class="thumb"><img th:src="http://43.200.2.115:8080/kmarket/${thumb1}" alt=""></a>
                                     <ul>
-                                        <li class="company">상호명</li>
-                                        <li class="prodName"><a href="#">상품명</a></li>
-                                        <li>수량 : <span class="prodCount">1</span>개 / 주문번호 : <span class="ordNo">1012211341</span></li>
-                                        <li class="prodPrice">34,000</li>
+                                        <li class="company">[[${order.company}]]</li>
+                                        <li class="prodName"><a href="#">[[${order.prodName}]]</a></li>
+                                        <li>수량 : <span class="prodCount">[[${order.count}]]</span>개 / 주문번호 : <span class="ordNo">[[${order.ordNo}]]</span></li>
+                                        <li class="prodPrice">[[${order.price}]]</li>
                                     </ul>
                                 </td>
-                                <td class="status">배송완료</td>
-                                <td class="confirm">
-                                    <a href="#" class="receive">수취확인</a>
-                                    <a href="#" class="review">상품평</a>
-                                    <a href="#" class="refund">반품신청</a>
-                                    <a href="#" class="exchange">교환신청</a>
-                                </td>
+                                <th:block th:if="${order.ordStatus == 2}">
+                                    <td class="status">[[${order.ordState}]]</td>
+                                    <td class="confirm">
+                                        <a th:href="@{/my/orderConfirm(ordNo=${order.ordNo}, prodNo=${order.prodNo})}" class="receive">수취확인</a>
+                                        <a href="#" class="review">상품평</a>
+                                        <a href="#" class="refund">반품신청</a>
+                                        <a href="#" class="exchange">교환신청</a>
+                                    </td>
+                                </th:block>
+                                <th:block th:if="${order.ordStatus == 3}">
+                                    <td class="status">[[${order.ordState}]]</td>
+                                    <td class="confirm">
+                                        <a href="#" class="review">상품평</a>
+                                        <a href="#" class="refund">반품신청</a>
+                                        <a href="#" class="exchange">교환신청</a>
+                                    </td>
+                                </th:block>
                             </tr>
                         </table>
                     </article>
