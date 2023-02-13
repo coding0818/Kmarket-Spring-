@@ -33,6 +33,7 @@ public class SecurityConfiguration {
 		// 사이트 위변조 요청 방지
 		http.csrf().disable();
 
+
 		// 로그인 설정
 		http.formLogin()
 		.loginPage("/member/login")
@@ -44,7 +45,7 @@ public class SecurityConfiguration {
 		// 로그아웃 설정
 		http.logout()
 		.invalidateHttpSession(true)
-		.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+		.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")).deleteCookies("JSESSIONID", "autoUid")
 		.logoutSuccessUrl("/member/login?success=200");
 		
 		// 사용자 인증 처리 컴포넌트 서비스 등록
