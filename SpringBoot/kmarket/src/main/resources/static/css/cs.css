@@ -939,27 +939,27 @@ color: #fff;
 }
 
 /* qna - 글쓰기 */
-#cs > .qna > .write > article table {
+#cs > .qna > .list > article > form > table {
 width: 100%;
 border-collapse: collapse;
 border-top: 2px solid #111;
 }
-#cs > .qna > .write > article table tr {
+#cs > .qna > .list > article > form > table tr {
 width: 100%;
 height: 26px;
 }
 
-#cs > .qna > .write > article table td {
+#cs > .qna > .list > article > form > table td {
 padding: 16px;
 border-bottom: 1px solid #ccc;
 font-size: 16px;
 }
 
-#cs > .qna > .write > article table td:first-child {
+#cs > .qna > .list > article > form > table td:first-child {
 width: 100px;
 }
 
-#cs > .qna > .write > article table input {
+#cs > .qna > .list > article > form > table input {
 width: 100%;
 height: 40px;
 font-size: 16px;
@@ -967,18 +967,18 @@ box-sizing: border-box;
 text-indent: 10px;
 }
 
-#cs > .qna > .write > article table select {
-width: 100px;
+#cs > .qna > .list > article > form > table select {
+width: 220px;
 height: 40px;
 font-size: 16px;
 box-sizing: border-box;
 }
 
-#cs > .qna > .write > article table select * {
+#cs > .qna > .list > article > form > table select * {
 font-size: inherit;
 }
 
-#cs > .qna > .write > article table textarea {
+#cs > .qna > .list > article > form > table textarea {
 width: 100%;
 height: 360px;
 resize: none;
