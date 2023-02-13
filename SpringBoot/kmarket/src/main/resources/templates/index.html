@@ -76,7 +76,7 @@
                 <section class="hit">
                     <h3><span>히트상품</span></h3>
                     <article th:each="hit, i:${index.hit}">
-                        <a th:href="@{#}">
+                        <a th:href="@{/product/view (prodNo=${hit.prodNo})}">
                             <div class="thumb">
                                 <img th:src="@{#}" alt="t1">
                             </div>
@@ -97,7 +97,7 @@
                 <section class="recommend">
                     <h3><span>추천상품</span></h3>
                     <article th:each="score:${index.score}">
-                        <a th:href="@{#}">
+                        <a th:href="@{/product/view (prodNo=${score.prodNo})}">
                             <div class="thumb">
                                 <img src="https://via.placeholder.com/230x230" alt="t1">
                             </div>
@@ -118,7 +118,7 @@
                 <section class="new">
                     <h3><span>최신상품</span></h3>
                     <article th:each="newProd:${index.new}">
-                        <a th:href="@{#}">
+                        <a th:href="@{/product/view (prodNo=${newProd.prodNo})}">
                             <div class="thumb">
                                 <img src="https://via.placeholder.com/230x230" alt="t1">
                             </div>
@@ -139,7 +139,7 @@
                 <section class="discount">
                     <h3><span>할인상품</span></h3>
                     <article th:each="discount:${index.discount}">
-                        <a th:href="@{#}">
+                        <a th:href="@{/product/view (prodNo=${discount.prodNo})}">
                             <div class="thumb">
                                 <img src="https://via.placeholder.com/230x230" alt="t1">
                             </div>
