@@ -1,5 +1,11 @@
 package kr.co.kmarket.controller.cs;
 
+/**
+ * 날짜 : 2023/02/09
+ * 이름 : 조주영
+ * 내용 : Cs board 컨트롤러
+ */
+
 import kr.co.kmarket.service.CsService;
 import kr.co.kmarket.vo.CsVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +25,10 @@ public class BoardController {
     @GetMapping("cs/list")
     public String list(Model model, String cate1, String cate2, String pg) {
 
-        List<CsVO> articles = null;
-        List<CsVO> faqs = null;
+        List<CsVO> articles = null;     // view로 연결되는 게시물
+        List<CsVO> faqs = null;         // faq type
 
+        /*** 페이징 처리 ***/
         int currentPage = service.getCurrentPage(pg);
         int start = service.getLimitstart(currentPage);
         long total = service.getTotalCount(cate1, cate2);
@@ -30,17 +37,19 @@ public class BoardController {
         int groups[] = service.getPageGroup(currentPage, lastPage);
 
 
+        /*** faq 카테고리라면 - faq type 불러오기 ***/
         if (cate1.equals("faq")){
             faqs = service.selectFaqArticles(cate2);
         }
 
+        /*** cate2가 all (전체보기)라면 - ***/
         if (cate2.equals("all")) {
+            /*** cate1에 속한 모든 게시물 불러오기  ***/
             articles = service.selectCSArticlesAll(cate1, start);
         } else {
+            /*** 아닐 경우 cate2에 속하는 게시물만 불러오기 ***/
             articles = service.selectCsArticles(cate1, cate2, start);
         }
-
-
 
         cate1 = "_"+cate1;
         model.addAttribute("articles", articles);
