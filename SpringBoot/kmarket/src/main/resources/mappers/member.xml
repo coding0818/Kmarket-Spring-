@@ -23,6 +23,7 @@
             `fax`=#{fax},
             `email`=#{email},
             `regip`=#{regip},
+            `sellerorgeneral`='seller',
             `rdate`=NOW();
     </insert>
     <insert id="insertMember">
@@ -40,6 +41,7 @@
             `addr1`=#{addr1},
             `addr2`=#{addr2},
             `regip`=#{regip},
+            `sellerorgeneral`='general',
             `rdate`=NOW();
     </insert>
     <insert id="insertUser">

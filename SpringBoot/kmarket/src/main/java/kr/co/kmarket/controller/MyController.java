@@ -1,9 +1,10 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.MyService;
+import kr.co.kmarket.vo.MyCsVO;
 import kr.co.kmarket.vo.MyOrderVO;
-import kr.co.kmarket.vo.MyReviewVO;
 import kr.co.kmarket.vo.MyPointVO;
+import kr.co.kmarket.vo.MyReviewVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,12 +31,14 @@ public class MyController {
         List<MyPointVO> pointList = service.selectPoints(principal.getName());
         List<MyReviewVO> reviewList = service.selectReviews(principal.getName());
         List<MyOrderVO> orderList = service.selectOrders(principal.getName());
+        List<MyCsVO> csList = service.selectCs(principal.getName());
 
         log.info("pointList : " + pointList);
 
         model.addAttribute("pointList", pointList);
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("orderList", orderList);
+        model.addAttribute("csList", csList);
         return "my/home";
     }
 
@@ -58,6 +61,9 @@ public class MyController {
     public String review(){
         return "my/review";
     }
+
+    @GetMapping("my/info")
+    public String info(){ return "my/info"; }
 
     @GetMapping("my/orderConfirm")
     public String orderConfirm(int ordNo, int prodNo){

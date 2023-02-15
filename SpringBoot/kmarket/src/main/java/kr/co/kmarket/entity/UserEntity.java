@@ -29,7 +29,7 @@ public class UserEntity {
     private String addr1;
     private String addr2;
     private String regip;
-    private String wdate;
+    private String sellerorgeneral;
     private String rdate;
 
 }

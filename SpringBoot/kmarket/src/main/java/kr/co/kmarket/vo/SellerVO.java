@@ -29,7 +29,7 @@ public class SellerVO {
     private String fax;
     private String email;
     private String regip;
-    private String wdate;
+    private String sellerorgeneral;
     private String rdate;
 
 }

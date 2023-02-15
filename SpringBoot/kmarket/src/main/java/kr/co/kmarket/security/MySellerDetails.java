@@ -44,6 +44,10 @@ public class MySellerDetails implements UserDetails{
 		return user.getUid();
 	}
 
+	public String getType(){
+		return user.getSellerorgeneral();
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		// 계정 만료 여부(true:만료안됨, false:만료) -> true 고정
