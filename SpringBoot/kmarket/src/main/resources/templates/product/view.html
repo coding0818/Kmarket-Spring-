@@ -9,6 +9,7 @@
 
         let num = 1;
 
+        // 증가 버튼
         $('button[class=increase]').click(function(){
 
             console.log("1");
@@ -16,11 +17,31 @@
             num++;
             $('input[name=num]').val(num);
 
-            let totalPrice = [[${prod.price}]]*(num)+[[${prod.delivery}]];
+            let totalPrice = [[${prod.price}]] * (num);
 
-            $('.totalPrice').text(totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g,","));
+            console.log(totalPrice);
+
+            let comTotalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
+
+            $('.totalPrice').text(comTotalPrice);
 
         });
+
+
+        // 감소 버튼
+        $('button[class=decrease]').click(function(){
+			if(num == 1){
+				return;
+			}
+			num--;
+			$('input[name=num]').val(num);
+
+			let totalPrice = [[${prod.price}]]*(num);
+
+			let comTotalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
+
+			$('.totalPrice').text((comTotalPrice));
+		});
     });
 
 </script>
@@ -29,9 +50,9 @@
                     <h1>상품보기</h1>
                     <p>
                         HOME > 
-                        <span>임시</span>
+                        <span>[[${ncate.c1Name}]]</span>
                         > 
-                        <strong>임시</strong>
+                        <strong>[[${ncate.c2Name}]]</strong>
                     </p>
                 </nav>
                 <article class="info">
@@ -55,11 +76,11 @@
                         </nav>
                         <nav>
                             <div class="org_price">
-                                <del>[[${prod.price}]]</del>
+                                <del th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">36,000</del>
                                 <span>[[${prod.discount + "%"}]]</span>
                             </div>
                             <div class="dis_price">
-                                <ins>[[${prod.price}]]</ins>
+                                <ins th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">20,000</ins>
                             </div>
                         </nav>
                         <nav>
@@ -90,7 +111,9 @@
                             <button class="increase">+</button>
                         </div>
                         <div class="total">
-                            <span class="totalPrice">[[${prod.price + prod.delivery}]]</span>
+                            <span class="totalPrice" th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">
+                               20,000
+                            </span>
                             <em>총 상품금액</em>
                         </div>
                         <div class="button">

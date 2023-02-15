@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--cate별 상품리스트 조회하기-->
     <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO" parameterType="map">
-        SELECT * FROM `km_product` WHERE `cate1`=#{cate1} AND `cate2`=#{cate2};
+        SELECT * FROM `km_product` WHERE `cate1`=#{cate1} AND `cate2`=#{cate2} ORDER BY `prodNo` DESC LIMIT #{start}, 10;
     </select>
 
     <!--상품번호로 상품 조회하기-->
@@ -23,6 +23,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT * FROM `km_product_cate1` AS a JOIN `km_product_cate2` AS b
         ON a.cate1 = b.cate1 WHERE a.`cate1`=#{cate1} and b.cate2=#{cate2};
     </select>
+
+    <!--상품 총 갯수-->
+    <select id="selectCountProduct" resultType="int">
+        select count(`prodNo`) from `km_product` where `cate1`=#{cate1} and `cate2`=#{cate2};
+    </select>
+
+    <!--장바구니 등록-->
+    <insert id="insertCart">
+        insert into `km_product_cart` set
+                        `prodNo`=#{prodNo},
+                        `uid`=#{seller},
+                        `count`=#{count},
+                        `price`=#{price},
+                        `discount`=#{discount},
+                        `point`=#{point},
+                        `delivery`=#{delivery},
+                        `total`=#{total},
+                        `rdate`=NOW();
+    </insert>
 
     <!--판매량-->
     <select id="selectProductsSold" resultType="kr.co.kmarket.vo.ProductVO">
