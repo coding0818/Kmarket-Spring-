@@ -21,7 +21,7 @@ public interface CsDAO {
     public CsVO selectCsArticle(int csNo);
     public List<CsVO> selectCsArticles(@Param("cate1") String cate1, @Param("cate2") String cate2, @Param("start") int start);
     public List<CsVO> selectFaqArticles(String cate2);
-    public List<CsVO> selectFaqTypeArticles(String cate2);
+    public List<CsVO> selectFaqTypeArticles(@Param("cate2") String cate2, @Param("type") String type);
     public List<CsVO> selectCsArticlesAll(@Param("cate1") String cate1, @Param("start") int start);
     public int updateCsArticle(CsVO vo);
     public int deleteCsArticle(int csNo);
