@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import javax.persistence.*;
 
 @Data
@@ -44,6 +45,7 @@ public class ProdEntity {
     private String ip;
     private String rdate;
 
+
     /*
         2023/02/15 이원정 복합 외래키 사용시 JPA 쿼리문 사용
         복합 외래키 사용 시 - 복합키를 pk로 사용한 테이블의 pk를 외래키로 참조할 경우 해당 복합키 모두 참조해야 함.
@@ -61,6 +63,7 @@ public class ProdEntity {
 
     @OneToOne(fetch = FetchType.EAGER)
     private CateEntity cateEntity;
+
 
 
 

@@ -16,5 +16,5 @@ public interface MemberDAO {
     public int insertMember(MemberVO vo);
     public int insertSeller(SellerVO vo);
 
-    public int insertUser(@Param("uid") String uid, @Param("type") int type);
+    public int insertUser(@Param("uid") String uid, @Param("type") int type, @Param("sellerorgeneral") String sellerorgeneral);
 }

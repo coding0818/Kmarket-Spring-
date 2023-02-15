@@ -1,10 +1,7 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.service.MyService;
-import kr.co.kmarket.vo.MyCsVO;
-import kr.co.kmarket.vo.MyOrderVO;
-import kr.co.kmarket.vo.MyPointVO;
-import kr.co.kmarket.vo.MyReviewVO;
+import kr.co.kmarket.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +29,25 @@ public class MyController {
         List<MyReviewVO> reviewList = service.selectReviews(principal.getName());
         List<MyOrderVO> orderList = service.selectOrders(principal.getName());
         List<MyCsVO> csList = service.selectCs(principal.getName());
+
+        String userType = service.selectUserType(principal.getName());
+
+        log.info("userType : " + userType);
+
+        if(userType.equals("seller")){
+            SellerVO seller = service.selectSeller(principal.getName());
+            model.addAttribute("member", seller);
+
+            log.info("seller name : " + principal.getName());
+            log.info("seller member : " + seller);
+
+        }else{
+            MemberVO user = service.selectUser(principal.getName());
+            model.addAttribute("member", user);
+
+            log.info("user name : " + principal.getName());
+            log.info("user member : " + user);
+        }
 
         log.info("pointList : " + pointList);
 
