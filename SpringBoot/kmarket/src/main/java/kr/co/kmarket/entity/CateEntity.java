@@ -6,14 +6,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@IdClass(ProdCate.class)
 @Table(name="km_product_cate2")
 public class CateEntity {
     @Id

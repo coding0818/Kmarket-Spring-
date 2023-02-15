@@ -1,19 +1,16 @@
 package kr.co.kmarket.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Builder
-@Table(name = "km_product")
+@Table(name="km_product")
 public class ProdEntity {
 
     @Id
@@ -26,6 +23,7 @@ public class ProdEntity {
     private String company;
     private int price;
     private int discount;
+    private int sellPrice;
     private int point;
     private int stock;
     private int sold;
@@ -58,11 +56,11 @@ public class ProdEntity {
             - SellerUid
     */
 
-    // 외래키를 기본키로 사용 (@MapsId : @Id 컬럼에 @OneToOne 관계를 매핑시키는 역할)
-    @OneToOne(fetch = FetchType.EAGER)
-    private SellerEntity sellerEntity;
+    // 외래키를 기본키로 사용
+    //@OneToOne(fetch = FetchType.EAGER)
+    //private SellerEntity sellerEntity;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    private CateEntity cateEntity;
+    //@OneToOne(fetch = FetchType.EAGER)
+    //private CateEntity cateEntity;
 
 }

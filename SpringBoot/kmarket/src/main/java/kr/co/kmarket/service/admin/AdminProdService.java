@@ -20,6 +20,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -135,14 +136,13 @@ public class AdminProdService {
     }
     // ------------------------------------------ 상품 목록 (키워드 검색) ------------------------------
     @Transactional
-    public List<ProdEntity> searchProducts(String seller, String keyword){
-        //List<ProdEntity> products = repo.findProdEntityBySeller(seller);
-        List<ProdEntity> products = repo.findBySellerAndProdNameContains(seller, keyword);
+    public List<ProductVO> searchProducts(String seller, String keyword){
+        List<ProdEntity> products = repo.findBySeller(seller);
 
         //List<SellerEntity> sellers = sellerRepo.selectSellers();
         //log.info("sellers : " + sellers);
+        System.out.println("서비스1");
 
-        /*
         List<ProductVO> productVOList = new ArrayList<>();
 
         if(products.isEmpty()) return productVOList;
@@ -151,26 +151,28 @@ public class AdminProdService {
             productVOList.add(this.convertEntityToVO(product));
         }
 
+        System.out.println("서비스2");
+
         return productVOList;
 
-         */
-        return products;
+
+        //return products;
     }
 
-//    private ProductVO convertEntityToVO(ProdEntity product){
-//        return ProductVO.builder()
-//                .cate1(product.getCate1())
-//                .cate2(product.getCate2())
-//                .seller(product.getSeller())
-//                .descript(product.getDescript())
-//                .price(product.getPrice())
-//                .discount(product.getDiscount())
-//                .point(product.getPoint())
-//                .stock(product.getStock())
-//                .hit(product.getHit())
-//                .thumb1(product.getThumb1())
-//                .build();
-//    }
+    private ProductVO convertEntityToVO(ProdEntity product){
+        return ProductVO.builder()
+                .cate1(product.getCate1())
+                .cate2(product.getCate2())
+                .seller(product.getSeller())
+                .descript(product.getDescript())
+                .price(product.getPrice())
+                .discount(product.getDiscount())
+                .point(product.getPoint())
+                .stock(product.getStock())
+                .hit(product.getHit())
+                .thumb1(product.getThumb1())
+                .build();
+    }
 
 
     // --------------------  페이징  -----------------------
