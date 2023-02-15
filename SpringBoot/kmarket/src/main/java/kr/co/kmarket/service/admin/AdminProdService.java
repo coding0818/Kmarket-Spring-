@@ -6,14 +6,19 @@ package kr.co.kmarket.service.admin;
  */
 
 import kr.co.kmarket.dao.admin.AdminProdDAO;
+import kr.co.kmarket.entity.ProdEntity;
+import kr.co.kmarket.entity.SellerEntity;
+import kr.co.kmarket.repository.AdminProdRepo;
+import kr.co.kmarket.repository.SellerRepo;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,6 +32,12 @@ public class AdminProdService {
 
     @Autowired
     private AdminProdDAO dao;
+
+    @Autowired
+    private AdminProdRepo repo;
+
+    @Autowired
+    private SellerRepo sellerRepo;
 
     // ------------------------------------------ 상품 등록 ------------------------------------------
     public void registerProduct(ProductVO vo) throws Exception{
@@ -124,6 +135,46 @@ public class AdminProdService {
         System.out.println("service - admin");
         return dao.selectProductsAdmin(start);
     }
+    // ------------------------------------------ 상품 목록 (키워드 검색) ------------------------------
+    @Transactional
+    public List<ProdEntity> searchProducts(String seller, String keyword, Pageable pageable){
+        //List<ProdEntity> products = repo.findProdEntityBySeller(seller);
+        List<ProdEntity> products = repo.selectProducts();
+
+        List<SellerEntity> sellers = sellerRepo.selectSellers();
+
+        log.info("sellers : " + sellers);
+
+        /*
+        List<ProductVO> productVOList = new ArrayList<>();
+
+        if(products.isEmpty()) return productVOList;
+
+        for(ProdEntity product : products) {
+            productVOList.add(this.convertEntityToVO(product));
+        }
+
+        return productVOList;
+
+         */
+        return products;
+    }
+
+//    private ProductVO convertEntityToVO(ProdEntity product){
+//        return ProductVO.builder()
+//                .cate1(product.getCate1())
+//                .cate2(product.getCate2())
+//                .seller(product.getSeller())
+//                .descript(product.getDescript())
+//                .price(product.getPrice())
+//                .discount(product.getDiscount())
+//                .point(product.getPoint())
+//                .stock(product.getStock())
+//                .hit(product.getHit())
+//                .thumb1(product.getThumb1())
+//                .build();
+//    }
+
 
     // --------------------  페이징  -----------------------
     // 전체 게시글 개수

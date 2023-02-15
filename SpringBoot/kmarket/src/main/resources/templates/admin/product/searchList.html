@@ -2,14 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/adminLayout}">
-<!-- 2023/02/07 황원진 admin product list 화면구현-->
-<!-- 2023/02/08 이원정 admin product list 기능 구현 -->
-<!-- 참고 사이트
-- 타임리프 콤마 찍는 방법 (금액) https://pingfanzhilu.tistory.com/entry/Thymeleaf-%ED%83%80%EC%9E%84%EB%A6%AC%ED%94%84-%ED%95%A8%EC%88%98-numbersformatInteger-%EC%BD%A4%EB%A7%88-%EC%82%AC%EC%9A%A9%EB%B2%95-%EB%B0%8F-%EB%AC%B8%EB%B2%95
-- vertical bar https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html
-- <span th:text="|Welcome to our application, ${user.name}!|">
-- Which is actually equivalent to:  <span th:text="'Welcome to our application, ' + ${user.name} + '!'">
--->
+<!-- 2023/02/014 이원정 admin product searched list 기능 구현 -->
 <th:block layout:fragment="main">
     <section id="admin-product-list">
         <nav>
@@ -22,7 +15,7 @@
         <section>
             <div>
                 <form id="searchForm" th:action="@{/admin/product/search}" method="GET">
-                    <select name="type">
+                    <select>
                         <option value="prodName">상품명</option>
                         <option value="prodNo">상품코드</option>
                         <option value="company">제조사</option>
@@ -60,15 +53,15 @@
                 <th:block th:unless="${products == null}">
                     <tr th:each="product:${products}">
                         <td><input type="checkbox" name="상품코드"></td>
-                        <td><img th:src="|@{/}thumb/${product.cate1}/${product.cate2}/${product.thumb1}" class="thumb"></td>
-                        <td th:text="${product.prodNo}">201603292</td>
-                        <td th:text="${product.prodName}">FreeMovement BLUEFORCE</td>
-                        <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '원'}">36,000</td>
-                        <td th:text="${product.discount + '%'}">10</td>
-                        <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '점'}">360</td>
-                        <td th:text="${#numbers.formatInteger(product.stock, 0, 'COMMA') + '개'}">400</td>
-                        <td th:text="${product.seller}">홍길동</td>
-                        <td th:text="${#numbers.formatInteger(product.hit, 0, 'COMMA')}">126</td>
+                        <td>1</td>
+                        <td>201603292</td>
+                        <td>FreeMovement BLUEFORCE</td>
+                        <td>36,000</td>
+                        <td>10</td>
+                        <td>360</td>
+                        <td>400</td>
+                        <td>홍길동</td>
+                        <td>126</td>
                         <td>
                             <a href="#">[삭제]</a>
                             <a href="#">[수정]</a>
@@ -78,16 +71,14 @@
             </table>
             <input type="button" value="선택삭제">
             <div class="paging">
-                <span th:if="${paging.groupStart gt 1}" class="prev">
-                    <a th:href="|@{/}admin/product/list/${paging.groupStart-1}|"><&nbsp;이전</a>
+                <span class="prev">
+                    <a><&nbsp;이전</a>
                 </span>
                 <span class="num">
-                    <th:block th:each="i:${#numbers.sequence(paging.groupStart, paging.groupEnd)}">
-                        <a th:href="|@{/}admin/product/list/${i}|" th:classappend="${paging.currentPage eq i ? 'on' : ''}" th:text="${i}"></a>
-                    </th:block>
+                    <a>1</a>
                 </span>
-                <span th:if="${paging.groupEnd lt paging.lastPage}" class="next">
-                    <a th:href="|@{/}admin/product/list/${paging.groupEnd+1}|">다음&nbsp;></a>
+                <span class="next">
+                    <a>다음&nbsp;></a>
                 </span>
             </div>
         </section>

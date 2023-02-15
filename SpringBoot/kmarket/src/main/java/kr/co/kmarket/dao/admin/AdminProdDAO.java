@@ -17,17 +17,22 @@ import java.util.List;
 public interface AdminProdDAO {
     // ------------------------------------------ 상품 등록 ------------------------------------------
     public void registerProduct(ProductVO vo);
-    // ------------------------------------------ 상품 목록 (판매자가 조회 시)-------------------------
+    // ---------------------------------- 판매자 로그인 시  상품 목록 ---------------------------------
+    // 상품 목록 조회
     public List<ProductVO> selectProducts(@Param("seller") String seller, @Param("start") int start);
+
     // ------------------------------------------ 상품 목록 (관리자가 조회 시) ------------------------
     public List<ProductVO> selectProductsAdmin(@Param("start") int start);
+
+
+
+
+    // -------------------------------- 관리자 로그인 시 상품 목록  ------------------------------------
+    // 상품 목록
+    public int updateProduct(ProductVO vo);
+
     // ------------------------------------------ 페이징 ------------------------------------------
     public int selectCountProduct(@Param("seller") String seller);
-
-
-
-    // ------------------------------------------ 상품 업데이트 ---------------------------------------
-    public int updateProduct(ProductVO vo);
     // ------------------------------------------ 상품 삭제 ------------------------------------------
     public int deleteProduct(int prodNo);
 

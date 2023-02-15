@@ -6,6 +6,7 @@ package kr.co.kmarket.controller.admin;
  */
 
 import kr.co.kmarket.DTO.PagingDTO;
+import kr.co.kmarket.entity.ProdEntity;
 import kr.co.kmarket.entity.SellerEntity;
 import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.IndexService;
@@ -15,11 +16,15 @@ import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,22 +61,41 @@ public class AdminProdController {
         if(level == 7){
             // 관리자 조회 시 전체 상품 목록
             List<ProductVO> products = service.selectProductsAdmin(paging.getStart());
-
             // 모델 전송
             model.addAttribute("products", products);
             model.addAttribute("paging", paging);
         }else if(level < 7){
             List<ProductVO> products = service.selectProducts(uid, paging.getStart());
-
             // 모델 전송
             model.addAttribute("products", products);
             model.addAttribute("paging", paging);
         }
 
-        // 리턴
         return "admin/product/list";
     }
-    // ------------------------------------------ 상품 목록 (외부 파일 이미지 불러오기) --------------------------
+    // ------------------------------------------ 상품 목록 (키워드 검색) ------------------------------------------
+    @GetMapping("admin/product/search")
+    public String search(@RequestParam(value = "type") String type,
+                         @RequestParam(value = "keyword") String keyword,
+                         @AuthenticationPrincipal MySellerDetails sellerDetails,
+                         Model model,
+                         @PageableDefault(size=10, sort="prodNo", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        SellerEntity seller = sellerDetails.getUser();
+        String uid = seller.getUid();
+
+        List<ProdEntity> productList = service.searchProducts(uid, keyword, pageable);
+
+        log.info("productList : "+productList.size());
+        log.info("productList : "+productList.get(0).getProdName());
+
+
+        System.out.println(productList);
+
+        model.addAttribute("productList", productList);
+
+        return "admin/product/searchList";
+    }
 
 
 

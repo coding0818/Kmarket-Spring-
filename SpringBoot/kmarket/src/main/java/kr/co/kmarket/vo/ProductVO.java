@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class ProductVO {
 
     private String cate1;
@@ -62,6 +63,8 @@ public class ProductVO {
 //    private String c1Name;
 //    private String c2Name;
     private int level;
+
+
 //    private String uid;
 //    private int cartNo;
 //    private int totalcount;
