@@ -13,7 +13,6 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@IdClass(SellerUid.class)
 @Table(name="km_member_seller")
 public class SellerEntity {
 

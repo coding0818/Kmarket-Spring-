@@ -17,7 +17,7 @@
             num++;
             $('input[name=num]').val(num);
 
-            let totalPrice = [[${prod.price}]] * (num);
+            let totalPrice = [[${prod.sellPrice}]] * (num);
 
             console.log(totalPrice);
 
@@ -36,7 +36,7 @@
 			num--;
 			$('input[name=num]').val(num);
 
-			let totalPrice = [[${prod.price}]]*(num);
+			let totalPrice = [[${prod.sellPrice}]]*(num);
 
 			let comTotalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
 
@@ -80,7 +80,7 @@
                                 <span id="discount">[[${prod.discount}]]</span>
                             </div>
                             <div class="dis_price">
-                                <ins th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">20,000</ins>
+                                <ins th:text="${#numbers.formatInteger(prod.sellPrice, 0, 'COMMA')}">20,000</ins>
                             </div>
                         </nav>
                         <nav>
@@ -111,7 +111,7 @@
                             <button class="increase">+</button>
                         </div>
                         <div class="total">
-                            <span class="totalPrice" id="totalPrice" th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">
+                            <span class="totalPrice" id="totalPrice" th:text="${#numbers.formatInteger(prod.sellPrice, 0, 'COMMA')}">
                                20,000
                             </span>
                             <em>총 상품금액</em>

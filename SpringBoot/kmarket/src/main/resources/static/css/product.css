@@ -275,7 +275,7 @@
     font-size: 16px;
     color: #2e8de5;
 }
-#product > .view > .info > .summary .delivery > span::after { content: "원"; }
+#product > .view > .info > .summary .delivery::after { content: "원"; }
 #product > .view > .info > .summary .origin {
     font-size: 16px;
 }
