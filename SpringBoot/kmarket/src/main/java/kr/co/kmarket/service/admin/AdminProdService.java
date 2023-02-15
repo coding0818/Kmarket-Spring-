@@ -7,14 +7,12 @@ package kr.co.kmarket.service.admin;
 
 import kr.co.kmarket.dao.admin.AdminProdDAO;
 import kr.co.kmarket.entity.ProdEntity;
-import kr.co.kmarket.entity.SellerEntity;
 import kr.co.kmarket.repository.AdminProdRepo;
 import kr.co.kmarket.repository.SellerRepo;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -137,13 +135,12 @@ public class AdminProdService {
     }
     // ------------------------------------------ 상품 목록 (키워드 검색) ------------------------------
     @Transactional
-    public List<ProdEntity> searchProducts(String seller, String keyword, Pageable pageable){
+    public List<ProdEntity> searchProducts(String seller, String keyword){
         //List<ProdEntity> products = repo.findProdEntityBySeller(seller);
-        List<ProdEntity> products = repo.selectProducts();
+        List<ProdEntity> products = repo.findBySellerAndProdNameContains(seller, keyword);
 
-        List<SellerEntity> sellers = sellerRepo.selectSellers();
-
-        log.info("sellers : " + sellers);
+        //List<SellerEntity> sellers = sellerRepo.selectSellers();
+        //log.info("sellers : " + sellers);
 
         /*
         List<ProductVO> productVOList = new ArrayList<>();
