@@ -31,7 +31,7 @@ public class BoardController {
 
         List<CsVO> articles = null;                            // view로 연결되는 게시물
         List<String> types = new ArrayList<>();                // faq types
-        Map<String, List<CsVO>> faqs = new HashMap<>();
+        Map<String, List<CsVO>> faqs = new HashMap<>();        // Map <type, type별 게시물>
 
         /*** 페이징 처리 ***/
         int currentPage = service.getCurrentPage(pg);
@@ -57,8 +57,9 @@ public class BoardController {
                 faqs.put(tName, service.selectFaqTypeArticles(cate2, tName));
             }
 
+        /*** faq 카테고리가 아니라면 ***/
         } else {
-            /*** cate2가 all (전체보기)라면 - ***/
+            /*** cate2가 all(전체보기) 일때 ***/
             if (cate2.equals("all")) {
                 /*** cate1에 속한 모든 게시물 불러오기  ***/
                 articles = service.selectCSArticlesAll(cate1, start);
