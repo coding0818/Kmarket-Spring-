@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,7 +28,8 @@ public class BoardController {
     public String list(Model model, String cate1, String cate2, String pg) {
 
         List<CsVO> articles = null;     // view로 연결되는 게시물
-        List<CsVO> faqs = null;         // faq type
+        List<CsVO> type = null;         // faq type
+        List<List<CsVO>> faqs = null;   // faq type 별 게시물
 
         /*** 페이징 처리 ***/
         int currentPage = service.getCurrentPage(pg);
@@ -39,17 +42,14 @@ public class BoardController {
 
         /*** faq 카테고리라면  ***/
         if (cate1.equals("faq")){
-            faqs = service.selectFaqArticles(cate2);
-/*
-            String[] types;
-            types = Add(types, faqs.)
-
-
-
-            for (int i=1; i<=faqs.size(); i++){
-                articles = service.selectFaqTypeArticles(cate2, faqs.);
+            type = service.selectFaqArticles(cate2);
+            List<String> types = new ArrayList<String>();
+            for (int i=0; i<type.size(); i++){
+                types.add(type.get(i).getType());
             }
-*/
+
+            System.out.println("types :"+types);
+
         } else {
             /*** cate2가 all (전체보기)라면 - ***/
             if (cate2.equals("all")) {
@@ -100,7 +100,8 @@ public class BoardController {
 
     @PostMapping("cs/write")
     public String write(CsVO vo) {
-        return "redirect:cs/board/list";
+        service.insertCsArticle(vo);
+        return MessageFormat.format("redirect:/cs/list?cate1=qna&cate2={0}", vo.getCate2());
     }
 
 }
