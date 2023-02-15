@@ -64,7 +64,7 @@
                             <h1>(주)[[${prod.company}]]</h1>
                             <h2>
                                 상품번호 : 
-                                <span>[[${prod.prodNo}]]</span>
+                                <span id="prodNo">[[${prod.prodNo}]]</span>
                             </h2>
                         </nav>
                         <nav>
@@ -76,8 +76,8 @@
                         </nav>
                         <nav>
                             <div class="org_price">
-                                <del th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">36,000</del>
-                                <span>[[${prod.discount + "%"}]]</span>
+                                <del id="price" th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">36,000</del>
+                                <span id="discount">[[${prod.discount}]] %</span>
                             </div>
                             <div class="dis_price">
                                 <ins th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">20,000</ins>
@@ -85,10 +85,10 @@
                         </nav>
                         <nav>
                                 <th:block th:if="${prod.delivery eq 0}">
-                            <span class="delivery">무료배송</span>
+                            <span class="delivery" id="delivery">무료배송</span>
                                 </th:block>
                             <th:block th:if="${prod.delivery gt 0}">
-                                <span class="delivery">[[${prod.delivery + "원"}]]</span>
+                                <span class="delivery" id="delivery">[[${prod.delivery + "원"}]]</span>
                             </th:block>
                             <span class="arrival">모레(금) 7/8 도착예정</span>
                             <span class="desc">본 상품은 국내배송만 가능합니다.</span>
@@ -111,14 +111,14 @@
                             <button class="increase">+</button>
                         </div>
                         <div class="total">
-                            <span class="totalPrice" th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">
+                            <span class="totalPrice" id="totalPrice" th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}">
                                20,000
                             </span>
                             <em>총 상품금액</em>
                         </div>
                         <div class="button">
-                            <input type="button" class="cart" value="장바구니">
-                            <input type="button" class="order" value="구매하기">
+                            <input type="button" class="cart" id="cart" value="장바구니">
+                            <input type="button" class="order" id="order" value="구매하기">
                         </div>
                     </div>
                 </article>
