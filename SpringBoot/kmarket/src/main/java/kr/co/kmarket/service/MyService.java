@@ -13,6 +13,24 @@ public class MyService {
     @Autowired
     private MyDAO dao;
 
+    // 공통
+    public int selectCountOrder(String uid){
+        return dao.selectCountOrder(uid);
+    }
+
+    public int selectCountCoupon(String uid){
+        return dao.selectCountCoupon(uid);
+    }
+
+    public int selectSumPoint(String uid){
+        return dao.selectSumPoint(uid);
+    }
+
+    public int selectCountCs(String uid){
+        return dao.selectCountCs(uid);
+    }
+
+    // home
     public List<MyPointVO> selectPoints(String uid){
         return dao.selectPoints(uid);
     }
