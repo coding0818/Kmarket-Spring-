@@ -34,7 +34,7 @@
                             <tr th:unless="${#lists.isEmpty(orderList)}" th:each="order:${orderList}">
                                 <td class="date">[[${order.ordDate.substring(0, 10)}]]</td>
                                 <td>
-                                    <a href="#" class="thumb"><img th:src="@{http://43.200.2.115:8080/Kmarket/thumb/{cate1}/{cate2}/{thumb1}(cate1=${order.cate1}, cate2=${order.cate2}, thumb1=${order.thumb1})}" alt=""></a>
+                                    <a href="#" class="thumb"><img th:src="@{/thumb/{cate1}/{cate2}/{thumb1}(cate1=${order.cate1}, cate2=${order.cate2}, thumb1=${order.thumb1})}" alt=""></a>
                                     <ul>
                                         <li class="company">[[${order.company}]]</li>
                                         <li class="prodName"><a href="#">[[${order.prodName}]]</a></li>
