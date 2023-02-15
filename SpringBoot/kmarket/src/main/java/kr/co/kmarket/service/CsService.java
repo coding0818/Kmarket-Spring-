@@ -40,8 +40,8 @@ public class CsService {
     }
 
     /*** 자주묻는 질문 카테고리별 게시물 불러오기 ***/
-    public List<CsVO> selectFaqTypeArticles (String cate2) {
-        return dao.selectFaqTypeArticles(cate2);
+    public List<CsVO> selectFaqTypeArticles (String cate2, String type) {
+        return dao.selectFaqTypeArticles(cate2, type);
     }
 
     /*** cate1에 속하는 모든 CS 게시물을 불러오기 ***/

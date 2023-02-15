@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BoardController {
@@ -27,9 +29,9 @@ public class BoardController {
     @GetMapping("cs/list")
     public String list(Model model, String cate1, String cate2, String pg) {
 
-        List<CsVO> articles = null;     // view로 연결되는 게시물
-        List<CsVO> type = null;         // faq type
-        List<List<CsVO>> faqs = null;   // faq type 별 게시물
+        List<CsVO> articles = null;                            // view로 연결되는 게시물
+        List<String> types = new ArrayList<>();                // faq types
+        Map<String, List<CsVO>> faqs = new HashMap<>();
 
         /*** 페이징 처리 ***/
         int currentPage = service.getCurrentPage(pg);
@@ -42,13 +44,18 @@ public class BoardController {
 
         /*** faq 카테고리라면  ***/
         if (cate1.equals("faq")){
-            type = service.selectFaqArticles(cate2);
-            List<String> types = new ArrayList<String>();
+
+            /*** type명 배열 ***/
+            List<CsVO> type = service.selectFaqArticles(cate2);
             for (int i=0; i<type.size(); i++){
                 types.add(type.get(i).getType());
             }
 
-            System.out.println("types :"+types);
+            /*** type에 따른 게시물 list ***/
+            for (int j=0; j<type.size(); j++){
+                String tName = types.get(j);
+                faqs.put(tName, service.selectFaqTypeArticles(cate2, tName));
+            }
 
         } else {
             /*** cate2가 all (전체보기)라면 - ***/
@@ -65,6 +72,7 @@ public class BoardController {
 
         cate1 = "_"+cate1;
         model.addAttribute("articles", articles);
+        model.addAttribute("types", types);
         model.addAttribute("faqs", faqs);
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);

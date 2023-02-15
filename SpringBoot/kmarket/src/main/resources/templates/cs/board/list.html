@@ -77,21 +77,28 @@
                 <h1>안전거래</h1>
                 <h2>안전거래관련 가장 자주 묻는 질문입니다.</h2>
               </nav>
-              <th:block th:each="faqs:${faqs}">
+              <th:block th:each="faq:${faqs}">
                 <div>
-                  <h3>[[${faqs.type}]]</h3>
+                  <h3>[[${faq.key}]]</h3>
                   <ul>
-                  <th:block th:each="art,index:${articles}" th:if="${faqs.type} == ${art.type}">
+                  <th:block th:each="art,index:${faq.value}">
+                    <th:block th:if="${index.count} > 3">
+                      <li class="hide">
+                        <a th:href="@{/cs/view(cate1=notice, cate2=${art.cate2}, csNo=${art.csNo})}"><span>Q.</span>[[${art.title}]]</a>
+                      </li>
+                    </th:block>
+                    <th:block th:unless="${index.count} > 3">
                       <li>
                         <a th:href="@{/cs/view(cate1=notice, cate2=${art.cate2}, csNo=${art.csNo})}"><span>Q.</span>[[${art.title}]]</a>
                       </li>
+                    </th:block>
                   </th:block>
                   <li class="open"><a href="#">더보기</a></li>
                   <li class="close"><a href="#">간단히보기</a></li>
                   </ul>
                 </div>
+                </th:block>
               </th:block>
-            </th:block>
 
             <th:block th:case="_qna">
               <nav th:if="${cate2}=='user'">
