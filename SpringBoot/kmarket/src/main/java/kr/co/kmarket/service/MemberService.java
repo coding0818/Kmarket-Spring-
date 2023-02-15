@@ -26,14 +26,14 @@ public class MemberService {
     @Transactional
     public int insertMember(MemberVO vo){
         vo.setPass(encoder.encode(vo.getPass()));
-        dao.insertUser(vo.getUid(), 1);
+        dao.insertUser(vo.getUid(), 1, "general");
         return dao.insertMember(vo);
     }
 
     @Transactional
     public int insertSeller(SellerVO vo){
         vo.setPass(encoder.encode(vo.getPass()));
-        dao.insertUser(vo.getUid(), 2);
+        dao.insertUser(vo.getUid(), 2, "seller");
         return dao.insertSeller(vo);
     }
 }

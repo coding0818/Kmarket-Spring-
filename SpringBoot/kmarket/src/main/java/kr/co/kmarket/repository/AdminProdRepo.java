@@ -15,7 +15,9 @@ public interface AdminProdRepo extends JpaRepository<ProdEntity, Integer> {
 
     // findBy(컬럼 이름)Containing : 컬럼에서 키워드가 포함된 것을 찾기
     // 상품명 키워드 검색 + 페이징
-    List<ProdEntity> findProdEntityBySeller(String seller);
+    //List<ProdEntity> findProdEntityBySeller(String seller);
+
+    List<ProdEntity> findBySellerAndProdNameContains(String seller, String prodName);
 
     @Query("select pe from ProdEntity as pe")
     public List<ProdEntity> selectProducts();

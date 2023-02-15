@@ -19,7 +19,7 @@
             `comRegNum`=#{comRegNum},
             `tel`=#{tel},
             `manager`=#{manager},
-            `managerHp`=#{managerHp},
+            `hp`=#{hp},
             `fax`=#{fax},
             `email`=#{email},
             `regip`=#{regip},
@@ -45,7 +45,7 @@
             `rdate`=NOW();
     </insert>
     <insert id="insertUser">
-        insert into `km_member_uid` set `uid`=#{uid}, `type`=#{type};
+        insert into `km_member_uid` set `uid`=#{uid}, `type`=#{type}, `sellerorgeneral`=#{sellerorgeneral};
     </insert>
     <select id="selectTerms" resultType="kr.co.kmarket.vo.TermsVO">
         select * from `km_member_terms`;

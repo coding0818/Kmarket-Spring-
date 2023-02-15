@@ -4,15 +4,15 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.kmarket.dao.CsDAO">
 
-    <insert id="insertCsArticle" useGeneratedKeys="true" keyProperty="no">
+    <insert id="insertCsArticle" useGeneratedKeys="true" keyProperty="csNo">
         INSERT INTO `km_cs` SET
-            `uid` = iamid,
-            `cate1` = ${cate1},
-            `cate2` = ${cate2},
-            `type` = ${type},
-            `title` = ${title},
-            `content` = ${content},
-            `regip` = ${regip},
+            `uid` = 'iamid',
+            `cate1` = 'qna',
+            `cate2` = #{cate2},
+            `type` = #{type},
+            `title` = #{title},
+            `content` = #{content},
+            `regip` = '1.2.3.4.5',
             `rdate` = NOW();
     </insert>
 
@@ -34,8 +34,9 @@
 
     <select id="selectFaqTypeArticles" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs`
-        WHERE `cate1`='faq' AND `cate2`=#{cate2}
-        ORDER BY `csNo`;
+           WHERE `cate1`='faq' AND `cate2`=#{cate2} AND `type`=#{type}
+           ORDER BY `csNo`
+           DESC LIMIT 0, 10;
     </select>
 
     <select id="selectCsArticlesAll" resultType="kr.co.kmarket.vo.CsVO">

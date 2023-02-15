@@ -1,59 +1,61 @@
 /*** selectbox 동적 추가 ***/
-function qnaOption(){
+  function qnaOption(){
 
-/*** type category 배열 만들기 ***/
-let user = ['가입', '탈퇴', '회원정보', '로그인'];
-let event = ['쿠폰/할인/혜택', '포인트', '제휴', '이벤트'];
-let order = ['상품', '결제', '구매내역', '영수증/증빙'];
-let delivery = ['배송 상태/기간', '배송 정보 확인/변경', '해외배송', '당일배송', '해외직구'];
-let cancel = ['반품 신청/철회', '반품 정보 확인/변경', '교환 AS 신청/철회', '교환 정보 확인/변경', '취소 신청/철회', '취소 확인/환불 정보'];
-let travel = ['여행/숙박', '항공'];
-let safeDeal = ['서비스 이용규칙 위반', '지식재산권침해', '법령 및 정책위반 상품', '게시물 정책위반', '직거래/외부거래 유도', '표시광고', '청소년 위해상품/이미지'];
+  /*** type category 배열 만들기 ***/
+  let user = ['가입', '탈퇴', '회원정보', '로그인'];
+  let event = ['쿠폰/할인/혜택', '포인트', '제휴', '이벤트'];
+  let order = ['상품', '결제', '구매내역', '영수증/증빙'];
+  let delivery = ['배송 상태/기간', '배송 정보 확인/변경', '해외배송', '당일배송', '해외직구'];
+  let cancel = ['반품 신청/철회', '반품 정보 확인/변경', '교환 AS 신청/철회', '교환 정보 확인/변경', '취소 신청/철회', '취소 확인/환불 정보'];
+  let travel = ['여행/숙박', '항공'];
+  let safeDeal = ['서비스 이용규칙 위반', '지식재산권침해', '법령 및 정책위반 상품', '게시물 정책위반', '직거래/외부거래 유도', '표시광고', '청소년 위해상품/이미지'];
 
-let change;
+  let cate2 = $('.cate2').val();
 
-/*** cate2 선택 value에 따라서 append할 배열 선택 ***/
-switch (cate2) {
-  case 'user':
-    change = user;
-    break;
+  let change;
 
-  case 'coupon':
-    change = event;
-    break;
+  /*** cate2 선택 value에 따라서 append할 배열 선택 ***/
+  switch (cate2) {
+    case 'user':
+      change = user;
+      break;
 
-  case 'order':
-    change = order;
-    break;
+    case 'coupon':
+      change = event;
+      break;
 
-  case 'delivery':
-    change = delivery;
-    break;
+    case 'order':
+      change = order;
+      break;
 
-  case 'cancel':
-    change = cancel;
-    break;
+    case 'delivery':
+      change = delivery;
+      break;
 
-  case 'travel':
-    change = travel;
-    break;
+    case 'cancel':
+      change = cancel;
+      break;
 
-  case 'safeDeal':
-    change = safeDeal;
-    break;
-}
+    case 'travel':
+      change = travel;
+      break;
 
-/*** selectbox append 이전에 먼저 비워주기 ***/
-$('.type').empty();
-let option;
+    case 'safeDeal':
+      change = safeDeal;
+      break;
+  }
 
-/*** append ***/
-option =  $("<option value='none' disabled selected>2차 선택</option>");
-$('.type').append(option);
+  /*** selectbox append 이전에 먼저 비워주기 ***/
+  $('.type').empty();
+  let option;
 
-for (let i=0; i<change.length; i++){
-  option = $("<option>"+change[i]+"</option>");
+  /*** append ***/
+  option =  $("<option value='none' disabled selected>2차 선택</option>");
   $('.type').append(option);
-}
 
-}
+  for (let i=0; i<change.length; i++){
+    option = $("<option>"+change[i]+"</option>");
+    $('.type').append(option);
+  }
+
+  }
