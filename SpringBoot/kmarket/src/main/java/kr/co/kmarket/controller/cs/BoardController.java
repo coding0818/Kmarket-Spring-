@@ -37,19 +37,31 @@ public class BoardController {
         int groups[] = service.getPageGroup(currentPage, lastPage);
 
 
-        /*** faq 카테고리라면 - faq type 불러오기 ***/
+        /*** faq 카테고리라면  ***/
         if (cate1.equals("faq")){
             faqs = service.selectFaqArticles(cate2);
+/*
+            String[] types;
+            types = Add(types, faqs.)
+
+
+
+            for (int i=1; i<=faqs.size(); i++){
+                articles = service.selectFaqTypeArticles(cate2, faqs.);
+            }
+*/
+        } else {
+            /*** cate2가 all (전체보기)라면 - ***/
+            if (cate2.equals("all")) {
+                /*** cate1에 속한 모든 게시물 불러오기  ***/
+                articles = service.selectCSArticlesAll(cate1, start);
+            } else {
+                /*** 아닐 경우 cate2에 속하는 게시물만 불러오기 ***/
+                articles = service.selectCsArticles(cate1, cate2, start);
+            }
         }
 
-        /*** cate2가 all (전체보기)라면 - ***/
-        if (cate2.equals("all")) {
-            /*** cate1에 속한 모든 게시물 불러오기  ***/
-            articles = service.selectCSArticlesAll(cate1, start);
-        } else {
-            /*** 아닐 경우 cate2에 속하는 게시물만 불러오기 ***/
-            articles = service.selectCsArticles(cate1, cate2, start);
-        }
+
 
         cate1 = "_"+cate1;
         model.addAttribute("articles", articles);

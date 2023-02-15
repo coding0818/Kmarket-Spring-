@@ -6,7 +6,7 @@
 
     <insert id="insertCsArticle" useGeneratedKeys="true" keyProperty="no">
         INSERT INTO `km_cs` SET
-            `uid` = ${uid},
+            `uid` = iamid,
             `cate1` = ${cate1},
             `cate2` = ${cate2},
             `type` = ${type},
@@ -27,10 +27,15 @@
             DESC LIMIT #{start}, 10;
     </select>
 
-
     <select id="selectFaqArticles" resultType="kr.co.kmarket.vo.CsVO">
         SELECT DISTINCT `cate1`, `cate2`, `type`, `title` FROM `km_cs`
             WHERE `cate1` = 'faq' AND `cate2` = #{cate2};
+    </select>
+
+    <select id="selectFaqTypeArticles" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs`
+        WHERE `cate1`='faq' AND `cate2`=#{cate2}
+        ORDER BY `csNo`;
     </select>
 
     <select id="selectCsArticlesAll" resultType="kr.co.kmarket.vo.CsVO">
