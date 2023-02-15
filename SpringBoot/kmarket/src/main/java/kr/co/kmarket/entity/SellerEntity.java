@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@IdClass(SellerUid.class)
 @Table(name="km_member_seller")
 public class SellerEntity {
 
@@ -30,7 +32,7 @@ public class SellerEntity {
     private String comRegNum;
     private String tel;
     private String manager;
-    private String managerHp;
+    private String hp;
     private String fax;
     private String email;
     private String regip;
@@ -38,3 +40,7 @@ public class SellerEntity {
     private String rdate;
 
 }
+
+
+
+

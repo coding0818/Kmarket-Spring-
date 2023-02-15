@@ -1,10 +1,7 @@
 package kr.co.kmarket.service;
 
 import kr.co.kmarket.dao.MyDAO;
-import kr.co.kmarket.vo.MyCsVO;
-import kr.co.kmarket.vo.MyOrderVO;
-import kr.co.kmarket.vo.MyReviewVO;
-import kr.co.kmarket.vo.MyPointVO;
+import kr.co.kmarket.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +27,16 @@ public class MyService {
 
     public List<MyCsVO> selectCs(String uid){
         return dao.selectCs(uid);
+    }
+
+    public String selectUserType(String uid){
+        return dao.selectUserType(uid);
+    }
+
+    public MemberVO selectUser(String uid){
+        return dao.selectUser(uid);
+    }
+    public SellerVO selectSeller(String uid){
+        return dao.selectSeller(uid);
     }
 }

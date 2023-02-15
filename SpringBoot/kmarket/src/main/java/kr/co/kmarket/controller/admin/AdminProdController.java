@@ -16,9 +16,6 @@ import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,16 +75,15 @@ public class AdminProdController {
     public String search(@RequestParam(value = "type") String type,
                          @RequestParam(value = "keyword") String keyword,
                          @AuthenticationPrincipal MySellerDetails sellerDetails,
-                         Model model,
-                         @PageableDefault(size=10, sort="prodNo", direction = Sort.Direction.DESC) Pageable pageable) {
+                         Model model) {
 
         SellerEntity seller = sellerDetails.getUser();
         String uid = seller.getUid();
 
-        List<ProdEntity> productList = service.searchProducts(uid, keyword, pageable);
+        List<ProdEntity> productList = service.searchProducts(uid, keyword);
 
-        log.info("productList : "+productList.size());
-        log.info("productList : "+productList.get(0).getProdName());
+        //log.info("productList : "+productList.size());
+        //log.info("productList : "+productList.get(0).getProdName());
 
 
         System.out.println(productList);
