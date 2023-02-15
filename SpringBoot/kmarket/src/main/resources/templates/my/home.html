@@ -134,29 +134,26 @@
                                 <th>작성일</th>
                                 <th>상태</th>
                             </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>고객센터</td>
-                                <td>주문/결제</td>                                
-                                <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
-                                <td>2024-12-12</td>
-                                <td><span class="notAnswerYet">검토중</span></td>
+                            <tr th:if="${#lists.isEmpty(csList)}">
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td><span class="notAnswerYet">-</span></td>
                             </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>고객센터</td>
-                                <td>주문/결제</td>                                
-                                <td>신용카드 결제 중 오류가 난 경우 어떻게 하나요?</td>
-                                <td>2024-12-12</td>
-                                <td><span class="answered">답변완료</span></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>판매자게시판</td>
-                                <td>배송</td>                                
-                                <td>배송기간이 보통 얼마나 걸리나요?</td>
-                                <td>2024-12-12</td>
-                                <td><span class="answered">답변완료</span></td>
+                            <tr th:unless="${#lists.isEmpty(csList)}" th:each="cs,i:${csList}">
+                                <td>[[${i.count}]]</td>
+                                <td th:if="${cs.cate1 == 'faq'}">자주묻는질문</td>
+                                <td th:if="${cs.cate1 == 'notice'}">공지사항</td>
+                                <td th:if="${cs.cate1 == 'qna'}">문의하기</td>
+                                <td>[[${cs.type}]]</td>
+                                <td>[[${cs.title}]]</td>
+                                <td>[[${cs.rdate.substring(0, 10)}]]</td>
+                                <td>
+                                    <span class="notAnswerYet" th:if="${cs.comment == null}">검토중</span>
+                                    <span class="answered" th:unless="${cs.comment == null}">답변완료</span>
+                                </td>
                             </tr>
                         </table>
                     </article>
@@ -167,11 +164,11 @@
                         <div>
                             <div class="address">
                                 <span>기본 배송지설정</span>
-                                <a href="#" class="setting">변경</a>
+                                <a th:href="@{/my/info}" class="setting">변경</a>
                             </div>
                             <div class="email">
                                 <span>email 설정</span>
-                                <a href="#" class="setting">변경</a>
+                                <a th:href="@{/my/info}" class="setting">변경</a>
                                 <p>
                                     <span>abc123@gmail.com</span><br/>
                                     (최종수정일 <span>2021-12-10</span>)
@@ -179,7 +176,7 @@
                             </div>
                             <div class="hp">
                                 <span>휴대폰 설정</span>
-                                <a href="#" class="setting">변경</a>
+                                <a th:href="@{/my/info}" class="setting">변경</a>
                                 <p>
                                     <span>abc123@gmail.com</span><br/>
                                     (최종수정일 <span>2021-12-10</span>)

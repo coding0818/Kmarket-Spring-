@@ -1,6 +1,7 @@
 package kr.co.kmarket.service;
 
 import kr.co.kmarket.dao.MyDAO;
+import kr.co.kmarket.vo.MyCsVO;
 import kr.co.kmarket.vo.MyOrderVO;
 import kr.co.kmarket.vo.MyReviewVO;
 import kr.co.kmarket.vo.MyPointVO;
@@ -26,4 +27,8 @@ public class MyService {
     public List<MyOrderVO> selectOrders(String uid){return dao.selectOrders(uid);}
 
     public int updateOrdStatus(int ordNo, int prodNo){ return dao.updateOrdStatus(ordNo, prodNo); }
+
+    public List<MyCsVO> selectCs(String uid){
+        return dao.selectCs(uid);
+    }
 }
