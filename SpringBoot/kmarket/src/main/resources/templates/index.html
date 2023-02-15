@@ -87,7 +87,7 @@
                                 <span>[[${hit.discount + "%"}]]</span>
                             </div>
                             <div class="dis_price">
-                                <ins th:text="${#numbers.formatInteger(hit.price, 0, 'COMMA')}">30,000</ins>
+                                <ins th:text="${#numbers.formatInteger(hit.sellPrice, 0, 'COMMA')}">30,000</ins>
                                 <span class="free">무료배송</span>
                             </div>
                         </a>
@@ -108,7 +108,7 @@
                                 <span>[[${score.discount + "%"}]]</span>
                             </div>
                             <div class="dis_price">
-                                <ins th:text="${#numbers.formatInteger(score.price, 0, 'COMMA')}">20,000</ins>
+                                <ins th:text="${#numbers.formatInteger(score.sellPrice, 0, 'COMMA')}">20,000</ins>
                                 <span>[[${score.delivery}]]</span>
                             </div>
                         </a>
@@ -129,7 +129,7 @@
                                 <span>[[${newProd.discount + "%"}]]</span>
                             </div>
                             <div class="dis_price">
-                                <ins th:text="${#numbers.formatInteger(newProd.price, 0, 'COMMA')}">20,000</ins>
+                                <ins th:text="${#numbers.formatInteger(newProd.sellPrice, 0, 'COMMA')}">20,000</ins>
                                 <span class="free">무료배송</span>
                             </div>
                         </a>
@@ -150,7 +150,7 @@
                                 <span>[[${discount.discount + "%"}]]</span>
                             </div>
                             <div class="dis_price">
-                                <ins th:text="${#numbers.formatInteger(discount.price, 0, 'COMMA')}">20,000</ins>
+                                <ins th:text="${#numbers.formatInteger(discount.sellPrice, 0, 'COMMA')}">20,000</ins>
                                 <span class="free">무료배송</span>
                             </div>
                         </a>

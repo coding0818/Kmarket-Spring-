@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         `company`=#{company},
         `price`=#{price},
         `discount`=#{discount},
+        `sellPrice`=#{sellPrice},
         `point`=#{point},
         `stock`=#{stock},
         `delivery`=#{delivery},
