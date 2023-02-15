@@ -1,7 +1,9 @@
 package kr.co.kmarket.controller;
 
+import kr.co.kmarket.DTO.PagingDTO;
 import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.ProductService;
+import kr.co.kmarket.util.PagingUtil;
 import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,18 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping("product/list")
-    public String list(Model model, String cate1, String cate2){
+    public String list(Model model, String cate1, String cate2, String pg){
         // 카테고리 분류
         Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
 
+        // 페이징
+        PagingDTO paging = new PagingUtil().getPagingDTO(pg, service.selectCountProduct(cate1, cate2));
+
         // cate별 상품리스트 조회하기
-        List<ProductVO> products = service.selectProducts(cate1, cate2);
+        List<ProductVO> products = service.selectProducts(cate1, cate2, paging.getStart());
         model.addAttribute("prods", products);
+        model.addAttribute("paging", paging);
 
         // 상품 네비게이션
         CateVO ncate = service.selectCate(cate1, cate2);
@@ -47,6 +53,10 @@ public class ProductController {
         // 상품번호로 상품 조회하기
         ProductVO  prod = service.selectProduct(prodNo);
         model.addAttribute("prod", prod);
+
+        // 상품 네비게이션
+        CateVO ncate = service.selectCate(cate1, cate2);
+        model.addAttribute("ncate", ncate);
 
         return "product/view";
     }
