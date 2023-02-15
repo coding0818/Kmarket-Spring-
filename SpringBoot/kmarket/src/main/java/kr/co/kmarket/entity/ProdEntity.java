@@ -45,9 +45,5 @@ public class ProdEntity {
     private String ip;
     private String rdate;
 
-    @OneToOne
-    private SellerEntity sellerEntity;
 
-
-    private CateEntity cateEntity;
 }
