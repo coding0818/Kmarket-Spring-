@@ -8,7 +8,6 @@ package kr.co.kmarket.service.admin;
 import kr.co.kmarket.dao.admin.AdminProdDAO;
 import kr.co.kmarket.entity.ProdEntity;
 import kr.co.kmarket.repository.AdminProdRepo;
-import kr.co.kmarket.repository.SellerRepo;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +15,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,12 +28,9 @@ public class AdminProdService {
 
     @Autowired
     private AdminProdDAO dao;
-
     @Autowired
     private AdminProdRepo repo;
 
-    @Autowired
-    private SellerRepo sellerRepo;
 
     // ------------------------------------------ 상품 등록 ------------------------------------------
     public void registerProduct(ProductVO vo) throws Exception{
@@ -135,44 +129,11 @@ public class AdminProdService {
         return dao.selectProductsAdmin(start);
     }
     // ------------------------------------------ 상품 목록 (키워드 검색) ------------------------------
-    @Transactional
-    public List<ProductVO> searchProducts(String seller, String keyword){
-        List<ProdEntity> products = repo.findBySeller(seller);
-
-        //List<SellerEntity> sellers = sellerRepo.selectSellers();
-        //log.info("sellers : " + sellers);
-        System.out.println("서비스1");
-
-        List<ProductVO> productVOList = new ArrayList<>();
-
-        if(products.isEmpty()) return productVOList;
-
-        for(ProdEntity product : products) {
-            productVOList.add(this.convertEntityToVO(product));
-        }
-
-        System.out.println("서비스2");
-
-        return productVOList;
-
-
-        //return products;
+    public List<ProdEntity> search(String keyword){
+        List<ProdEntity> productsList = repo.findByProdNameContaining(keyword);
+        return productsList;
     }
 
-    private ProductVO convertEntityToVO(ProdEntity product){
-        return ProductVO.builder()
-                .cate1(product.getCate1())
-                .cate2(product.getCate2())
-                .seller(product.getSeller())
-                .descript(product.getDescript())
-                .price(product.getPrice())
-                .discount(product.getDiscount())
-                .point(product.getPoint())
-                .stock(product.getStock())
-                .hit(product.getHit())
-                .thumb1(product.getThumb1())
-                .build();
-    }
 
 
     // --------------------  페이징  -----------------------
