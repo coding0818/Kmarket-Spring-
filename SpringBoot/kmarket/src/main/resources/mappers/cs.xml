@@ -32,11 +32,11 @@
             WHERE `cate1` = 'faq' AND `cate2` = #{cate2};
     </select>
 
-    <select id="selectFaqTypeArticles" resultType="kr.co.kmarket.vo.CsVO">
+    <select id="selectTypeArticles" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs`
-           WHERE `cate1`='faq' AND `cate2`=#{cate2} AND `type`=#{type}
+           WHERE `cate1`=#{cate1} AND `cate2`=#{cate2} AND `type`=#{type}
            ORDER BY `csNo`
-           DESC LIMIT 0, 10;
+           DESC LIMIT #{start}, 10;
     </select>
 
     <select id="selectCsArticlesAll" resultType="kr.co.kmarket.vo.CsVO">
@@ -56,6 +56,10 @@
     <select id="selectCountTotal" resultType="long">
         SELECT COUNT(`csNo`) FROM `km_cs`
             WHERE `cate1` = #{cate1} AND `cate2`=#{cate2};
+    </select>
+    <select id="selectCountTotalType" resultType="long">
+        SELECT COUNT(`csNo`) FROM `km_cs`
+            WHERE `cate1` = #{cate1} AND `cate2` = #{cate2} AND `type` = #{type};
     </select>
 
 </mapper>

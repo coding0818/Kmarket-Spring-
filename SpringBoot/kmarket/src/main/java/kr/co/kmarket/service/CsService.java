@@ -40,8 +40,8 @@ public class CsService {
     }
 
     /*** 자주묻는 질문 카테고리별 게시물 불러오기 ***/
-    public List<CsVO> selectFaqTypeArticles (String cate2, String type) {
-        return dao.selectFaqTypeArticles(cate2, type);
+    public List<CsVO> selectTypeArticles (String cate1, String cate2, String type, int start) {
+        return dao.selectTypeArticles(cate1, cate2, type, start);
     }
 
     /*** cate1에 속하는 모든 CS 게시물을 불러오기 ***/
@@ -65,11 +65,13 @@ public class CsService {
     }
 
     /*** 전체 게시물 갯수 ***/
-    public long getTotalCount(String cate1, String cate2) {
-        if (cate2.equals("all")){
+    public long getTotalCount(String cate1, String cate2, String type) {
+        if ("all".equals(cate2)){
             return dao.selectCountTotalAll(cate1);
-        } else {
+        } else if (type == null) {
             return dao.selectCountTotal(cate1, cate2);
+        } else {
+            return dao.selectCountTotalType(cate1, cate2, type);
         }
     }
 

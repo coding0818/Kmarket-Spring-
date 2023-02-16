@@ -1,11 +1,9 @@
 package kr.co.kmarket.controller.admin;
 
-import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.CsService;
 import kr.co.kmarket.vo.CsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,24 +18,48 @@ public class AdminNoticeController {
     private CsService service;
 
     @GetMapping("admin/cs/notice/list")
-    public String list (Model model, String pg){
+    public String list (Model model, String cate2, String pg){
+
+        String cate1 = "notice";
+        List<CsVO> articles = null;
+        long total = 0;
+
+        /*** selectbox로 검색한 것이 아닌 경우 ***/
+        if (cate2 == null){
+            articles = service.selectCSArticlesAll(cate1, 0);
+            total = service.getTotalCount(cate1, "all", null);
+        /*** 검색어가 있을 경우 ***/
+        } else {
+            articles = service.selectCsArticles(cate1, cate2, 0);
+            total = service.getTotalCount(cate1, cate2, null);
+        }
 
         /*** 페이징 처리 ***/
         int currentPage = service.getCurrentPage(pg);
         int start = service.getLimitstart(currentPage);
-        long total = service.getTotalCount("notice", "all");
         int lastPage = service.getLastPageNum(total);
         int pageStartNum = service.getPageStartNum(total, start);
         int groups[] = service.getPageGroup(currentPage, lastPage);
-
-        List<CsVO> articles = service.selectCSArticlesAll("notice", 0);
 
         model.addAttribute("articles", articles);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("lastPage", lastPage);
         model.addAttribute("pageStartNum", pageStartNum);
         model.addAttribute("groups", groups);
+        model.addAttribute("cate1", cate1);
+        model.addAttribute("cate2", cate2);
         return "admin/cs/notice/list";
     }
+
+    @GetMapping("admin/cs/notice/modify")
+    public String modify() {
+        return "admin/cs/notice/modify";
+    }
+
+    @GetMapping("admin/cs/notice/view")
+    public String view() {return "admin/cs/notice/view";}
+
+    @GetMapping("admin/cs/notice/write")
+    public String write() {return "admin/cs/notice/write";}
 
 }
