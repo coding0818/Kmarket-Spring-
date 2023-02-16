@@ -1,9 +1,13 @@
 package kr.co.kmarket.controller.admin;
 
+import kr.co.kmarket.entity.SellerEntity;
+import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.IndexService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Slf4j
@@ -14,7 +18,11 @@ public class AdminController {
     private IndexService service;
 
     @GetMapping("admin/index")
-    public String index(){
+    public String index(@AuthenticationPrincipal MySellerDetails myUser, Model model){
+
+        SellerEntity seller = myUser.getUser();
+
+        model.addAttribute("seller", seller);
         return "admin/index";
     }
 
