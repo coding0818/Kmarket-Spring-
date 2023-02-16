@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class ProdEntity {
 
     @Id
-    private String prodNo;
+    private int prodNo;
     private String cate1;
     private String cate2;
     private String seller;
@@ -41,6 +41,8 @@ public class ProdEntity {
     private String origin;
     private String ip;
     private String rdate;
+
+
 
 
 
