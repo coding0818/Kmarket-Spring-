@@ -18,6 +18,15 @@
     </select>
 
     <!--home-->
+    <insert id="insertPoint">
+        insert into `km_member_point` set
+            `uid`=#{uid},
+            `ordNo`=#{ordNo},
+            `point`=#{point},
+            `pointDate`=NOW(),
+            `pointdes`=#{pointdes},
+            `expireDate`=DATE_ADD(NOW(), INTERVAL 2 YEAR);
+    </insert>
     <select id="selectUserType" resultType="String">
         select `sellerorgeneral` from `km_member_uid` where `uid`=#{uid};
     </select>
@@ -44,7 +53,12 @@
     </update>
 
     <!--point-->
-    <select id="selectPointLists" resultType="kr.co.kmarket.vo.MyPointVO">
-        select * from `km_member_point` where `uid`=#{uid} order by `pointDate` desc limit 10;
+    <!-- 게시글 리스트 조회-->
+    <select id="selectPointListByPaging" resultType="kr.co.kmarket.vo.MyPointVO">
+        select * from `km_member_point` where `uid`=#{uid} order by `pointDate` desc limit #{start}, 10;
+    </select>
+    <!--게시글 수 카운팅-->
+    <select id="selectPointListCount" resultType="int">
+        select count(`pointNo`) from `km_member_point` where `uid`=#{uid};
     </select>
 </mapper>

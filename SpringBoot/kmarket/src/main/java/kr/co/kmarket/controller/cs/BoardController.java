@@ -36,7 +36,7 @@ public class BoardController {
         /*** 페이징 처리 ***/
         int currentPage = service.getCurrentPage(pg);
         int start = service.getLimitstart(currentPage);
-        long total = service.getTotalCount(cate1, cate2);
+        long total = service.getTotalCount(cate1, cate2, null);
         int lastPage = service.getLastPageNum(total);
         int pageStartNum = service.getPageStartNum(total, start);
         int groups[] = service.getPageGroup(currentPage, lastPage);
@@ -54,7 +54,7 @@ public class BoardController {
             /*** type에 따른 게시물 list ***/
             for (int j=0; j<type.size(); j++){
                 String tName = types.get(j);
-                faqs.put(tName, service.selectFaqTypeArticles(cate2, tName));
+                faqs.put(tName, service.selectTypeArticles(cate1, cate2, tName, 0));
             }
 
         /*** faq 카테고리가 아니라면 ***/

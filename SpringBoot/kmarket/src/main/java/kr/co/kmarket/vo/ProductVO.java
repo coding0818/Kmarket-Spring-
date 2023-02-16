@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 public class ProductVO {
 
+    private String prodNo;
     private String cate1;
     private String cate2;
     private String seller;
@@ -30,15 +31,10 @@ public class ProductVO {
     private int hit;
     private int score;
     private int review;
-    private MultipartFile file1;
-    private MultipartFile file2;
-    private MultipartFile file3;
-    private MultipartFile file4;
     private String thumb1;
     private String thumb2;
     private String thumb3;
     private String detail;
-
     private String status;
     private String duty;
     private String receipt;
@@ -46,6 +42,13 @@ public class ProductVO {
     private String origin;
     private String ip;
     private String rdate;
+    private MultipartFile file1;
+    private MultipartFile file2;
+    private MultipartFile file3;
+    private MultipartFile file4;
+
+
+
 
     // 추가
     private String newThumb1;
@@ -53,28 +56,18 @@ public class ProductVO {
     private String newThumb3;
     private String newDetail;
 
-    // 필요 여부 판단 후 삭제 해 주십시오
-    private String prodNo;
-    private String type;
+    //
     private int sellPrice;
+
 //    private int prodnum;
     private int count;
     private int total;
 //    private String c1Name;
 //    private String c2Name;
+
+    private String type;
+
     private int level;
-
-
-//    private String uid;
-//    private int cartNo;
-//    private int totalcount;
-//    private int costPrice;
-//    private int totalSalePrice;
-//    private int totalDelivery;
-//    private int totalPoint;
-//    private int totalPrice;
-//    private String content;
-//    private int rating;
 
 
 
