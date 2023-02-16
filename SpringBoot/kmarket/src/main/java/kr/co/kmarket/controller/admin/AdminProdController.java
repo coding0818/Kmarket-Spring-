@@ -6,6 +6,7 @@ package kr.co.kmarket.controller.admin;
  */
 
 import kr.co.kmarket.DTO.PagingDTO;
+import kr.co.kmarket.entity.ProdEntity;
 import kr.co.kmarket.entity.SellerEntity;
 import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.IndexService;
@@ -75,23 +76,19 @@ public class AdminProdController {
                          @AuthenticationPrincipal MySellerDetails sellerDetails,
                          Model model) {
 
-        System.out.println("컨트롤러1");
 
         SellerEntity seller = sellerDetails.getUser();
         String uid = seller.getUid();
 
-        List<ProductVO> productList = service.searchProducts("circle", keyword);
+        List<ProdEntity> products = service.search(keyword);
 
         //log.info("productList : "+productList.size());
         //log.info("productList : "+productList.get(0).getProdName());
 
-        System.out.println("컨트롤러2");
+        System.out.println("prdoucts : ");
+        System.out.println(products);
 
-        System.out.println(productList);
-
-        model.addAttribute("productList", productList);
-
-        System.out.println("컨트롤러3");
+        model.addAttribute("products", products);
 
         return "admin/product/searchList";
     }
