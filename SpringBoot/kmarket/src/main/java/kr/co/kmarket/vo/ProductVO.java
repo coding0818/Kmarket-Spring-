@@ -56,17 +56,14 @@ public class ProductVO {
     private String newThumb3;
     private String newDetail;
 
-    //
     private int sellPrice;
-
-//    private int prodnum;
+//  private int prodnum;
     private int count;
     private int total;
-//    private String c1Name;
-//    private String c2Name;
+//  private String c1Name;
+//  private String c2Name;
 
     private String type;
-
     private int level;
 
 

@@ -136,8 +136,11 @@ public class AdminProdService {
         log.warn("키워드: " + prodName);
         log.warn("레포 들어가기 전");
 
-        List<ProdEntity> products = repo.findByProdNameContaining(prodName);
-        //List<ProdEntity> products = repo.findAll();
+        //List<ProdEntity> products = repo.findByProdNameContains(prodName);
+        List<ProdEntity> products = repo.findAll();
+        // findBy...를 쓰면 전체 null
+        // findAll을 쓰면 prodNo, prodName이 null
+
 
         log.warn("레포 후 1 : " + products);
 
@@ -160,7 +163,6 @@ public class AdminProdService {
 
     private ProductVO convertEntityToVO(ProdEntity product){
         return ProductVO.builder()
-                .prodNo(String.valueOf(product.getProdNo()))
                 .cate1(product.getCate1())
                 .cate2(product.getCate2())
                 .seller(product.getSeller())

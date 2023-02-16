@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface AdminProdRepo extends JpaRepository<ProdEntity, Integer> {
     // <엔티티, PK로 지정한 컬럼의 데이터 타입>
-    List<ProdEntity> findByProdNameContaining(String prodName);
+    List<ProdEntity> findByProdNameContains(String prodName);
 
 
     //@Query("select pe from ProdEntity as pe")
