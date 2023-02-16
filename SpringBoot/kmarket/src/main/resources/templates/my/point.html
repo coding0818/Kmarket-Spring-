@@ -46,47 +46,39 @@
                                 <th>비고</th>
                                 <th>유효기간</th>
                             </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">2022121001</td>                                
-                                <td class="point">340</td>
-                                <td class="desc">상품 구매확정</td>
-                                <td class="expire">2024-12-12</td>
+                            <tr th:if="${#lists.isEmpty(pointList)}">
+                                <td class="date">-</td>
+                                <td class="type">-</td>
+                                <td class="ordNo">-</td>
+                                <td class="point">-</td>
+                                <td class="desc">-</td>
+                                <td class="expire">-</td>
                             </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
+                            <tr th:unless="${#lists.isEmpty(pointList)}" th:each="list:${pointList}">
+                                <td class="date">[[${list.pointDate.substring(0, 10)}]]</td>
                                 <td class="type">적립</td>
-                                <td class="ordNo">2022121001</td>
-                                <td class="point">100</td>
-                                <td class="desc">상품 리뷰 작성 추가 포인트</td>
-                                <td class="expire">2024-12-12</td>
+                                <td class="ordNo">[[${list.ordNo}]]</td>
+                                <td class="point">[[${list.point}]]</td>
+                                <td class="desc">[[${list.pointdes}]]</td>
+                                <td class="expire">[[${list.expireDate.substring(0, 10)}]]</td>
                             </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">2022121001</td>
-                                <td class="point">340</td>
-                                <td class="desc">상품 구매확정</td>
-                                <td class="expire">2024-12-12</td>
-                            </tr>
-                            <tr>
-                                <td class="date">2022-12-13</td>
-                                <td class="type">적립</td>
-                                <td class="ordNo">2022121001</td>
-                                <td class="point">340</td>
-                                <td class="desc">상품 구매확정</td>
-                                <td class="expire">2024-12-12</td>
-                            </tr>
-                            
                         </table>
 
                         <p class="page">
-                            <a href="#" class="prev">이전</a>
-                            <a href="#" class="num on">1</a>
-                            <a href="#" class="num">2</a>
-                            <a href="#" class="num">3</a>
-                            <a href="#" class="next">다음</a>
+                            <th:block th:if="${paging.startPage != 1}">
+                                <a th:href="@{/my/point(nowPage=${paging.startPage - 1})}" class="prev">이전</a>
+                            </th:block>
+                            <th:block th:each="p:${#numbers.sequence(paging.start, paging.end)}">
+                                <th:block th:if="${p == paging.nowPage}">
+                                    <a th:href="@{/my/point(nowPage=${p}, cntPerPage=${paging.cntPerPage})}" class="num on">[[${p}]]</a>
+                                </th:block>
+                                <th:block th:unless="${p == paging.nowPage}">
+                                    <a th:href="@{/my/point(nowPage=${p})}" class="num">[[${p}]]</a>
+                                </th:block>
+                            </th:block>
+                            <th:block th:if="${paging.endPage != paging.lastPage}">
+                                <a th:href="@{/my/point(nowPage=${paging.endPage + 1})}" class="next">다음</a>
+                            </th:block>
                         </p>
 
                     </article>                  

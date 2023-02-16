@@ -45,7 +45,7 @@
                                 <th:block th:if="${order.ordStatus == 2}">
                                     <td class="status">[[${order.ordState}]]</td>
                                     <td class="confirm">
-                                        <a th:href="@{/my/orderConfirm(ordNo=${order.ordNo}, prodNo=${order.prodNo})}" class="receive">수취확인</a>
+                                        <a th:href="@{/my/orderConfirm(ordNo=${order.ordNo}, prodNo=${order.prodNo}, point=${order.point})}" class="receive">수취확인</a>
                                         <a href="#" class="review">상품평</a>
                                         <a href="#" class="refund">반품신청</a>
                                         <a href="#" class="exchange">교환신청</a>
