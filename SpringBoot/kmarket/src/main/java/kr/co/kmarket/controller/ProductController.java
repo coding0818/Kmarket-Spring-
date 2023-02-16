@@ -83,8 +83,14 @@ public class ProductController {
 
         //  장바구니 목록
         List<ProductVO> vo =service.selectCart(mySellerDetails.getUser().getUid());
-
         model.addAttribute("prod", vo);
+
+        // 장바구니 전체 가격 목록
+        ProductVO cvo = service.selectTotalCart(mySellerDetails.getUser().getUid());
+
+        log.info("cvo : "+cvo);
+
+        model.addAttribute("tProd", cvo);
 
         return "product/cart";
     }
@@ -100,10 +106,7 @@ public class ProductController {
 
         vo.setSeller(sellerDetails.getUser().getUid());
 
-
         int result =service.insertCart(vo);
-
-        log.info("result : "+result);
 
         Map<String, Integer> map = new HashMap<>();
         map.put("result", result);

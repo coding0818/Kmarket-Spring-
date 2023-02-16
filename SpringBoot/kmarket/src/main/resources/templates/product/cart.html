@@ -2,6 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <th:block th:replace="~{/product/_header}"/>
+        <script>
+
+
+
+        </script>
             <section class="cart">
                 <nav>
                     <h1>장바구니</h1>
@@ -14,7 +19,7 @@
                   <!-- <input type="hidden" name="seller" th:value="${#authentication.principal.user.uid}"> -->
                     <table border="0">
                         <tr>
-                            <th><input type="checkbox" name="all"></th>
+                            <th><input type="checkbox" id="all" name="all" onclick=""></th>
                             <th>상품명</th>
                             <th>총수량</th>
                             <th>판매가</th>
@@ -30,7 +35,7 @@
                         </th:block>
                         <th:block th:if="${!#lists.isEmpty(prod)}">
                             <tr th:each="prod:${prod}">
-                                <td><input type="checkbox" name="1"></td>
+                                <td><input type="checkbox" id="chk" name="chk"></td>
                                 <td><article>
                                     <a th:href="@{/product/view (cate1=${prod.cate1}, cate2=${prod.cate2}, prodNo=${prod.prodNo})}">
                                         <img src="	https://via.placeholder.com/80x80" alt="1">
@@ -55,27 +60,27 @@
                         <table>
                             <tr>
                                 <td>상품수</td>
-                                <td>1</td>
+                                <td th:text="${#numbers.formatInteger(tProd.count, 0, 'COMMA')}"></td>
                             </tr>
                             <tr>
                                 <td>상품금액</td>
-                                <td>27,000</td>
+                                <td th:text="${#numbers.formatInteger(tProd.price, 0, 'COMMA')}"></td>
                             </tr>
                             <tr>
                                 <td>할인금액</td>
-                                <td>-1,000</td>
+                                <td th:text="${#numbers.formatInteger(tProd.discount, 0, 'COMMA')}"></td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
-                                <td>0</td>
+                                <td th:text="${#numbers.formatInteger(tProd.delivery, 0, 'COMMA')}"></td>
                             </tr>
                             <tr>
                                 <td>포인트</td>
-                                <td>260</td>
+                                <td th:text="${#numbers.formatInteger(tProd.point, 0, 'COMMA')}"></td>
                             </tr>
                             <tr>
                                 <td>전체주문금액</td>
-                                <td>26,000</td>
+                                <td th:text="${#numbers.formatInteger(tProd.total, 0, 'COMMA')}"></td>
                             </tr>
                         </table>
                         <input type="submit" value="주문하기">

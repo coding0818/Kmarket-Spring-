@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!--장바구니 전체 가격-->
-    <select id="selectTotalCart" resultType="kr.co.kmarket.vo.ProductCartVO">
+    <select id="selectTotalCart" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT COUNT(`prodNo`) AS COUNT, SUM(`price`) AS price, SUM(`point`) AS POINT, SUM(`delivery`) AS delivery, SUM(`total`) AS total FROM `km_product_cart` WHERE `uid`=#{uid} ;
     </select>
 
