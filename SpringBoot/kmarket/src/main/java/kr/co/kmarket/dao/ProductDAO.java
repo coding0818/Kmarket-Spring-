@@ -27,4 +27,10 @@ public interface ProductDAO {
     // 장바구니 등록
     public int insertCart(ProductVO vo);
 
+    //장바구니 목록
+    public List<ProductVO> selectCart(String uid);
+
+    // 장바구니 전체 상품 가격
+    public List<CateVO> selectTotalCart(String uid);
+
 }

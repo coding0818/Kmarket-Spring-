@@ -1,21 +1,30 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.DTO.PagingDTO;
+import kr.co.kmarket.security.MySellerDetails;
+import kr.co.kmarket.security.MyUserDetails;
 import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.util.PagingUtil;
 import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.ProductVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 public class ProductController {
 
@@ -67,23 +76,40 @@ public class ProductController {
 
 
     @GetMapping("product/cart")
-    public String cart(Model model){
+    public String cart(Model model, @AuthenticationPrincipal MySellerDetails mySellerDetails){
         // 카테고리 분류
         Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
 
+        //  장바구니 목록
+        List<ProductVO> vo =service.selectCart(mySellerDetails.getUser().getUid());
 
-
+        model.addAttribute("prod", vo);
 
         return "product/cart";
     }
 
     // 장바구니 등록
- //   @ResponseBody
- //   @PostMapping("product/cart")
- //   public String insertCart(){
+    @ResponseBody
+    @PostMapping("product/cart")
+    public Map<String, Integer> insertCart(ProductVO vo, HttpServletRequest req, @AuthenticationPrincipal MySellerDetails sellerDetails){
 
-  //  }
+        log.info("vo : "+vo);
+        log.info("sellerDetails : " +sellerDetails);
+        log.info("sellerUid : " +sellerDetails.getUser().getUid());
+
+        vo.setSeller(sellerDetails.getUser().getUid());
+
+
+        int result =service.insertCart(vo);
+
+        log.info("result : "+result);
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("result", result);
+
+        return map;
+    }
 
     @GetMapping("product/order")
     public String order(Model model){
