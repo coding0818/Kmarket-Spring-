@@ -32,4 +32,7 @@ public interface MyDAO {
     // point
     public int selectPointListCount(String uid);
     public List<MyPointVO> selectPointListByPaging(MyPagingVO dto);
+    public List<MyPointVO> selectPointShort1(String uid);
+    public List<MyPointVO> selectPointShort2(String uid);
+    public List<MyPointVO> selectPointShort3(String uid);
 }

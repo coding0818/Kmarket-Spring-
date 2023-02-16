@@ -61,4 +61,14 @@
     <select id="selectPointListCount" resultType="int">
         select count(`pointNo`) from `km_member_point` where `uid`=#{uid};
     </select>
+    <!--기간별 조회-->
+    <select id="selectPointShort1" resultType="kr.co.kmarket.vo.MyPointVO">
+        select * from `km_member_point` where `uid`=#{uid} AND (`pointDate`> DATE_SUB(NOW(), INTERVAL 7 DAY)) order by `pointDate` desc;
+    </select>
+    <select id="selectPointShort2" resultType="kr.co.kmarket.vo.MyPointVO">
+        select * from `km_member_point` where `uid`=#{uid} AND (`pointDate`> DATE_SUB(NOW(), INTERVAL 15 DAY)) order by `pointDate` desc;
+    </select>
+    <select id="selectPointShort3" resultType="kr.co.kmarket.vo.MyPointVO">
+        select * from `km_member_point` where `uid`=#{uid} AND (`pointDate`> DATE_SUB(NOW(), INTERVAL 1 MONTH)) order by `pointDate` desc;
+    </select>
 </mapper>
