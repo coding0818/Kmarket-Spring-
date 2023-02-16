@@ -24,6 +24,7 @@ public interface ProductDAO {
     // 페이징처리
     public int selectCountProduct(@Param("cate1") String cate1, @Param("cate2") String cate2);
 
-
+    // 장바구니 등록
+    public int insertCart(ProductVO vo);
 
 }

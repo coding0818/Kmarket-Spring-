@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,7 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    // Index
     @GetMapping("product/list")
     public String list(Model model, String cate1, String cate2, String pg){
         // 카테고리 분류
@@ -44,6 +47,7 @@ public class ProductController {
         return "product/list";
     }
 
+    // 단일 상품
     @GetMapping("product/view")
     public String view(Model model, String prodNo, String cate1, String cate2){
         // 카테고리 분류
@@ -61,6 +65,7 @@ public class ProductController {
         return "product/view";
     }
 
+
     @GetMapping("product/cart")
     public String cart(Model model){
         // 카테고리 분류
@@ -72,6 +77,13 @@ public class ProductController {
 
         return "product/cart";
     }
+
+    // 장바구니 등록
+ //   @ResponseBody
+ //   @PostMapping("product/cart")
+ //   public String insertCart(){
+
+  //  }
 
     @GetMapping("product/order")
     public String order(Model model){
