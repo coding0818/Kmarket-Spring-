@@ -30,7 +30,7 @@
                     <table id="tb">
                         <tr>
                             <th>
-                            <input type="checkbox" name="all" class="chk">
+                            <input type="checkbox" name="all" class="chk" onclick="selectAll(this)">
                             </th>
                             <th>번호</th>
                             <th>1차 유형</th>
@@ -42,7 +42,7 @@
                         </tr>
                         
                         <tr class="row" th:each="art,index:${articles}">
-                        	<td><input type="checkbox" name="articleNo" value="${art.csNo}"></td>
+                        	<td><input type="checkbox" name="check" value="${art.csNo}"></td>
                             <td>[[${pageStartNum - index.index}]]</td>
                             <td>[[${art.cate2}]]</td>
                             <td>[[${art.type}]]</td>
@@ -52,13 +52,13 @@
                                 [[${art.rdate}]]
 							</td>
                             <td>
-                                <a href="#" class='remove'>[삭제]</a><br>
-                                <a href="#">[수정]</a>
+                                <a th:href="@{/admin/cs/delete(cate1=${art.cate1}, csNo=${art.csNo})}" class='remove'>[삭제]</a><br>
+                                <a th:href="@{/admin/cs/faq/modify(csNo=${art.csNo})}">[수정]</a>
                             </td>
                         </tr>
                        
                     </table>
-                    <input type="button" class="delete" value="선택삭제">
+                    <input type="button" class="delete" value="선택삭제" onclick="checkDelete()">
                     <a href="#" class="write" id="write">작성하기</a>
 
                     <div class="paging">

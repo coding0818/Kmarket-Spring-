@@ -23,14 +23,14 @@
                             <option value="travel">여행/숙박/항공</option>
                             <option value="safeDeal">안전거래</option>
                         </select>
-                        <select name="type" class="type" onchange="csSearch">
+                        <select name="type" class="type" onchange="csSearch()">
                             <option value="none" disabled selected>2차 선택</option>
                         </select>
                     </div>
                     <table id="tb">
                         <tr>
                             <th>
-                            <input type="checkbox" name="all" class="chk">
+                            <input type="checkbox" name="all" class="chk" onclick="selectAll(this)">
                             </th>
                             <th>번호</th>
                             <th>1차 유형</th>
@@ -42,7 +42,7 @@
                         </tr>
                         
                         <tr class="row" th:each="art,index:${articles}">
-                        	<td><input type="checkbox" name="articleNo" value="${art.csNo}"></td>
+                        	<td><input type="checkbox" name="check" value="${art.csNo}"></td>
                             <td>[[${pageStartNum - index.index}]]</td>
                             <td>[[${art.cate2}]]</td>
                             <td>[[${art.type}]]</td>
@@ -57,7 +57,7 @@
                         </tr>
                        
                     </table>
-                    <input type="button" class="delete" value="선택삭제">
+                    <input type="button" class="delete" value="선택삭제" onclick="checkDelete()">
 
                     <div class="paging">
                         <th:block th:if="${groups[0] > 1}">

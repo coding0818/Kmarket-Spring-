@@ -49,6 +49,10 @@ public class CsService {
         return dao.selectCsArticlesAll(cate1, start);
     }
 
+    public int updateCsArticle (CsVO vo) { return dao.updateCsArticle(vo); }
+
+    public int deleteCsArticle (int csNo) { return dao.deleteCsArticle(csNo); }
+
     /*** 페이지 시작 값 ***/
     public int getLimitstart(int currentPage) {
         return (currentPage - 1) * 10;
