@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -94,18 +95,29 @@ public class MyController {
     }
 
     @GetMapping("my/point")
-    public String point(Principal principal, Model model){
+    public String point(Principal principal, Model model, MyPagingVO vo, @RequestParam(value="nowPage", required=false)String nowPage
+            , @RequestParam(value="cntPerPage", required=false)String cntPerPage){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
         int pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
 
+        // 페이징처리
+
+        int total = service.selectPointListCount(principal.getName());
+        if (nowPage == null){
+            nowPage = "1";
+        }
+        vo = new MyPagingVO(total, Integer.parseInt(nowPage), principal.getName());
+        List<MyPointVO> pointList = service.selectPointListByPaging(vo);
+
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
         model.addAttribute("pointSum", pointSum);
         model.addAttribute("csCount", csCount);
-
+        model.addAttribute("pointList", pointList);
+        model.addAttribute("paging", vo);
         return "my/point";
     }
 
@@ -157,10 +169,18 @@ public class MyController {
     }
 
     @GetMapping("my/orderConfirm")
-    public String orderConfirm(int ordNo, int prodNo){
-        int result = service.updateOrdStatus(ordNo, prodNo);
-        return "redirect:/my/home?result="+result;
-    }
+    public String orderConfirm(String ordNo, int prodNo, int point, Principal principal){
+        MyPointVO vo = new MyPointVO();
+        vo.setUid(principal.getName());
+        vo.setOrdNo(ordNo);
+        vo.setPoint(point);
+        vo.setPointdes("상품 구매적립");
 
+        log.info("ordNo"+ordNo);
+        log.info("point"+point);
+
+        int[] result = service.orderConfirm(ordNo, prodNo, vo);
+        return "redirect:/my/home?result="+result[0]+result[1];
+    }
 
 }
