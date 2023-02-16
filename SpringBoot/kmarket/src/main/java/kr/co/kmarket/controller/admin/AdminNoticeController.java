@@ -52,12 +52,23 @@ public class AdminNoticeController {
     }
 
     @GetMapping("admin/cs/notice/modify")
-    public String modify() {
+    public String modify(Model model, int csNo) {
+        CsVO art = service.selectCsArticle(csNo);
+
+        model.addAttribute("art", art);
         return "admin/cs/notice/modify";
     }
 
     @GetMapping("admin/cs/notice/view")
-    public String view() {return "admin/cs/notice/view";}
+    public String view(Model model, String cate2, String pg, int csNo) {
+
+        CsVO art = service.selectCsArticle(csNo);
+
+        model.addAttribute("cate2", cate2);
+        model.addAttribute("pg", pg);
+        model.addAttribute("csNo", csNo);
+        model.addAttribute("art", art);
+        return "admin/cs/notice/view";}
 
     @GetMapping("admin/cs/notice/write")
     public String write() {return "admin/cs/notice/write";}

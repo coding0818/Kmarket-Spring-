@@ -54,12 +54,23 @@ public class AdminFaqController {
     }
 
     @GetMapping("admin/cs/faq/modify")
-    public String modify() {
+    public String modify(Model model, int csNo) {
+        CsVO art = service.selectCsArticle(csNo);
+
+        model.addAttribute("art", art);
         return "admin/cs/faq/modify";
     }
 
     @GetMapping("admin/cs/faq/view")
-    public String view() {return "admin/cs/faq/view";}
+    public String view(Model model, String cate2, String pg, int csNo) {
+
+        CsVO art = service.selectCsArticle(csNo);
+
+        model.addAttribute("cate2", cate2);
+        model.addAttribute("pg", pg);
+        model.addAttribute("csNo", csNo);
+        model.addAttribute("art", art);
+        return "admin/cs/faq/view";}
 
     @GetMapping("admin/cs/faq/write")
     public String write() {return "admin/cs/faq/write";}

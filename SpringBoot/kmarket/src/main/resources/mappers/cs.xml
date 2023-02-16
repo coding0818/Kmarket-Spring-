@@ -47,6 +47,7 @@
     </select>
 
     <delete id="deleteCsArticle">
+        DELETE FROM `km_cs` WHERE `csNo`=#{csNo};
     </delete>
 
     <select id="selectCountTotalAll" resultType="long">

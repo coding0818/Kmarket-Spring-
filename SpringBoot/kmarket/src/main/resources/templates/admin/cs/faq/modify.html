@@ -38,13 +38,13 @@
 	                                    <tr>
 	                                        <td>제목</td>
 	                                        <td>
-	                                            <input type="text" name="title">
+	                                            <input type="text" name="title" th:value="${art.title}">
 	                                        </td>
 	                                    </tr>
 	                                    <tr>
 	                                        <td>내용</td>
 	                                        <td>
-	                                            <textarea name="content"></textarea>
+	                                            <textarea name="content">[[${art.content}]]</textarea>
 	                                        </td>
 	                                    </tr>
 	                                </tbody>

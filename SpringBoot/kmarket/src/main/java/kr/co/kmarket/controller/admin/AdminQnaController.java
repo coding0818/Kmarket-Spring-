@@ -54,11 +54,19 @@ public class AdminQnaController {
     }
 
     @GetMapping("admin/cs/qna/reply")
-    public String modify() {
+    public String reply() {
         return "admin/cs/faq/reply";
     }
 
     @GetMapping("admin/cs/qna/view")
-    public String view() {return "admin/cs/faq/view";}
+    public String view(Model model, String cate2, String pg, int csNo) {
+
+        CsVO art = service.selectCsArticle(csNo);
+
+        model.addAttribute("cate2", cate2);
+        model.addAttribute("pg", pg);
+        model.addAttribute("csNo", csNo);
+        model.addAttribute("art", art);
+        return "admin/cs/qna/view";}
 
 }
