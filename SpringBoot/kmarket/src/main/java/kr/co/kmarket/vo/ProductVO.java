@@ -58,8 +58,8 @@ public class ProductVO {
     private String type;
     private int sellPrice;
 //    private int prodnum;
-//    private int count;
-//    private int total;
+    private int count;
+    private int total;
 //    private String c1Name;
 //    private String c2Name;
     private int level;

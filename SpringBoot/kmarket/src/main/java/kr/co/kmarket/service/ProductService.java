@@ -39,6 +39,15 @@ public class ProductService {
         return dao.insertCart(vo);
     }
 
+    // 장바구니 목록
+    public List<ProductVO> selectCart(String uid){
+        return dao.selectCart(uid);
+    }
+
+    // 장바구니 전체 상품 가격
+    public List<CateVO> selectTotalCart(String uid){
+        return dao.selectTotalCart(uid);
+    }
 
 
 }

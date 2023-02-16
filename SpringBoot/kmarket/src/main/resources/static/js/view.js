@@ -31,9 +31,27 @@ $(function(){
                 "total" : totalPrice
         }
 
-        let prod = JSON.stringify(jsonData);
+        console.log("jsonData : " +jsonData);
 
 
+        $.ajax({
+                url : '/kmarket/product/cart',
+                method:'POST',
+                data: jsonData,
+                dataType:'JSON',
+                success:function(data){
+                    console.log("data : "+data)
+
+                    if(data.result == 1){
+                        if(confirm('장바구니에 상품이 담겼습니다. 확인하시겠습니까?')){
+                            location.href = "/kmarket/product/cart"
+                        }
+                    }else{
+                        alert('다시 시도하여 주십시오');
+
+                    }
+
+                }
+        });
     });
-
 });

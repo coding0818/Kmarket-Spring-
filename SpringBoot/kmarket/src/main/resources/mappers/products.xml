@@ -43,6 +43,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                         `rdate`=NOW();
     </insert>
 
+    <!--장바구니 목록-->
+    <select id="selectCart" resultType="kr.co.kmarket.vo.ProductVO">
+        SELECT a.*, b.`cate1`, b.`cate2`,b.`thumb2`, b.`prodName`, b.`descript` FROM `km_product_cart` AS a JOIN
+        `km_product` AS b ON a.`prodNo` = b.`prodNo`
+        WHERE `uid`=#{uid};
+    </select>
+
+    <!--장바구니 전체 가격-->
+    <select id="selectTotalCart" resultType="kr.co.kmarket.vo.ProductCartVO">
+        SELECT COUNT(`prodNo`) AS COUNT, SUM(`price`) AS price, SUM(`point`) AS POINT, SUM(`delivery`) AS delivery, SUM(`total`) AS total FROM `km_product_cart` WHERE `uid`=#{uid} ;
+    </select>
+
     <!--판매량-->
     <select id="selectProductsSold" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT A.*, B.`level` FROM `km_product` AS A
