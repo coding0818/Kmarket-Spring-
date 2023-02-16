@@ -31,6 +31,6 @@ public interface ProductDAO {
     public List<ProductVO> selectCart(String uid);
 
     // 장바구니 전체 상품 가격
-    public List<CateVO> selectTotalCart(String uid);
+    public ProductVO selectTotalCart(String uid);
 
 }

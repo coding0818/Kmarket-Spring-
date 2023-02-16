@@ -1,3 +1,7 @@
+/**
+    날짜 : 2023/02/15
+    이름 : 황원진
+**/
 $(function(){
       var num = document.querySelector('input[name=num]');
 
