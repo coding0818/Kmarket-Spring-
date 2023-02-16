@@ -34,7 +34,10 @@ public class ProductService {
         return dao.selectCountProduct(cate1, cate2);
     }
 
-
+    // 장바구니 등록
+    public int insertCart(ProductVO vo){
+        return dao.insertCart(vo);
+    }
 
 
 
