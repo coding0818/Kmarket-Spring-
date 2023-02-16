@@ -1,6 +1,5 @@
 package kr.co.kmarket.service;
 
-import kr.co.kmarket.vo.MyPagingVO;
 import kr.co.kmarket.dao.MyDAO;
 import kr.co.kmarket.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +72,15 @@ public class MyService {
 
     public List<MyPointVO> selectPointListByPaging(MyPagingVO vo){
         return dao.selectPointListByPaging(vo);
+    }
+
+    public List<MyPointVO> selectPointShort1(String uid){
+        return dao.selectPointShort1(uid);
+    }
+    public List<MyPointVO> selectPointShort2(String uid){
+        return dao.selectPointShort2(uid);
+    }
+    public List<MyPointVO> selectPointShort3(String uid){
+        return dao.selectPointShort3(uid);
     }
 }

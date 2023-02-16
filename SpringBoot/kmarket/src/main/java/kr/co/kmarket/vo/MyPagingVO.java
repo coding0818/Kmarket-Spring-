@@ -9,12 +9,11 @@ import lombok.*;
 public class MyPagingVO {
     private String uid;
     private int pageSize = 5;
-    private int cntPerPage = 10; //페이지당 글개수
 
-    // 현재페이지, 시작페이지, 끝페이지, 게시글 총개수, 마지막페이지, SQL쿼리에 쓸 start, end
-    private int nowPage, startPage, endPage, total, lastPage, start, end;
+    // 현재페이지, 시작페이지, 페이지당 글개수, 끝페이지, 게시글 총개수, 마지막페이지, SQL쿼리에 쓸 start, end
+    private int nowPage, startPage, cntPerPage, endPage, total, lastPage, start, end;
 
-    public MyPagingVO(int total, int nowPage, String uid){
+    public MyPagingVO(int total, int nowPage, int cntPerPage, String uid){
         setNowPage(nowPage);
         setCntPerPage(cntPerPage);
         setTotal(total);
@@ -27,7 +26,7 @@ public class MyPagingVO {
     // 제일 마지막 페이지 계산
     public void calcLastPage(int total, int cntPerPage){
         if (total % cntPerPage > 0) {
-            setLastPage((int)Math.ceil((double)total / (double)cntPerPage));
+            setLastPage((total / cntPerPage)+1);
         }else{
             setLastPage(total / cntPerPage);
         }
@@ -39,12 +38,17 @@ public class MyPagingVO {
         if (getLastPage() < getEndPage()){
             setEndPage(getLastPage());
         }
-        
+        // 공식 : 현재페이지 / 페이징의 개수 * 페이징의 개수 + 1;
+        if(nowPage % pageSize == 0){
+            setStartPage(nowPage / pageSize * pageSize + 1 - pageSize);
+        }else{
+            setStartPage(nowPage / pageSize * pageSize + 1);
+        }
     }
 
     // DB 쿼리에서 사용할 start, end 값 계산
     public void calcStartEnd(int nowPage, int cntPerPage){
         setEnd(nowPage * cntPerPage);
-        setStart(getEnd() - cntPerPage + 1);
+        setStart((nowPage - 1)*10);
     }
 }

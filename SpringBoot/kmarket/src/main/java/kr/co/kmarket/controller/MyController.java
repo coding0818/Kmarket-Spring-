@@ -95,8 +95,9 @@ public class MyController {
     }
 
     @GetMapping("my/point")
-    public String point(Principal principal, Model model, MyPagingVO vo, @RequestParam(value="nowPage", required=false)String nowPage
-            , @RequestParam(value="cntPerPage", required=false)String cntPerPage){
+    public String point(Principal principal, Model model, MyPagingVO vo,
+                        @RequestParam(value="nowPage", required=false)String nowPage,
+                        @RequestParam(value="cntPerPage", required=false)String cntPerPage){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
@@ -109,7 +110,10 @@ public class MyController {
         if (nowPage == null){
             nowPage = "1";
         }
-        vo = new MyPagingVO(total, Integer.parseInt(nowPage), principal.getName());
+        if(cntPerPage == null){
+            cntPerPage = "10";
+        }
+        vo = new MyPagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), principal.getName());
         List<MyPointVO> pointList = service.selectPointListByPaging(vo);
 
         model.addAttribute("orderCount", orderCount);
@@ -181,6 +185,31 @@ public class MyController {
 
         int[] result = service.orderConfirm(ordNo, prodNo, vo);
         return "redirect:/my/home?result="+result[0]+result[1];
+    }
+
+    // 포인트 기간별 조회
+    @GetMapping("my/findPoint")
+    public String findPoint(int division, int no, Model model, Principal principal){
+        List<MyPointVO> pointList = null;
+        if(division == 1){
+            if(no == 1){
+                log.info("findPoint division :"+division);
+                log.info("findPoint no:"+no);
+                pointList = service.selectPointShort1(principal.getName());
+            }else if(no == 2){
+                log.info("findPoint division :"+division);
+                log.info("findPoint no:"+no);
+                pointList = service.selectPointShort2(principal.getName());
+            }else{
+                log.info("findPoint division :"+division);
+                log.info("findPoint no:"+no);
+                pointList = service.selectPointShort3(principal.getName());
+            }
+        }
+
+        log.info("pointList : "+pointList.size());
+        model.addAttribute("pointList", pointList);
+        return "my/point";
     }
 
 }
