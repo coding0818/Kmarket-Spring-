@@ -65,7 +65,7 @@
                         <td th:text="${product.prodName}">FreeMovement BLUEFORCE</td>
                         <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '원'}">36,000</td>
                         <td th:text="${product.discount + '%'}">10</td>
-                        <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '점'}">360</td>
+                        <td th:text="${#numbers.formatInteger(product.point, 0, 'COMMA') + '점'}">360</td>
                         <td th:text="${#numbers.formatInteger(product.stock, 0, 'COMMA') + '개'}">400</td>
                         <td th:text="${product.seller}">홍길동</td>
                         <td th:text="${#numbers.formatInteger(product.hit, 0, 'COMMA')}">126</td>

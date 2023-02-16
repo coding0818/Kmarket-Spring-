@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +29,7 @@ public class AdminProdService {
 
     @Autowired
     private AdminProdDAO dao;
+
     @Autowired
     private AdminProdRepo repo;
 
@@ -129,12 +131,48 @@ public class AdminProdService {
         return dao.selectProductsAdmin(start);
     }
     // ------------------------------------------ 상품 목록 (키워드 검색) ------------------------------
-    public List<ProdEntity> search(String keyword){
-        List<ProdEntity> productsList = repo.findByProdNameContaining(keyword);
-        return productsList;
+    public List<ProductVO> search(String prodName){
+
+        log.warn("키워드: " + prodName);
+        log.warn("레포 들어가기 전");
+
+        List<ProdEntity> products = repo.findByProdNameContaining(prodName);
+        //List<ProdEntity> products = repo.findAll();
+
+        log.warn("레포 후 1 : " + products);
+
+        List<ProductVO> productVOList = new ArrayList<>();
+
+        if(products.isEmpty()){
+            log.warn("레포 후 - null");
+            return productVOList;
+        }
+
+        for (ProdEntity product : products){
+            log.warn("레포 후 2");
+            productVOList.add(this.convertEntityToVO(product));
+        }
+
+        log.warn("레포 나온 후 서비스: " + productVOList);
+
+        return productVOList;
     }
 
-
+    private ProductVO convertEntityToVO(ProdEntity product){
+        return ProductVO.builder()
+                .prodNo(String.valueOf(product.getProdNo()))
+                .cate1(product.getCate1())
+                .cate2(product.getCate2())
+                .seller(product.getSeller())
+                .prodName(product.getProdName())
+                .thumb1((product.getThumb1()))
+                .price(product.getPrice())
+                .discount(product.getDiscount())
+                .point(product.getPoint())
+                .stock(product.getStock())
+                .hit(product.getHit())
+                .build();
+    }
 
     // --------------------  페이징  -----------------------
     // 전체 게시글 개수

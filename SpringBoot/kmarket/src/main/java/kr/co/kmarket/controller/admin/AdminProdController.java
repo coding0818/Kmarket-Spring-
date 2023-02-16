@@ -6,7 +6,6 @@ package kr.co.kmarket.controller.admin;
  */
 
 import kr.co.kmarket.DTO.PagingDTO;
-import kr.co.kmarket.entity.ProdEntity;
 import kr.co.kmarket.entity.SellerEntity;
 import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.IndexService;
@@ -39,7 +38,7 @@ public class AdminProdController {
 
     // ------------------------------------------ 상품 목록 ------------------------------------------
     @GetMapping("admin/product/list")
-    public String list(Model model, @AuthenticationPrincipal MySellerDetails sellerDetails, String pg, HttpServletRequest req) {
+    public String list(Model model, String pg, HttpServletRequest req, @AuthenticationPrincipal MySellerDetails sellerDetails) {
 
         SellerEntity seller = sellerDetails.getUser();
 
@@ -48,8 +47,6 @@ public class AdminProdController {
 
         String uid = seller.getUid();
         int level = seller.getLevel();
-
-        System.out.println("상품 목록 구별 전");
 
         // 페이징
         PagingDTO paging = new PagingUtil().getPagingDTO(pg, service.selectCountProduct(uid));
@@ -68,6 +65,7 @@ public class AdminProdController {
             model.addAttribute("paging", paging);
         }
 
+
         return "admin/product/list";
     }
     // ------------------------------------------ 상품 목록 (키워드 검색) ------------------------------------------
@@ -75,20 +73,21 @@ public class AdminProdController {
     public String search(@RequestParam(value = "keyword") String keyword,
                          @AuthenticationPrincipal MySellerDetails sellerDetails,
                          Model model) {
-
-
         SellerEntity seller = sellerDetails.getUser();
         String uid = seller.getUid();
 
-        List<ProdEntity> products = service.search(keyword);
+        log.warn("서비스 들어가기 전");
+
+        List<ProductVO> productVOList = service.search(keyword);
+        // 모델 전송
 
         //log.info("productList : "+productList.size());
         //log.info("productList : "+productList.get(0).getProdName());
 
-        System.out.println("prdoucts : ");
-        System.out.println(products);
+        log.warn("서비스에서 나온 후 컨트롤러");
+        log.warn("prdoucts : "+productVOList);
 
-        model.addAttribute("products", products);
+        model.addAttribute("products", productVOList);
 
         return "admin/product/searchList";
     }
