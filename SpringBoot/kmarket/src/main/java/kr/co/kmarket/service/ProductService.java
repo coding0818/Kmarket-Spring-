@@ -20,8 +20,8 @@ public class ProductService {
     }
 
     // cate별 상품리스트 조회
-    public List<ProductVO> selectProducts(String cate1, String cate2, int start){
-        return dao.selectProducts(cate1, cate2, start);
+    public List<ProductVO> selectProducts(String cate1, String cate2, int start, String sort){
+        return dao.selectProducts(cate1, cate2, start, sort);
     }
 
     // 상품 네비게이션

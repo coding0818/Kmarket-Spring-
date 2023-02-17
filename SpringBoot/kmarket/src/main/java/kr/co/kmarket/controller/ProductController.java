@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,7 @@ public class ProductController {
 
     // Index
     @GetMapping("product/list")
-    public String list(Model model, String cate1, String cate2, String pg){
+    public String list(Model model, String cate1, String cate2, String pg, String sort){
         // 카테고리 분류
         Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
@@ -45,9 +46,11 @@ public class ProductController {
         PagingDTO paging = new PagingUtil().getPagingDTO(pg, service.selectCountProduct(cate1, cate2));
 
         // cate별 상품리스트 조회하기
-        List<ProductVO> products = service.selectProducts(cate1, cate2, paging.getStart());
+        List<ProductVO> products = service.selectProducts(cate1, cate2, paging.getStart(), sort);
         model.addAttribute("prods", products);
         model.addAttribute("paging", paging);
+        model.addAttribute("cate1", cate1);
+        model.addAttribute("cate2", cate2);
 
         // 상품 네비게이션
         CateVO ncate = service.selectCate(cate1, cate2);
@@ -102,7 +105,10 @@ public class ProductController {
 
         log.info("vo : "+vo);
         log.info("sellerDetails : " +sellerDetails);
-        log.info("sellerUid : " +sellerDetails.getUser().getUid());
+
+      //  HttpSession session =req.getSession();
+
+        //log.info("sesssion : " + session);
 
         vo.setSeller(sellerDetails.getUser().getUid());
 

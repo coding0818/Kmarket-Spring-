@@ -10,7 +10,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--cate별 상품리스트 조회하기-->
     <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO" parameterType="map">
-        SELECT * FROM `km_product` WHERE `cate1`=#{cate1} AND `cate2`=#{cate2} ORDER BY `prodNo` DESC LIMIT #{start}, 10;
+        SELECT * FROM `km_product` WHERE `cate1`=#{cate1} AND `cate2`=#{cate2}
+        <choose>
+            <when test="sort == 'sold'"> ORDER BY `sold` DESC LIMIT #{start}, 10;</when>
+            <when test="sort == 'lowPrice'"> ORDER BY `sellPrice` asc LIMIT #{start}, 10;</when>
+            <when test="sort == 'highPrice'"> ORDER BY `sellPrice` DESC LIMIT #{start}, 10;</when>
+            <when test="sort == 'score'"> ORDER BY `score` DESC LIMIT #{start}, 10;</when>
+            <when test="sort == 'review'"> ORDER BY `review` DESC LIMIT #{start}, 10;</when>
+            <when test="sort == 'rdate'"> ORDER BY `rdate` DESC LIMIT #{start}, 10;</when>
+        </choose>
     </select>
 
     <!--상품번호로 상품 조회하기-->
