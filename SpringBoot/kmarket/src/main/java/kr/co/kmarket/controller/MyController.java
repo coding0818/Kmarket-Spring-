@@ -102,9 +102,7 @@ public class MyController {
     public String point(Principal principal, Model model, MyPagingVO vo,
                         @RequestParam(value="nowPage", required=false)String nowPage,
                         @RequestParam(value="cntPerPage", required=false)String cntPerPage,
-                        @RequestParam(value="division", required = false) int division,
-                        @RequestParam(value = "no", required = false) int no,
-                        @PageableDefault(size = 10, sort = "pointDate", direction = Sort.Direction.DESC) Pageable pageable){
+                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
@@ -114,36 +112,8 @@ public class MyController {
         // 기간별 조회
         List<MyPointEntity> pointList = null;
 
-        /*
-        if(division == 1){
-            if(no == 1){
-                log.info("findPoint division :"+division);
-                log.info("findPoint no:"+no);
-                pointList = service.selectPointShort1(principal.getName());
-            }else if(no == 2){
-                log.info("findPoint division :"+division);
-                log.info("findPoint no:"+no);
-                pointList = service.selectPointShort2(principal.getName());
-            }else{
-                log.info("findPoint division :"+division);
-                log.info("findPoint no:"+no);
-                pointList = service.selectPointShort3(principal.getName());
-            }
-        }
-
-        log.info("pointList : "+pointList.size());
-        */
-
         // 페이징처리
 
-        int total = service.selectPointListCount(principal.getName());
-        if (nowPage == null){
-            nowPage = "1";
-        }
-        if(cntPerPage == null){
-            cntPerPage = "10";
-        }
-        vo = new MyPagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), principal.getName());
         //pointList = service.findByUid(principal.getName(), pageable);
 
         model.addAttribute("orderCount", orderCount);
