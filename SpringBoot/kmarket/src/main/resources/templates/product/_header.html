@@ -87,7 +87,7 @@
           </a>
           <ol>
             <li th:each="brand:${cate.get('10')}">
-              <a th:href="@{/product/list (cate1=${brand.cate1}, cate2=${brand.cate2})}">[[${brand.c2Name}]]</a>
+              <a th:href="@{/product/list (cate1=${brand.cate1}, cate2=${brand.cate2}, sort='sold')}">[[${brand.c2Name}]]</a>
             </li>
           </ol>
         </li>
@@ -99,7 +99,7 @@
           </a>
           <ol>
             <li th:each="fashion:${cate.get('11')}">
-              <a th:href="@{/product/list (cate1=${fashion.cate1}, cate2=${fashion.cate2})}">[[${fashion.c2Name}]]</a>
+              <a th:href="@{/product/list (cate1=${fashion.cate1}, cate2=${fashion.cate2}, sort='sold')}">[[${fashion.c2Name}]]</a>
             </li>
           </ol>
         </li>
@@ -111,7 +111,7 @@
           </a>
           <ol>
             <li th:each="baby:${cate.get('12')}">
-              <a th:href="@{/product/list (cate1=${baby.cate1}, cate2=${baby.cate2})}">[[${baby.c2Name}]]</a>
+              <a th:href="@{/product/list (cate1=${baby.cate1}, cate2=${baby.cate2}, sort='sold')}">[[${baby.c2Name}]]</a>
             </li>
           </ol>
         </li>
@@ -123,7 +123,7 @@
           </a>
           <ol>
             <li th:each="utensils:${cate.get('13')}">
-              <a th:href="@{/product/list (cate1=${utensils.cate1}, cate2=${utensils.cate2})}">[[${utensils.c2Name}]]</a>
+              <a th:href="@{/product/list (cate1=${utensils.cate1}, cate2=${utensils.cate2}, sort='sold')}">[[${utensils.c2Name}]]</a>
             </li>
           </ol>
         </li>
@@ -135,7 +135,7 @@
           </a>
           <ol>
             <li th:each="home:${cate.get('14')}">
-              <a th:href="@{/product/list (cate1=${home.cate1}, cate2=${home.cate2})}">[[${home.c2Name}]]</a>
+              <a th:href="@{/product/list (cate1=${home.cate1}, cate2=${home.cate2}, sort='sold')}">[[${home.c2Name}]]</a>
             </li>
           </ol>
         </li>
@@ -147,7 +147,7 @@
           </a>
           <ol>
             <li th:each="tv:${cate.get('15')}">
-              <a th:href="@{/product/list (cate1=${tv.cate1}, cate2=${tv.cate2})}">[[${tv.c2Name}]]</a>
+              <a th:href="@{/product/list (cate1=${tv.cate1}, cate2=${tv.cate2}, sort='sold')}">[[${tv.c2Name}]]</a>
             </li>
           </ol>
         </li>
@@ -159,7 +159,7 @@
           </a>
           <ol>
             <li th:each="running:${cate.get('16')}">
-              <a th:href="@{/product/list (cate1=${running.cate1}, cate2=${running.cate2})}">[[${running.c2Name}]]</a>
+              <a th:href="@{/product/list (cate1=${running.cate1}, cate2=${running.cate2}, sort='sold')}">[[${running.c2Name}]]</a>
             </li>
           </ol>
         </li>
@@ -171,7 +171,7 @@
           </a>
           <ol>
             <li th:each="car:${cate.get('17')}">
-              <a th:href="@{/product/list (cate1=${car.cate1}, cate2=${car.cate2})}">[[${car.c2Name}]]</a>
+              <a th:href="@{/product/list (cate1=${car.cate1}, cate2=${car.cate2}, sort='sold')}">[[${car.c2Name}]]</a>
             </li>
           </ol>
         </li>
@@ -183,7 +183,7 @@
           </a>
           <ol>
             <li th:each="book:${cate.get('18')}">
-              <a th:href="@{/product/list (cate1=${book.cate1}, cate2=${book.cate2})}">[[${book.c2Name}]]</a>
+              <a th:href="@{/product/list (cate1=${book.cate1}, cate2=${book.cate2}, sort='sold')}">[[${book.c2Name}]]</a>
             </li>
           </ol>
         </li>

@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProductDAO {
 
     // cate별 상품리스트 조회하기
-    public List<ProductVO> selectProducts(@Param("cate1") String cate1, @Param("cate2") String cate2, @Param("start") int start);
+    public List<ProductVO> selectProducts(@Param("cate1") String cate1, @Param("cate2") String cate2, @Param("start") int start, @Param("sort") String sort);
 
     // 상품번호로 상품 조회하기
     public ProductVO selectProduct(String prodNo);
