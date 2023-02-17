@@ -1,14 +1,18 @@
 package kr.co.kmarket.controller;
 
+import kr.co.kmarket.entity.MyPointEntity;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.awt.print.Pageable;
 import java.security.Principal;
 import java.util.List;
 
@@ -97,12 +101,38 @@ public class MyController {
     @GetMapping("my/point")
     public String point(Principal principal, Model model, MyPagingVO vo,
                         @RequestParam(value="nowPage", required=false)String nowPage,
-                        @RequestParam(value="cntPerPage", required=false)String cntPerPage){
+                        @RequestParam(value="cntPerPage", required=false)String cntPerPage,
+                        @RequestParam(value="division", required = false) int division,
+                        @RequestParam(value = "no", required = false) int no,
+                        @PageableDefault(size = 10, sort = "pointDate", direction = Sort.Direction.DESC) Pageable pageable){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
         int pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
+
+        // 기간별 조회
+        List<MyPointEntity> pointList = null;
+
+        /*
+        if(division == 1){
+            if(no == 1){
+                log.info("findPoint division :"+division);
+                log.info("findPoint no:"+no);
+                pointList = service.selectPointShort1(principal.getName());
+            }else if(no == 2){
+                log.info("findPoint division :"+division);
+                log.info("findPoint no:"+no);
+                pointList = service.selectPointShort2(principal.getName());
+            }else{
+                log.info("findPoint division :"+division);
+                log.info("findPoint no:"+no);
+                pointList = service.selectPointShort3(principal.getName());
+            }
+        }
+
+        log.info("pointList : "+pointList.size());
+        */
 
         // 페이징처리
 
@@ -114,7 +144,7 @@ public class MyController {
             cntPerPage = "10";
         }
         vo = new MyPagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), principal.getName());
-        List<MyPointVO> pointList = service.selectPointListByPaging(vo);
+        //pointList = service.findByUid(principal.getName(), pageable);
 
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
@@ -185,31 +215,6 @@ public class MyController {
 
         int[] result = service.orderConfirm(ordNo, prodNo, vo);
         return "redirect:/my/home?result="+result[0]+result[1];
-    }
-
-    // 포인트 기간별 조회
-    @GetMapping("my/findPoint")
-    public String findPoint(int division, int no, Model model, Principal principal){
-        List<MyPointVO> pointList = null;
-        if(division == 1){
-            if(no == 1){
-                log.info("findPoint division :"+division);
-                log.info("findPoint no:"+no);
-                pointList = service.selectPointShort1(principal.getName());
-            }else if(no == 2){
-                log.info("findPoint division :"+division);
-                log.info("findPoint no:"+no);
-                pointList = service.selectPointShort2(principal.getName());
-            }else{
-                log.info("findPoint division :"+division);
-                log.info("findPoint no:"+no);
-                pointList = service.selectPointShort3(principal.getName());
-            }
-        }
-
-        log.info("pointList : "+pointList.size());
-        model.addAttribute("pointList", pointList);
-        return "my/point";
     }
 
 }
