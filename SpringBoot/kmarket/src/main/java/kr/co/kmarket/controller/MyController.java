@@ -5,6 +5,8 @@ import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -12,8 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.awt.print.Pageable;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -99,29 +103,77 @@ public class MyController {
     }
 
     @GetMapping("my/point")
-    public String point(Principal principal, Model model, MyPagingVO vo,
-                        @RequestParam(value="nowPage", required=false)String nowPage,
-                        @RequestParam(value="cntPerPage", required=false)String cntPerPage,
-                        @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable){
+    public String point(Principal principal, Model model,
+                        @RequestParam(value = "division", required = false, defaultValue = "0") int division,
+                        @RequestParam(value = "no", required = false, defaultValue = "0") int no,
+                        @PageableDefault(size = 10, sort = "pointDate", direction = Sort.Direction.DESC) Pageable pageable){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
         int pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
 
+        Page<MyPointEntity> pointList = null;
+
         // 기간별 조회
-        List<MyPointEntity> pointList = null;
+        Calendar cal = Calendar.getInstance();
+        if(division == 1){
+            if(no == 1){
+                cal.add(Calendar.DATE, -7);
+            }else if(no == 2){
+                cal.add(Calendar.DATE, -15);
+            }else{
+                cal.add(Calendar.MONTH, -1);
+            }
+            Date date = new Date(cal.getTimeInMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String newdate = sdf.format(date);
+            log.info("date : "+date);
+            pointList = service.findByUidAndPointDate1(principal.getName(), newdate, pageable);
+        }else if(division == 2){
+            if(no == 1){
+                cal.add(Calendar.MONTH, -1);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            } else if (no == 2) {
+                cal.add(Calendar.MONTH, -2);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            } else if (no == 3) {
+                cal.add(Calendar.MONTH, -3);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            } else if (no == 4) {
+                cal.add(Calendar.MONTH, -4);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            } else{
+                cal.add(Calendar.MONTH, -5);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            }
+            Date date = new Date(cal.getTimeInMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sta = new SimpleDateFormat("yyyy-MM-01");
+            String startdate = sta.format(date);
+            String enddate = sdf.format(date);
+            log.info("startdate : "+startdate);
+            log.info("enddate : "+enddate);
+            pointList = service.findByUidAndPointDate2(principal.getName(), startdate, enddate, pageable);
+        }else{pointList = service.findByUid(principal.getName(), pageable);}
 
         // 페이징처리
+        int start = (int)(Math.floor(pointList.getNumber() / 5)*5+1);
 
-        //pointList = service.findByUid(principal.getName(), pageable);
+        log.info("pointList:"+pointList.getContent());
+        log.info("pointList:"+pointList.getContent().size());
+        log.info("start : "+start);
 
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
         model.addAttribute("pointSum", pointSum);
         model.addAttribute("csCount", csCount);
-        model.addAttribute("pointList", pointList);
-        model.addAttribute("paging", vo);
+        model.addAttribute("pointList", pointList.getContent());
+        model.addAttribute("page", pointList);
+        model.addAttribute("start", start);
+        model.addAttribute("division", division);
+        model.addAttribute("no", no);
+
         return "my/point";
     }
 

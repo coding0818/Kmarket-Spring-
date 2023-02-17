@@ -1,9 +1,12 @@
 package kr.co.kmarket.service;
 
 import kr.co.kmarket.dao.MyDAO;
+import kr.co.kmarket.entity.MyPointEntity;
 import kr.co.kmarket.repository.MyPointRepo;
 import kr.co.kmarket.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -88,8 +91,14 @@ public class MyService {
         return dao.selectPointShort3(uid);
     }
 
-    /*
-    public List<MyPointEntity> findByUid(String uid, Pageable pageable){
+    public Page<MyPointEntity> findByUid(String uid, Pageable pageable){
         return repo.findByUid(uid, pageable);
-    }*/
+    }
+    public Page<MyPointEntity> findByUidAndPointDate1(String uid, String date, Pageable pageable){
+        return repo.findByUidAndPointDate1(uid, date, pageable);
+    }
+
+    public Page<MyPointEntity> findByUidAndPointDate2(String uid, String startdate, String enddate, Pageable pageable){
+        return repo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
+    }
 }
