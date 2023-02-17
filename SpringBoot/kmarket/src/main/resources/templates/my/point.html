@@ -25,6 +25,10 @@
         $('#three').append(threeMonthAgo);
         $('#four').append(fourMonthAgo);
         $('#five').append(fiveMonthAgo);
+
+        $('.btnConfirm').click(function(){
+            
+        });
     });
 </script>
             <div class="point">
@@ -52,11 +56,11 @@
                                 <li><a th:href="@{/my/point(division=1, no=3)}" th:class="${division == 1 && no == 3}?'on'"><em>1</em>개월</a></li>
                             </ul>
                             <ul class="date_5ea">
-                                <li><a th:href="@{/my/point(division=2, no=1)}" th:class="${division == 2 && no == 5}?'on'"><em id="five"></em>월</a></li>
-                                <li><a th:href="@{/my/point(division=2, no=2)}" th:class="${division == 2 && no == 4}?'on'"><em id="four"></em>월</a></li>
+                                <li><a th:href="@{/my/point(division=2, no=5)}" th:class="${division == 2 && no == 5}?'on'"><em id="five"></em>월</a></li>
+                                <li><a th:href="@{/my/point(division=2, no=4)}" th:class="${division == 2 && no == 4}?'on'"><em id="four"></em>월</a></li>
                                 <li><a th:href="@{/my/point(division=2, no=3)}" th:class="${division == 2 && no == 3}?'on'"><em id="three"></em>월</a></li>
-                                <li><a th:href="@{/my/point(division=2, no=4)}" th:class="${division == 2 && no == 2}?'on'"><em id="two"></em>월</a></li>
-                                <li><a th:href="@{/my/point(division=2, no=5)}" th:class="${division == 2 && no == 1}?'on'"><em id="one"></em>월</a></li>
+                                <li><a th:href="@{/my/point(division=2, no=2)}" th:class="${division == 2 && no == 2}?'on'"><em id="two"></em>월</a></li>
+                                <li><a th:href="@{/my/point(division=2, no=1)}" th:class="${division == 2 && no == 1}?'on'"><em id="one"></em>월</a></li>
                             </ul>
                             <p>
                                 <input type="date" name="begin"><span>~</span><input type="date" name="end">
