@@ -78,7 +78,7 @@
                     <article th:each="hit, i:${index.hit}">
                         <a th:href="@{/product/view (cate1=${hit.cate1}, cate2=${hit.cate2}, prodNo=${hit.prodNo})}">
                             <div class="thumb">
-                                <img th:src="|@{/}thumb/${hit.cate1}/${hit.cate2}/${hit.thumb1}" alt="t1">
+                                <img th:src="@{/thumb/{cate1}/{cate2}/{thumb1} (cate1=${hit.cate1}, cate2=${hit.cate2}, thumb1=${hit.thumb1})}" alt="t1">
                             </div>
                             <h2>[[${hit.prodName}]]</h2>
                             <p>[[${hit.descript}]]</p>

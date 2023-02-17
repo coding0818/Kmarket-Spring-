@@ -42,6 +42,10 @@ public class ProductController {
         Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
 
+        // 상품 네비게이션
+        CateVO ncate = service.selectCate(cate1, cate2);
+        model.addAttribute("ncate", ncate);
+
         // 페이징
         PagingDTO paging = new PagingUtil().getPagingDTO(pg, service.selectCountProduct(cate1, cate2));
 
@@ -51,10 +55,6 @@ public class ProductController {
         model.addAttribute("paging", paging);
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);
-
-        // 상품 네비게이션
-        CateVO ncate = service.selectCate(cate1, cate2);
-        model.addAttribute("ncate", ncate);
 
         return "product/list";
     }
@@ -106,19 +106,30 @@ public class ProductController {
         log.info("vo : "+vo);
         log.info("sellerDetails : " +sellerDetails);
 
-      //  HttpSession session =req.getSession();
-
-        //log.info("sesssion : " + session);
+        HttpSession session =req.getSession();
 
         vo.setSeller(sellerDetails.getUser().getUid());
 
-        int result =service.insertCart(vo);
+        int result =  service.insertCart(vo);
+
+
+
+
+
+
+
 
         Map<String, Integer> map = new HashMap<>();
         map.put("result", result);
 
         return map;
     }
+
+   // @GetMapping("product/firstorder")
+   // public String firstorder(){
+
+    //}
+
 
     @GetMapping("product/order")
     public String order(Model model){
