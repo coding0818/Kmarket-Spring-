@@ -23,6 +23,7 @@ public class ProdEntity {
     private String company;
     private int price;
     private int discount;
+    private int sellPrice;
     private int point;
     private int stock;
     private int sold;
@@ -41,6 +42,7 @@ public class ProdEntity {
     private String origin;
     private String ip;
     private String rdate;
+    private String seller_entity_uid;
 
 
 
