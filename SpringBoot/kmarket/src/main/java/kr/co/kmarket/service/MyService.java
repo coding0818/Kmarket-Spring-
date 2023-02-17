@@ -1,11 +1,14 @@
 package kr.co.kmarket.service;
 
 import kr.co.kmarket.dao.MyDAO;
+import kr.co.kmarket.entity.MyPointEntity;
+import kr.co.kmarket.repository.MyPointRepo;
 import kr.co.kmarket.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -13,6 +16,9 @@ public class MyService {
 
     @Autowired
     private MyDAO dao;
+
+    @Autowired
+    private MyPointRepo repo;
 
     // 공통
     public int selectCountOrder(String uid){
@@ -82,5 +88,9 @@ public class MyService {
     }
     public List<MyPointVO> selectPointShort3(String uid){
         return dao.selectPointShort3(uid);
+    }
+
+    public List<MyPointEntity> findByUid(String uid, Pageable pageable){
+        return repo.findByUid(uid, pageable);
     }
 }
