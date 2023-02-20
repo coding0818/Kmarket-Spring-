@@ -10,7 +10,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--cate별 상품리스트 조회하기-->
     <select id="selectProducts" resultType="kr.co.kmarket.vo.ProductVO" parameterType="map">
-        SELECT * FROM `km_product` WHERE `cate1`=#{cate1} AND `cate2`=#{cate2}
+        SELECT * FROM `km_product` WHERE
+        <choose>
+            <when test="cate1 != 0 &amp;&amp; cate2 != 0">
+                `cate1`=#{cate1} AND `cate2`=#{cate2}
+            </when>
+            <otherwise>
+                `prodName` LIKE concat('%', #{keyword}, '%')
+            </otherwise>
+        </choose>
+
         <choose>
             <when test="sort == 'sold'"> ORDER BY `sold` DESC LIMIT #{start}, 10;</when>
             <when test="sort == 'lowPrice'"> ORDER BY `sellPrice` asc LIMIT #{start}, 10;</when>
@@ -20,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <when test="sort == 'rdate'"> ORDER BY `rdate` DESC LIMIT #{start}, 10;</when>
         </choose>
     </select>
+
 
     <!--상품번호로 상품 조회하기-->
     <select id="selectProduct" resultType="kr.co.kmarket.vo.ProductVO">
@@ -32,10 +42,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ON a.cate1 = b.cate1 WHERE a.`cate1`=#{cate1} and b.cate2=#{cate2};
     </select>
 
-    <!--상품 총 갯수-->
+    <!--상품 총 개수-->
     <select id="selectCountProduct" resultType="int">
-        select count(`prodNo`) from `km_product` where `cate1`=#{cate1} and `cate2`=#{cate2};
+        select count(`prodNo`) from `km_product` where
+       <choose>
+           <when test="cate1 != 0 &amp;&amp; cate2 != 0">
+               `cate1`=#{cate1} AND `cate2`=#{cate2}
+           </when>
+           <when test="keyword != null">
+               `prodName` LIKE concat('%', #{keyword}, '%')
+           </when>
+       </choose>
     </select>
+
+    <!-- 리뷰 조회하기-->
+
 
     <!--장바구니 등록-->
     <insert id="insertCart">
@@ -63,14 +84,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT COUNT(`prodNo`) AS COUNT, SUM(`price`) AS price, SUM(`point`) AS POINT, SUM(`delivery`) AS delivery, SUM(`total`) AS total FROM `km_product_cart` WHERE `uid`=#{uid} ;
     </select>
 
-    <!--주문하기 등록-->
-    <insert id="insertOrder">
-        insert into `km_product_order` set
-                        `uid`=#{seller},
-                        `ordCount`=#{count},
-                        `ordPrice`=#{discount},
-                        `ordDelivery`=#{delivery};
+    <!--장바구니 선택 삭제-->
+    <delete id="deleteCart">
+        delete from `km_product_cart`
+        where `uid`=#{uid} and `prodNo` in
+        <foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
+            #{checkList}
+        </foreach>
+    </delete>
 
+    <!-- 선택 상품 주문 목록 -->
+    <select id="selectCartOrder" resultType="kr.co.kmarket.vo.ProductVO">
+        SELECT a.*, b.`cate1`, b.`cate2`,b.`thumb2`, b.`prodName`, b.`descript` FROM `km_product_cart` AS a JOIN
+        `km_product` AS b ON a.`prodNo` = b.`prodNo`
+        WHERE `uid`=#{uid} AND a.`prodNo` IN
+        <foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
+            #{checkList}
+        </foreach>
+    </select>
+
+    <!--주문하기 등록-->
+    <insert id="insertComplete">
+        insert into `km_product_order` set
+                            `ordNo`=#{ordNo},
+                            `ordUid`=#{ordUid},
+                            `ordCount`=#{ordCount},
+                            `ordPrice`=#{ordPrice},
+                            `ordDiscount`=#{ordDiscount},
+                            `ordDelivery`=#{ordDelivery},
+                            `savePoint`=#{savePoint},
+                            `usedPoint`=#{usedPoint},
+                            `ordTotPrice`=#{ordTotPrice},
+                            `recipName`=#{recipName},
+                            `recipHp`=#{recipHp},
+                            `recipZip`=#{recipZip},
+                            `recipAddr1`=#{recipAddr1},
+                            `recipAddr2`=#{recipAddr2},
+                            `ordPayment`=#{ordPayment},
+                            `ordComplete`=1,
+                            `ordDate`=NOW();
     </insert>
 
 

@@ -5,11 +5,11 @@
             <section class="list">
                 <nav>
                     <h1>상품목록</h1>
-                    <p>
+                    <p th:if="${cate1 != null}">
                         HOME > 
                         <span>[[${ncate.c1Name}]]</span>
                         > 
-                        <strong>[[${ncate.c2Name}]]</strong>
+                        <strong th:if="${cate2 != null}">[[${ncate.c2Name}]]</strong>
                     </p>
                 </nav>
                 <ul class="sort">
@@ -57,15 +57,15 @@
                 </table>
                 <div class="paging">
                     <span th:if="${paging.groupStart gt 1}" class="prev">
-                        <a th:href="@{/product/list(cate1=${ncate.cate1}, cate2=${ncate.cate2}, pg=${paging.groupStart-1})}">< 이전</a>
+                        <a th:href="@{/product/list(cate1=${cate1}, cate2=${cate2}, pg=${paging.groupStart-1}, keyword=${keyword})}">< 이전</a>
                     </span>
                     <span class="num">
                         <th:block th:each="i:${#numbers.sequence(paging.groupStart, paging.groupEnd)}">
-                            <a th:href="@{/product/list (cate1=${ncate.cate1}, cate2=${ncate.cate2}, pg=${i})}" th:classappend="${paging.currentPage eq i ? 'on' : ''}">[[${i}]]</a>
+                            <a th:href="@{/product/list (cate1=${cate1}, cate2=${cate2}, pg=${i}, keyword=${keyword})}" th:classappend="${paging.currentPage eq i ? 'on' : ''}">[[${i}]]</a>
                         </th:block>
                     </span>
                     <span th:if="${paging.groupEnd lt paging.lastPage}" class="next">
-                        <a th:href="@{/product/list(cate1=${ncate.cate1}, cate2=${ncate.cate2}, pg=${paging.groupEnd+1})}">다음 ></a>
+                        <a th:href="@{/product/list(cate1=${cate1}, cate2=${cate2}, pg=${paging.groupEnd+1}, keyword=${keyword})}">다음 ></a>
                     </span>
                 </div>
             </section>

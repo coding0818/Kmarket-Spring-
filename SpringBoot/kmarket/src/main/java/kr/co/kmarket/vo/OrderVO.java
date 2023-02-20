@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Product_OrderVO {
+public class OrderVO {
 
     private int ordNo;
     private String ordUid;
