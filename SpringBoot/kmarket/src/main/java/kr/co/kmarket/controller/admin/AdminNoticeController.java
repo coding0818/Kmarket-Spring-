@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -52,11 +53,19 @@ public class AdminNoticeController {
     }
 
     @GetMapping("admin/cs/notice/modify")
-    public String modify(Model model, int csNo) {
+    public String modify(Model model, int csNo, String pg) {
         CsVO art = service.selectCsArticle(csNo);
 
         model.addAttribute("art", art);
+        model.addAttribute("pg", pg);
         return "admin/cs/notice/modify";
+    }
+
+    @PostMapping("admin/cs/notice/modify")
+    public String modify(CsVO vo) {
+        int csNo = service.updateCsArticle(vo);
+
+        return "redirect:/admin/cs/notice/view?csNo="+csNo;
     }
 
     @GetMapping("admin/cs/notice/view")
