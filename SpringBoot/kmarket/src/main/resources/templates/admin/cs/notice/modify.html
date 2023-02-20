@@ -20,19 +20,34 @@
 	                                    <tr>
 	                                        <td>유형</td>
 	                                        <td>
-	                                            <select name="cateType1" id="selectBox">
-	                                                <option value="0">1차 선택</option>
-						                            <option value="회원">회원</option>
-						                            <option value="쿠폰/이벤트">쿠폰/이벤트</option>
-						                            <option value="주문/결제">주문/결제</option>
-						                            <option value="배송">배송</option>
-						                            <option value="취소/반품/교환">취소/반품/교환</option>
-						                            <option value="여행/숙박/항공">여행/숙박/항공</option>
-						                            <option value="안전거래">안전거래</option>
-	                                            </select>
-												<select name="cateType2" id="selectBox2" class="choose">
-	                                                <option value="0">2차 선택</option>
-	                                            </select>
+	                                            <select name="cate2" id="selectBox">
+													<th:block th:switch="${#strings.toString(vo.cate2)}">
+														<th:block th:case="service">
+															<option selected value="service">고객서비스</option>
+															<option value="safeDeal">안전거래</option>
+															<option value="xproduct">위해상품</option>
+															<option value="great">이벤트당첨</option>
+														</th:block>
+														<th:block th:case="safeDeal">
+															<option value="service">고객서비스</option>
+															<option selected value="safeDeal">안전거래</option>
+															<option value="xproduct">위해상품</option>
+															<option value="great">이벤트당첨</option>
+														</th:block>
+														<th:block th:case="xproduct">
+															<option value="service">고객서비스</option>
+															<option value="safeDeal">안전거래</option>
+															<option selected value="xproduct">위해상품</option>
+															<option value="great">이벤트당첨</option>
+														</th:block>
+														<th:block th:case="great">
+															<option value="service">고객서비스</option>
+															<option value="safeDeal">안전거래</option>
+															<option value="xproduct">위해상품</option>
+															<option selected value="great">이벤트당첨</option>
+														</th:block>
+													</th:block>
+												</select>
 	                                        </td>
 	                                    </tr>
 										<tr>
