@@ -32,4 +32,6 @@ public class AdminController {
         return "redirect:/admin/cs/"+cate1+"/list";
     }
 
+
+
 }

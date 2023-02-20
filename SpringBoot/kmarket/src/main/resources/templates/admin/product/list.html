@@ -28,7 +28,7 @@
                         <option value="company">제조사</option>
                         <option value="seller">판매자</option>
                     </select>
-                    <input type="text" name="keyword" placeholder="검색어를 입력하세요.">
+                    <input type="text" name="keyword" th:value="${keyword}" placeholder="검색어를 입력하세요.">
                     <button type="submit" class="btnSearch"><span>검색</span></button>
                 </form>
 
@@ -76,7 +76,7 @@
                     </tr>
                 </th:block>
             </table>
-            <input type="button" value="선택삭제">
+            <input type="button" value="선택삭제" style="cursor:pointer">
             <div class="paging">
                 <span th:if="${paging.groupStart gt 1}" class="prev">
                     <a th:href="|@{/}admin/product/list/${paging.groupStart-1}|"><&nbsp;이전</a>
