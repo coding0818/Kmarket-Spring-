@@ -6,13 +6,13 @@
 
     <insert id="insertCsArticle" useGeneratedKeys="true" keyProperty="csNo">
         INSERT INTO `km_cs` SET
-            `uid` = 'iamid',
             `cate1` = 'qna',
             `cate2` = #{cate2},
             `type` = #{type},
             `title` = #{title},
             `content` = #{content},
-            `regip` = '1.2.3.4.5',
+            `uid` = #{uid},
+            `regip` = #{regip},
             `rdate` = NOW();
     </insert>
 
@@ -62,5 +62,15 @@
         SELECT COUNT(`csNo`) FROM `km_cs`
             WHERE `cate1` = #{cate1} AND `cate2` = #{cate2} AND `type` = #{type};
     </select>
+
+    <update id="updateCsArticle">
+        UPDATE `km_cs` SET
+            `cate2` = #{cate2},
+            `type` = #{type},
+            `title` = #{title},
+            `content` = #{content},
+            `rdate` = NOW()
+            WHERE `csNo` = #{csNo};
+    </update>
 
 </mapper>

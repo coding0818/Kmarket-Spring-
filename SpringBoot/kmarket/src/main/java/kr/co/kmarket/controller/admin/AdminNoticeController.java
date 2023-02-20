@@ -63,8 +63,8 @@ public class AdminNoticeController {
 
     @PostMapping("admin/cs/notice/modify")
     public String modify(CsVO vo) {
-        int csNo = service.updateCsArticle(vo);
-
+        service.updateCsArticle(vo);
+        int csNo = vo.getCsNo();
         return "redirect:/admin/cs/notice/view?csNo="+csNo;
     }
 

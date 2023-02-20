@@ -4,7 +4,8 @@
 <th:block th:replace="~{/cs/board/__${cate1}__}"/>
             <article>
               <form th:action="@{/cs/write}" method="post">
-
+                <input type="hidden" name="uid" th:value="${#authentication.principal.user.uid}">
+                <input type="hidden" name="regip" th:value="${#authentication.details.remoteAddress}">
                 <table>
                   <tr>
                     <td>문의유형</td>

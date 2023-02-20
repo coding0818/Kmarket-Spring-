@@ -65,8 +65,8 @@ public class AdminFaqController {
 
     @PostMapping("admin/cs/faq/modify")
     public String modify(CsVO vo) {
-        int csNo = service.updateCsArticle(vo);
-
+        service.updateCsArticle(vo);
+        int csNo = vo.getCsNo();
         return "redirect:/admin/cs/faq/view?csNo="+csNo;
     }
 
@@ -79,7 +79,8 @@ public class AdminFaqController {
         model.addAttribute("pg", pg);
         model.addAttribute("csNo", csNo);
         model.addAttribute("art", art);
-        return "admin/cs/faq/view";}
+        return "admin/cs/faq/view";
+    }
 
     @GetMapping("admin/cs/faq/write")
     public String write() {return "admin/cs/faq/write";}
