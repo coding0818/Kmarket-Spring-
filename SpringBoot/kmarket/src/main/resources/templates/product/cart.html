@@ -16,10 +16,10 @@
                     </p>
                 </nav>
                <form action="#">
-                  <!-- <input type="hidden" name="seller" th:value="${#authentication.principal.user.uid}"> -->
+                   <input type="hidden" name="seller" th:value="${#authentication.principal.user.uid}">
                     <table border="0">
                         <tr>
-                            <th><input type="checkbox" id="all" name="all" onclick=""></th>
+                            <th><input type="checkbox" id="all" name="all"></th>
                             <th>상품명</th>
                             <th>총수량</th>
                             <th>판매가</th>
@@ -28,14 +28,14 @@
                             <th>배송비</th>
                             <th>소계</th>
                         </tr>
-                        <th:block th:if="${#lists.isEmpty(prod)}">
+
                             <tr class="empty">
                                 <td colspan="7">장바구니에 상품이 없습니다.</td>
                             </tr>
-                        </th:block>
-                        <th:block th:if="${!#lists.isEmpty(prod)}">
-                            <tr th:each="prod:${prod}">
-                                <td><input type="checkbox" id="chk" name="chk"></td>
+
+
+                            <tr th:each="prod:${prod}" th:id="${prod.prodNo}">
+                                <td><input type="checkbox" th:class="${prod.prodNo}" name="prodNo" th:value="${prod.prodNo}" th:onclick="checkProd([[${prod.prodNo}]])"></td>
                                 <td><article>
                                     <a th:href="@{/product/view (cate1=${prod.cate1}, cate2=${prod.cate2}, prodNo=${prod.prodNo})}">
                                         <img src="	https://via.placeholder.com/80x80" alt="1">
@@ -45,42 +45,42 @@
                                         <p>[[${prod.descript}]]</p>
                                     </div>
                                 </article></td>
-                                <td th:text="${#numbers.formatInteger(prod.count, 0, 'COMMA')}"></td>
-                                <td th:text="${#numbers.formatInteger(prod.price, 0, 'COMMA')}"></td>
-                                <td th:text="${#numbers.formatInteger(prod.discount, 0, 'COMMA')}"></td>
-                                <td th:text="${#numbers.formatInteger(prod.point, 0, 'COMMA')}"></td>
-                                <td th:text="${#numbers.formatInteger(prod.delivery, 0, 'COMMA')}"></td>
-                                <td th:text="${#numbers.formatInteger(prod.total, 0, 'COMMA')}"></td>
+                                <td th:id="${prod.prodNo + 'count'}">[[${#numbers.formatInteger(prod.count, 0, 'COMMA')}]]</td>
+                                <td th:id="${prod.prodNo + 'price'}">[[${#numbers.formatInteger(prod.price, 0, 'COMMA')}]]</td>
+                                <td th:id="${prod.prodNo + 'discount'}">[[${#numbers.formatInteger(prod.discount, 0, 'COMMA')}]]</td>
+                                <td th:id="${prod.prodNo + 'point'}">[[${#numbers.formatInteger(prod.point, 0, 'COMMA')}]]</td>
+                                <td th:id="${prod.prodNo + 'delivery'}">[[${#numbers.formatInteger(prod.delivery, 0, 'COMMA')}]]</td>
+                                <td th:id="${prod.prodNo + 'total'}">[[${#numbers.formatInteger(prod.total, 0, 'COMMA')}]]</td>
                             </tr>
-                        </th:block>
+
                     </table>
-                    <input type="button" name="del" value="선택삭제">
+                    <input type="button" name="del" class="del" value="선택삭제">
                     <div class="total">
                         <h2>전체합계</h2>
                         <table>
                             <tr>
                                 <td>상품수</td>
-                                <td th:text="${#numbers.formatInteger(tProd.count, 0, 'COMMA')}"></td>
+                                <td class="count">0</td>
                             </tr>
                             <tr>
                                 <td>상품금액</td>
-                                <td th:text="${#numbers.formatInteger(tProd.price, 0, 'COMMA')}"></td>
+                                <td class="price">0</td>
                             </tr>
                             <tr>
                                 <td>할인금액</td>
-                                <td th:text="${#numbers.formatInteger(tProd.discount, 0, 'COMMA')}"></td>
+                                <td class="discount">0</td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
-                                <td th:text="${#numbers.formatInteger(tProd.delivery, 0, 'COMMA')}"></td>
+                                <td class="delivery">0</td>
                             </tr>
                             <tr>
                                 <td>포인트</td>
-                                <td th:text="${#numbers.formatInteger(tProd.point, 0, 'COMMA')}"></td>
+                                <td class="point">0</td>
                             </tr>
                             <tr>
                                 <td>전체주문금액</td>
-                                <td th:text="${#numbers.formatInteger(tProd.total, 0, 'COMMA')}"></td>
+                                <td class="total">0</td>
                             </tr>
                         </table>
                         <input type="submit" value="주문하기">

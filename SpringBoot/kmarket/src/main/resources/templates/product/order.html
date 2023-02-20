@@ -6,6 +6,7 @@
 
 </script>
             <section class="order">
+                <input type="hidden" name="seller" th:value="${#authentication.principal.user.uid}">
                 <nav>
                     <h1>주문결제</h1>
                     <p>
@@ -27,50 +28,21 @@
                         <tr class="empty">
                             <td colspan="7">장바구니에 상품이 없습니다.</td>
                         </tr>
-                        <tr>
+                        <tr th:each="prod : ${prod}">
                             <td><article>
                                 <a href="#">
                                     <img src="	https://via.placeholder.com/80x80" alt="1">
                                 </a>
                                 <div>
-                                    <h2><a href="#">상품명</a></h2>
-                                    <p>상품설명</p>
+                                    <h2><a href="#">[[${prod.prodName}]]</a></h2>
+                                    <p>[[${prod.descript}]]</p>
                                 </div>
                             </article></td>
-                            <td>1</td>
-                            <td>27,000</td>
-                            <td>무료배송</td>
-                            <td>27,000</td>
-                        </tr>
-                        <tr>
-                            <td><article>
-                                <a href="#">
-                                    <img src="	https://via.placeholder.com/80x80" alt="1">
-                                </a>
-                                <div>
-                                    <h2><a href="#">상품명</a></h2>
-                                    <p>상품설명</p>
-                                </div>
-                            </article></td>
-                            <td>1</td>
-                            <td>27,000</td>
-                            <td>무료배송</td>
-                            <td>27,000</td>
-                        </tr>
-                        <tr>
-                            <td><article>
-                                <a href="#">
-                                    <img src="	https://via.placeholder.com/80x80" alt="1">
-                                </a>
-                                <div>
-                                    <h2><a href="#">상품명</a></h2>
-                                    <p>상품설명</p>
-                                </div>
-                            </article></td>
-                            <td>1</td>
-                            <td>27,000</td>
-                            <td>무료배송</td>
-                            <td>27,000</td>
+                            <td>[[${#numbers.formatInteger(prod.count, 0, 'COMMA')}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.price, 0, 'COMMA')}]]</td>
+                            <td th:if="${prod.delivery == 0}">무료배송</td>
+                            <td th:unless="${prod.delivery == 0}">[[${#numbers.formatInteger(prod.delivery, 0, 'COMMA')}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.total, 0, 'COMMA')}]]</td>
                         </tr>
                     </table>
                     <div class="final">
@@ -78,27 +50,31 @@
                         <table>
                             <tr>
                                 <td>총</td>
-                                <td>3 건</td>
+                                <td>[[${#numbers.formatInteger(total.count, 0, 'COMMA') + "건"}]]</td>
                             </tr>
                             <tr>
                                 <td>상품금액</td>
-                                <td>27,000</td>
+                                <td>[[${#numbers.formatInteger(total.price, 0, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>할인금액</td>
-                                <td>-1,000</td>
+                                <td>[[${#numbers.formatInteger(total.price + total.delivery - total.total, 0, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
-                                <td>0</td>
+                                <td>[[${#numbers.formatInteger(total.delivery, 0, 'COMMA')}]]</td>
+                            </tr>
+                            <tr>
+                                <td>포인트 적립</td>
+                                <td>[[${#numbers.formatInteger(total.point, 0, 'COMMA')}]]</td>
                             </tr>
                             <tr>
                                 <td>포인트 할인</td>
-                                <td>-1,000</td>
+                                <td>0</td>
                             </tr>
                             <tr>
                                 <td>전체주문금액</td>
-                                <td>25,000</td>
+                                <td>[[${#numbers.formatInteger(total.total, 0, 'COMMA')}]]</td>
                             </tr>
                         </table>
                         <input type="submit" value="결제하기">
@@ -109,31 +85,31 @@
                         <table>
                             <tr>
                                 <td>주문자</td>
-                                <td><input type="text" name="orderer"></td>
+                                <td><input type="text" name="orderer" th:value="${user.ceo}"></td>
                             </tr>
                             <tr>
                                 <td>휴대폰</td>
                                 <td>
-                                    <input type="text" name="hp">
+                                    <input type="text" name="hp" th:value="${user.hp}">
                                     <span>- 포함 입력</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td>우편번호</td>
                                 <td>
-                                    <input type="text" name="zip">
-                                    <input type="button" value="검색">
+                                    <input type="text" name="zip" id="zip" th:value="${user.zip}" readonly="readonly">
+                                    <input type="button" th:onclick="zipcode()" value="검색">
                                 </td>
                             </tr>
                             <tr>
                                 <td>기본주소</td>
                                 <td>
-                                    <input type="text" name="addr1">
+                                    <input type="text" name="addr1" id="addr1" th:value="${user.addr1}">
                                 </td>
                             </tr>
                             <tr>
                                 <td>상세주소</td>
-                                <td><input type="text" name="addr2"></td>
+                                <td><input type="text" name="addr2" id="addr2" th:value="${user.addr2}"></td>
                             </tr>
                         </table>
                     </article>
@@ -143,12 +119,12 @@
                         <div>
                             <p>
                                 현재 포인트 : 
-                                <span>7200</span>점
+                                <span class="userPoint">[[${#numbers.formatInteger(user.point, 0, 'COMMA')}]]</span>점
                             </p>
 
                             <label>
-                                <input type="text" name="point">점
-                                <input type="button" value="적용">
+                                <input type="text" name="point" value="0">점
+                                <input type="button" id="applyPoint" value="적용">
                             </label>
                             <span>포인트 5,000점 이상이면 현금처럼 사용 가능합니다.</span>
                         </div>
@@ -160,10 +136,10 @@
                             <span>신용카드</span>
                             <p>
                                 <label>
-                                    <input type="radio" name="payment" value="type1">신용카드 결제
+                                    <input type="radio" name="payment" value="1">신용카드 결제
                                 </label>
                                 <label>
-                                    <input type="radio" name="payment" value="type2">체크카드 결제
+                                    <input type="radio" name="payment" value="2">체크카드 결제
                                 </label>
                             </p>
                         </div>
@@ -171,10 +147,10 @@
                             <span>계좌이체</span>
                             <p>
                                 <label>
-                                    <input type="radio" name="payment" value="type3">실시간 계좌이체
+                                    <input type="radio" name="payment" value="3">실시간 계좌이체
                                 </label>
                                 <label>
-                                    <input type="radio" name="payment" value="type4">무통장 입금
+                                    <input type="radio" name="payment" value="4">무통장 입금
                                 </label>
                             </p>
                         </div>
@@ -182,11 +158,11 @@
                             <span>기타</span>
                             <p>
                                 <label>
-                                    <input type="radio" name="payment" value="type4">휴대폰 결제
+                                    <input type="radio" name="payment" value="5">휴대폰 결제
                                 </label>
                                 <label>
-                                    <input type="radio" name="payment" value="type5">카카오페이
-                                    <img src="./img/ico_kakaopay.gif" alt="카카오페이">
+                                    <input type="radio" name="payment" value="6">카카오페이
+                                    <img th:src="@{/img/ico_kakaopay.gif}" alt="카카오페이">
                                 </label>
                             </p>
                         </div>

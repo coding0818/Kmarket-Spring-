@@ -9,6 +9,8 @@ $(function(){
     var cart = document.getElementById('cart')
     cart.addEventListener('click', function(){
 
+
+
         let prodNo = document.getElementById('prodNo').innerText;           //상품번호
         console.log("prodNo : " + prodNo);
         let count = num.value;                                              // 수량
@@ -26,6 +28,7 @@ $(function(){
         console.log("totalPrice : "+totalPrice);
 
         let jsonData = {
+                "type" : 'cart',
                 "prodNo" : prodNo,
                 "count" : count,
                 "price" : price * count,
@@ -63,8 +66,10 @@ $(function(){
     var order = document.getElementById('order')
         order.addEventListener('click', function(){
 
-            let prodNo = document.getElementById('prodNo').innerText;           //상품번호
-            console.log("prodNo : " + prodNo);
+
+
+            let prodNo   = document.getElementById('prodNo').innerText;   // 상품 번호
+            console.log("prodNo : " +prodNo);
             let count = num.value;                                              // 수량
             console.log("count : " + count);
             let price = document.getElementById('price').innerText.split(',').join(''); //가격
@@ -80,7 +85,8 @@ $(function(){
             console.log("totalPrice : "+totalPrice);
 
             let jsonData = {
-                    "prodNo" : prodNo,
+                    "type" : 'order',
+                    "prodNo": prodNo,
                     "count" : count,
                     "price" : price * count,
                     "discount" : discount,
@@ -89,19 +95,22 @@ $(function(){
                     "total" : totalPrice
             }
 
+
            $.ajax({
-                    url : '/kmarket/product/order',
-                    method:'GET',
+                    url : '/kmarket/product/cart',
+                    method:'POST',
                     data: jsonData,
                     dataType:'JSON',
                     success:function(data){
                         console.log("data : "+data)
 
-                        if(data.result == 1){
-                                location.href = "/kmarket/product/order"
+                        if(data.result == 1111){
+                             if(confirm('구매 하시겠습니까?')){
 
+                                 location.href = "/kmarket/product/order"
+                             }
                         }else{
-                            alert('다시 시도하여 주십시오');
+                            alert('다시 시도하여 주십시오' + data.result);
 
                         }
 
