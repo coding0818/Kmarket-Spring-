@@ -17,11 +17,11 @@ import java.util.List;
 public interface AdminProdDAO {
     // ------------------------------------------ 상품 등록 ------------------------------------------
     public void registerProduct(ProductVO vo);
-    // ---------------------------------- 판매자 로그인 시  상품 목록 ---------------------------------
+    // --------------------------------  상품 목록1 (판매자 로그인 시) ---------------------------------
     // 상품 목록 조회
     public List<ProductVO> selectProducts(@Param("seller") String seller, @Param("start") int start);
 
-    // ------------------------------------------ 상품 목록 (관리자가 조회 시) ------------------------
+    // -------------------------------- 상품 목록2 (관리자가 조회 시) ------------------------
     public List<ProductVO> selectProductsAdmin(@Param("start") int start);
 
 
