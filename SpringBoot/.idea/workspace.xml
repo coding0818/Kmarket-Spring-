@@ -3,8 +3,42 @@
   <component name="ChangeListManager">
     <list default="true" id="8d2211dd-e6da-472e-890c-6b1cf4203bee" name="Changes" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kmarket/src/main/java/kr/co/kmarket/controller/admin/AdminFaqController.java" beforeDir="false" afterPath="$PROJECT_DIR$/kmarket/src/main/java/kr/co/kmarket/controller/admin/AdminFaqController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kmarket/src/main/resources/mappers/cs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/kmarket/src/main/resources/mappers/cs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/checksums/md5-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/checksums/sha1-checksums.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/7.5.1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/file-system.probe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/out/production/classes/org/example/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/out/production/classes/org/example/PasswordValidator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/out/test/classes/org/example/PasswordValidatorTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/src/main/java/org/example/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/src/main/java/org/example/PasswordValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/src/main/java/org/example/RandomPasswordGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/src/main/java/org/example/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/oop-practice/src/test/java/org/example/PasswordValidatorTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +60,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/java2/Desktop/WorkSpace/Kmarket-Spring-/SpringBoot/kmarket/build.gradle&quot;
+    &quot;last_opened_file_path&quot;: &quot;/Users/iilhwan/Desktop/Workspace/Kmarket-Spring-/SpringBoot&quot;
   }
 }</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -39,5 +73,16 @@
       <updated>1675845172859</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

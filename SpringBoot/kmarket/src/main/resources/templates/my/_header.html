@@ -9,6 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://kit.fontawesome.com/20962f3e4b.js" crossorigin="anonymous"></script>
+    <script src="./js/jquery.star-rating-svg.min.js"></script>
+    <script src="/js/popup.js"></script>
     <link rel="stylesheet" th:href="@{/css/my.css}">
 </head>
 <body>
@@ -46,7 +48,9 @@
                 <ol>
                     <li><a href="#">주문·배송<span class="delivery">[[${orderCount}]]</span></a></li>
                     <li><a href="#">할인쿠폰<span class="coupon">[[${couponCount}]]</span></a></li>
-                    <li><a href="#">포인트<span class="point">[[${pointSum}]]</span></a></li>
+                    <th:block th:if="${pointSum != null}">
+                        <li><a href="#">포인트<span class="point">[[${pointSum}]]</span></a></li>
+                    </th:block>
                     <li><a href="#">문의내역<span class="qna">[[${csCount}]]</span></a></li>
                 </ol>
             </div>
