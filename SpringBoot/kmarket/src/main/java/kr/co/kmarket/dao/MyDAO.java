@@ -22,7 +22,7 @@ public interface MyDAO {
     public int insertPoint(MyPointVO vo);
     public List<MyPointVO> selectPoints(String uid);
     public List<MyReviewVO> selectReviews(String uid);
-    public List<MyOrderVO> selectOrders(String uid);
+    public List<MyOrderVO> selectOrders(@Param("uid") String uid);
     public int updateOrdStatus(@Param("ordNo") String ordNo, @Param("prodNo") int prodNo);
     public List<MyCsVO> selectCs(String uid);
     public String selectUserType(String uid);

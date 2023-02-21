@@ -31,10 +31,13 @@
                         <li><a href="#"><em>8</em>월</a></li>
                         <li><a href="#"><em>7</em>월</a></li>
                     </ul>
-                    <p>
-                        <input type="date" name="begin"><span>~</span><input type="date" name="end">
-                    </p>
-                    <button class="btnConfirm">조회하기</button>
+                    <form th:action="@{/my/ordered}" method="get">
+                        <input type="hidden" name="division" value="3"/>
+                        <p>
+                            <input type="date" name="begin"><span>~</span><input type="date" name="end">
+                        </p>
+                        <button class="btnConfirm" type="submit">조회하기</button>
+                    </form>
                 </div>
 
                 <table border="0">

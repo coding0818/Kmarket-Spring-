@@ -69,6 +69,7 @@ public class MyController {
         }
 
         log.info("pointList : " + pointList);
+        log.info("orderList: "+orderList);
 
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
@@ -106,6 +107,8 @@ public class MyController {
     public String point(Principal principal, Model model,
                         @RequestParam(value = "division", required = false, defaultValue = "0") int division,
                         @RequestParam(value = "no", required = false, defaultValue = "0") int no,
+                        @RequestParam(value = "begin", required = false, defaultValue = "0") String begin,
+                        @RequestParam(value = "end", required = false, defaultValue = "0") String end,
                         @PageableDefault(size = 10, sort = "pointDate", direction = Sort.Direction.DESC) Pageable pageable){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
@@ -125,11 +128,11 @@ public class MyController {
             }else{
                 cal.add(Calendar.MONTH, -1);
             }
-            Date date = new Date(cal.getTimeInMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String newdate = sdf.format(date);
-            log.info("date : "+date);
-            pointList = service.findByUidAndPointDate1(principal.getName(), newdate, pageable);
+                Date date = new Date(cal.getTimeInMillis());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String newdate = sdf.format(date);
+                log.info("date : "+date);
+                pointList = service.findByUidAndPointDate1(principal.getName(), newdate, pageable);
         }else if(division == 2){
             if(no == 1){
                 cal.add(Calendar.MONTH, -1);
@@ -147,15 +150,17 @@ public class MyController {
                 cal.add(Calendar.MONTH, -5);
                 cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
             }
-            Date date = new Date(cal.getTimeInMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat sta = new SimpleDateFormat("yyyy-MM-01");
-            String startdate = sta.format(date);
-            String enddate = sdf.format(date);
-            log.info("startdate : "+startdate);
-            log.info("enddate : "+enddate);
-            pointList = service.findByUidAndPointDate2(principal.getName(), startdate, enddate, pageable);
-        }else{pointList = service.findByUid(principal.getName(), pageable);}
+                Date date = new Date(cal.getTimeInMillis());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sta = new SimpleDateFormat("yyyy-MM-01");
+                String startdate = sta.format(date);
+                String enddate = sdf.format(date);
+                log.info("startdate : "+startdate);
+                log.info("enddate : "+enddate);
+                pointList = service.findByUidAndPointDate2(principal.getName(), startdate, enddate, pageable);
+        }else if(division == 3){
+            pointList = service.findByUidAndPointDate2(principal.getName(), begin, end, pageable);
+        } else{pointList = service.findByUid(principal.getName(), pageable);}
 
         // 페이징처리
         int start = (int)(Math.floor(pointList.getNumber() / 5)*5+1);

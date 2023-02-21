@@ -589,23 +589,28 @@ footer p > strong {
     background-position: -377px -937px;
 }
 
-#my > .ordered > section > article > .byDate > p {
+#my > .point > section > article > .byDate > form{
+    float: left;
+}
+
+#my > .ordered > section > article > .byDate p {
     width: 190px;
     height: 29px;
     background: url('../img/my_sprites.png') no-repeat -461px -879px;
     padding: 5px;
     box-sizing: border-box;
+    float: left;
 }
-#my > .ordered > section > article > .byDate > p > span {
+#my > .ordered > section > article > .byDate p > span {
     display: inline-block;
     margin: 0 4px;
 }
-#my > .ordered > section > article > .byDate input[type=date] {
+#my > .ordered > section > article > .byDate p > input[type=date] {
     width: 80px;
     border: none;
 }
 
-#my > .ordered > section > article > .byDate > .btnConfirm {
+#my > .ordered > section > article > .byDate .btnConfirm {
     width: 69px;
     height: 27px;
     border: none;
@@ -796,23 +801,28 @@ footer p > strong {
     background-position: -377px -937px;
 }
 
-#my > .point > section > article > .byDate > p {
+#my > .point > section > article > .byDate > form{
+    float: left;
+}
+
+#my > .point > section > article > .byDate p {
     width: 190px;
     height: 29px;
     background: url('../img/my_sprites.png') no-repeat -461px -879px;
     padding: 5px;
     box-sizing: border-box;
+    float: left;
 }
-#my > .point > section > article > .byDate > p > span {
+#my > .point > section > article > .byDate p > span {
     display: inline-block;
     margin: 0 4px;
 }
-#my > .point > section > article > .byDate input[type=date] {
-    width: 80px;
+#my > .point > section > article > .byDate p > input[type=date] {
+    width: 79px;
     border: none;
 }
 
-#my > .point > section > article > .byDate > .btnConfirm {
+#my > .point > section > article > .byDate .btnConfirm {
     width: 69px;
     height: 27px;
     border: none;
