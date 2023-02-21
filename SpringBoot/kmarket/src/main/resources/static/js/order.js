@@ -6,6 +6,7 @@
     let savePoint  = $('.final').children().children().children('tr:eq(4)').children('td:eq(1)').text().replace(',','');
     let totalPrice = $('.final').children().children().children('tr:eq(6)').children('td:eq(1)').text().replace(',','');
 
+    console.log("totalPrice : " + totalPrice);
 
     $(function(){
         let applyPoint = document.getElementById('applyPoint');
@@ -40,12 +41,19 @@
 
         $('.order > form ').submit(function(e){
 
+
+            console.log("click");
+
             let orderer = $('input[name=orderer]').val();
             let hp = $('input[name=hp]').val();
             let zip = $('input[name=zip]').val();
             let addr1 = $('input[name=addr1]').val();
             let addr2 = $('input[name=addr2]').val();
-            totalPrice = $('.final').children().children().children('tr:eq(6)').children('td:eq(1)').text.replace(',','');
+            totalPrice = $('.final').children().children().children('tr:eq(6)').children('td:eq(1)').text().replace(',','');
+
+            console.log("addr1 : " + addr1);
+            console.log("addr2 : " + addr2);
+            console.log("clickTotalPrice : " + totalPrice);
 
             let jsonData = {
                 "ordCount": count,
@@ -62,12 +70,15 @@
                 "ordPayment": $('input[name=payment]:checked').val()
             }
 
+            console.log("jsonData : " +jsonData);
+
             $.ajax({
                     url:'/kmarket/product/complete',
                     method:'POST',
                     date: jsonData,
                     dataType: 'JSON',
                     success: function(data){
+                        console.log("data : " + data.result);
                         if(data.result == 1){
                             location.href = "/kmarket/product/complete";
                         }else {
