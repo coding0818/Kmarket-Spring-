@@ -109,6 +109,9 @@ public class BoardController {
 
     @PostMapping("cs/write")
     public String write(CsVO vo) {
+        vo.setCate1("qna");
+        System.out.println("uid : "+ vo.getUid());
+        System.out.println("regip : "+ vo.getRegip());
         service.insertCsArticle(vo);
         return MessageFormat.format("redirect:/cs/list?cate1=qna&cate2={0}", vo.getCate2());
     }

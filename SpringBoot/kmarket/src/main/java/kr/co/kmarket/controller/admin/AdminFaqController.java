@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Slf4j
@@ -84,5 +85,12 @@ public class AdminFaqController {
 
     @GetMapping("admin/cs/faq/write")
     public String write() {return "admin/cs/faq/write";}
+
+    @PostMapping("admin/cs/faq/write")
+    public String write(CsVO vo) {
+        vo.setCate1("faq");
+        service.insertCsArticle(vo);
+        return "redirect:/admin/cs/faq/list";
+    }
 
 }

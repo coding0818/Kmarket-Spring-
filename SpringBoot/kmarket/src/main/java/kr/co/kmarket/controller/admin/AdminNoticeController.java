@@ -82,4 +82,11 @@ public class AdminNoticeController {
     @GetMapping("admin/cs/notice/write")
     public String write() {return "admin/cs/notice/write";}
 
+    @PostMapping("admin/cs/notice/write")
+    public String write(CsVO vo) {
+        vo.setCate1("notice");
+        service.insertCsArticle(vo);
+        return "redirect:/admin/cs/notice/list";
+    }
+
 }

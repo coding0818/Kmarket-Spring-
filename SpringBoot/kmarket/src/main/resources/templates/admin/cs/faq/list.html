@@ -43,7 +43,7 @@
                         
                         <tr class="row" th:each="art,index:${articles}">
                         	<td><input type="checkbox" name="check" value="${art.csNo}"></td>
-                            <td>[[${pageStartNum - index.index + 1}]]</td>
+                            <td>[[${pageStartNum - index.index}]]</td>
                             <td>[[${art.cate2}]]</td>
                             <td>[[${art.type}]]</td>
                             <td><a th:href="@{/admin/cs/faq/view(pg=${pg}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
