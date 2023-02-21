@@ -27,7 +27,7 @@ public class AdminController {
     }
 
     @GetMapping("admin/cs/delete")
-    public String delete(String cate1, int csNo) {
+    public String csDelete(String cate1, int csNo) {
         service.deleteCsArticle(csNo);
         return "redirect:/admin/cs/"+cate1+"/list";
     }

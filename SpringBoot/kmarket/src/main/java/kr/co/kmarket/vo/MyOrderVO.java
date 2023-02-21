@@ -30,6 +30,7 @@ public class MyOrderVO {
     private int ordStatus;
 
     // order_item
+    private int itemNo;
     private int prodNo;
     private int count;
     private int discount;

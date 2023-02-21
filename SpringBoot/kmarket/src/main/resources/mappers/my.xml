@@ -10,9 +10,10 @@
     <select id="selectCountCoupon" resultType="int">
         SELECT COUNT(`couponNo`) FROM `km_member_coupon` WHERE `uid`=#{uid} AND `status`='사용가능';
     </select>
-    <select id="selectSumPoint" resultType="int">
+    <select id="selectSumPoint" resultType="Integer">
         SELECT SUM(`point`) FROM `km_member_point` WHERE `expireDate` > NOW() AND `uid`=#{uid};
     </select>
+
     <select id="selectCountCs" resultType="int">
         SELECT COUNT(`csNo`) FROM `km_cs` WHERE `comment` IS NULL AND `uid`=#{uid};
     </select>
@@ -61,14 +62,6 @@
     <select id="selectPointListCount" resultType="int">
         select count(`pointNo`) from `km_member_point` where `uid`=#{uid};
     </select>
-    <!--기간별 조회-->
-    <select id="selectPointShort1" resultType="kr.co.kmarket.vo.MyPointVO">
-        select * from `km_member_point` where `uid`=#{uid} AND (`pointDate`> DATE_SUB(NOW(), INTERVAL 7 DAY)) order by `pointDate` desc;
-    </select>
-    <select id="selectPointShort2" resultType="kr.co.kmarket.vo.MyPointVO">
-        select * from `km_member_point` where `uid`=#{uid} AND (`pointDate`> DATE_SUB(NOW(), INTERVAL 15 DAY)) order by `pointDate` desc;
-    </select>
-    <select id="selectPointShort3" resultType="kr.co.kmarket.vo.MyPointVO">
-        select * from `km_member_point` where `uid`=#{uid} AND (`pointDate`> DATE_SUB(NOW(), INTERVAL 1 MONTH)) order by `pointDate` desc;
-    </select>
+
+
 </mapper>
