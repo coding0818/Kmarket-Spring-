@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <th:block th:replace="~{/product/_header}"/>
+
 <script>
 
 </script>
@@ -45,7 +46,7 @@
                             <td>[[${#numbers.formatInteger(prod.total, 0, 'COMMA')}]]</td>
                         </tr>
                     </table>
-                    <div class="final">
+                    <div class="final" name="final">
                         <h2>최종결제 정보</h2>
                         <table>
                             <tr>
@@ -98,7 +99,7 @@
                                 <td>우편번호</td>
                                 <td>
                                     <input type="text" name="zip" id="zip" th:value="${user.zip}" readonly="readonly">
-                                    <input type="button" th:onclick="zipcode()" value="검색">
+                                    <input type="button" id="zipcode" value="검색">
                                 </td>
                             </tr>
                             <tr>
