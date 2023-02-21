@@ -108,6 +108,7 @@ public class MyService {
         return pointRepo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
     }
 
+
     // ordered
     public Page<MyOrderEntity> findMyOrderEntityByUid(String uid, Pageable pageable){
         return orderRepo.findByUid(uid, pageable);

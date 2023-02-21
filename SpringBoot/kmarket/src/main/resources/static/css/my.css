@@ -384,6 +384,13 @@ footer p > strong {
 #my > .home > section > article > table ul > li {
     margin: 4px 0;
 }
+#my > .home > section > article > table ul .company:hover {
+    text-decoration: underline;
+}
+
+#my > .home > section > article > table ul > li > a:hover {
+    text-decoration: underline;
+}
 #my > .home > section > article > table .prodPrice {
     margin-top: 6px;
     font-family: '고딕';
@@ -1303,7 +1310,7 @@ footer p > strong {
     float: right;
     width: 30px;
     height: 30px;
-    background-image: url('../../img/ico_sprites.png');
+    background-image: url('../img/ico_sprites.png');
     background-color: transparent;
     background-position: 227px -25px;
     border: none;
