@@ -26,12 +26,7 @@
         $('#four').append(fourMonthAgo);
         $('#five').append(fiveMonthAgo);
 
-        $('.btnConfirm').click(function(){
-            let begin = $('input[name=begin]').val();
-            let end = $('input[name=end]').val();
 
-
-        });
     });
 </script>
             <div class="point">
@@ -65,10 +60,13 @@
                                 <li><a th:href="@{/my/point(division=2, no=2)}" th:class="${division == 2 && no == 2}?'on'"><em id="two"></em>월</a></li>
                                 <li><a th:href="@{/my/point(division=2, no=1)}" th:class="${division == 2 && no == 1}?'on'"><em id="one"></em>월</a></li>
                             </ul>
-                            <p>
-                                <input type="date" name="begin"><span>~</span><input type="date" name="end">
-                            </p>
-                            <button class="btnConfirm">조회하기</button>
+                            <form th:action="@{/my/point}" method="get">
+                                <input type="hidden" name="division" value="3"/>
+                                <p>
+                                    <input type="date" name="begin"><span>~</span><input type="date" name="end">
+                                </p>
+                                <button class="btnConfirm" type="submit">조회하기</button>
+                            </form>
                         </div>
 
                         <table border="0">
