@@ -10,9 +10,10 @@
     <select id="selectCountCoupon" resultType="int">
         SELECT COUNT(`couponNo`) FROM `km_member_coupon` WHERE `uid`=#{uid} AND `status`='사용가능';
     </select>
-    <select id="selectSumPoint" resultType="int">
+    <select id="selectSumPoint" resultType="Integer">
         SELECT SUM(`point`) FROM `km_member_point` WHERE `expireDate` > NOW() AND `uid`=#{uid};
     </select>
+
     <select id="selectCountCs" resultType="int">
         SELECT COUNT(`csNo`) FROM `km_cs` WHERE `comment` IS NULL AND `uid`=#{uid};
     </select>
