@@ -6,10 +6,7 @@ import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.util.PagingUtil;
-import kr.co.kmarket.vo.CateVO;
-import kr.co.kmarket.vo.MemberVO;
-import kr.co.kmarket.vo.ProductVO;
-import kr.co.kmarket.vo.SellerVO;
+import kr.co.kmarket.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,10 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -327,5 +322,76 @@ public class ProductController {
     }
 
     // 주문 처리
+    @ResponseBody
+    @PostMapping("product/complete")
+    public String insertComplete(OrderVO vo, Principal principal, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        String uid = principal.getName();
+        String type = (String) session.getAttribute("type");
 
+        vo.setUid(uid);
+
+        // 고유번호 ------------------------------------------------
+        SimpleDateFormat sdf = new SimpleDateFormat("MMddHHmmss");
+        String now = sdf.format(new Date());
+
+        Random random = new Random(1000000000);
+        int rand = random.nextInt();
+        int randOrdNo = rand + Integer.parseInt(now);
+        //-------------------------------------------------
+
+        vo.setOrdNo(randOrdNo);
+
+        session.setAttribute("order", vo);
+
+        String userType = myService.selectUserType(principal.getName());
+
+        log.info("userType : " + userType);
+
+        if(userType.equals("seller")){
+            SellerVO seller = myService.selectSeller(principal.getName());
+
+            int point =seller.getPoint();
+
+            if(vo.getUsedPoint() < 5000) {
+                // 사용한 포인트가 5000원 미만일 때
+                // usedPoint 값은 적용을 눌러야만 차감된 상태로 넘어옴
+                // js에서 비정상 포인트일 때 작동을 막아놓음
+                // vo.setOrdTotPrice(vo.getOrdTotPrice()+vo.getUsedPoint());
+                vo.setUsedPoint(0);
+            }else if(vo.getUsedPoint() > point) {
+                // vo.setOrdTotPrice(vo.getOrdTotPrice()+vo.getUsedPoint());
+                vo.setUsedPoint(0);
+            }
+
+        }else{
+            MemberVO user = myService.selectUser(principal.getName());
+            int point = user.getPoint();
+
+            if(vo.getUsedPoint() < 5000) {
+                // 사용한 포인트가 5000원 미만일 때
+                // usedPoint 값은 적용을 눌러야만 차감된 상태로 넘어옴
+                // js에서 비정상 포인트일 때 작동을 막아놓음
+                // vo.setOrdTotPrice(vo.getOrdTotPrice()+vo.getUsedPoint());
+                vo.setUsedPoint(0);
+            }else if(vo.getUsedPoint() > point) {
+                // vo.setOrdTotPrice(vo.getOrdTotPrice()+vo.getUsedPoint());
+                vo.setUsedPoint(0);
+            }
+
+        }
+
+        // product_order insert
+        int result = service.insertComplete(vo);
+
+        List<String> checkList = (List<String>) session.getAttribute("cartCheckList");
+
+
+        // 장바구니 삭제
+        if(type == "cart"){
+            service.deleteCompleteCart(uid, checkList);
+        }
+
+        return null;
+    }
 }

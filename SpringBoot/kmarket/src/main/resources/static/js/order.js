@@ -36,8 +36,46 @@
                  let num = (Number(totalPrice)-Number(point.value));
                  total.text(Number(num).toLocaleString());
             }
+        });
 
+        $('.order > form ').submit(function(e){
 
+            let orderer = $('input[name=orderer]').val();
+            let hp = $('input[name=hp]').val();
+            let zip = $('input[name=zip]').val();
+            let addr1 = $('input[name=addr1]').val();
+            let addr2 = $('input[name=addr2]').val();
+            totalPrice = $('.final').children().children().children('tr:eq(6)').children('td:eq(1)').text.replace(',','');
+
+            let jsonData = {
+                "ordCount": count,
+                "ordPrice": price,
+                "ordDiscount": discount,
+                "ordDelivery": delivery,
+                "usedPoint": point.value,
+                "ordTotPrice": totalPrice,
+                "recipName": orderer,
+                "recipHp": hp,
+                "recipZip": zip,
+                "recipAddr1": addr1,
+                "recipAddr2": addr2,
+                "ordPayment": $('input[name=payment]:checked').val()
+            }
+
+            $.ajax({
+                    url:'/kmarket/product/complete',
+                    method:'POST',
+                    date: jsonData,
+                    dataType: 'JSON',
+                    success: function(data){
+                        if(data.result == 1){
+                            location.href = "/kmarket/product/complete";
+                        }else {
+                            alert('다시 시도해 주십시오.');
+                        }
+                    }
+            });
+            e.preventDefault();
         });
 
     });

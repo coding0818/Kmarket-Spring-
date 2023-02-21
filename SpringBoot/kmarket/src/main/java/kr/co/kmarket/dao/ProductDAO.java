@@ -49,7 +49,9 @@ public interface ProductDAO {
     // 주문하기 등록
     public int insertComplete(OrderVO vo);
 
+    // 주문 상품 삽입
+    public int insertCompleteItem(@Param("ordNO") int ordNo, @Param("ordState") String ordState, @Param("ordStatus") String ordStatus, @Param("checkList") List<String> checkList);
 
-    // 구매하기
-  //  public
+    // 장바구니 삭제
+    public int deleteCompleteCart(@Param("uid") String uid, @Param("checkList") List<String> checkList);
 }

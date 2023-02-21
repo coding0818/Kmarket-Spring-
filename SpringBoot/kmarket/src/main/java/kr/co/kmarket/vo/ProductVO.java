@@ -66,6 +66,7 @@ public class ProductVO {
     private String type;
     private int level;
     private String keyword;
-
+    private String ordState;
+    private String ordStatus;
 
 }

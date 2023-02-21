@@ -107,12 +107,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertComplete">
         insert into `km_product_order` set
                             `ordNo`=#{ordNo},
-                            `ordUid`=#{ordUid},
+                            `uid`=#{uid},
                             `ordCount`=#{ordCount},
                             `ordPrice`=#{ordPrice},
                             `ordDiscount`=#{ordDiscount},
                             `ordDelivery`=#{ordDelivery},
-                            `savePoint`=#{savePoint},
                             `usedPoint`=#{usedPoint},
                             `ordTotPrice`=#{ordTotPrice},
                             `recipName`=#{recipName},
@@ -121,10 +120,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                             `recipAddr1`=#{recipAddr1},
                             `recipAddr2`=#{recipAddr2},
                             `ordPayment`=#{ordPayment},
-                            `ordComplete`=1,
+                            `ordComplete`=2,
                             `ordDate`=NOW();
     </insert>
 
+    <!--주문 상품 입력-->
+    <insert id="insertCompleteItem">
+        insert into `km_product_order_item` (`prodNo`, `ordNo`, `count`, `price`, `discount`, `point`, `delivery`, `total`, `ordState`, `ordStatus`)
+        select `prodNo`, #{ordNo}, `count`, `price`, `discount`, `point`, `delivery`, `total`, #{ordState}, #{ordStatus} from `km_product_cart`
+        where `ordNo`=#{ordNo} and `prodNo` in
+        <foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
+            #{checkList}
+        </foreach>
+    </insert>
 
-
+    <!--장바구니 삭제-->
+    <delete id="deleteCompleteCart">
+        delete from `km_product_cart` where `uid`=#{uid} and `prodNo` in
+        <foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
+            #{checkList}
+        </foreach>
+    </delete>
 </mapper>
