@@ -126,9 +126,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--주문 상품 입력-->
     <insert id="insertCompleteItem">
-        insert into `km_product_order_item` (`prodNo`, `ordNo`, `count`, `price`, `discount`, `point`, `delivery`, `total`, `ordState`, `ordStatus`)
-        select `prodNo`, #{ordNo}, `count`, `price`, `discount`, `point`, `delivery`, `total`, #{ordState}, #{ordStatus} from `km_product_cart`
-        where `ordNo`=#{ordNo} and `prodNo` in
+        insert into `km_product_order_item` (`prodNo`, `ordNo`, `uid`, `count`, `price`, `discount`, `point`, `delivery`, `total`, `ordState`, `ordStatus`)
+        select `prodNo`, #{ordNo}, `uid`, `count`, `price`, `discount`, `point`, `delivery`, `total`, "배송중", 2 from `km_product_cart`
+        where `uid`=#{uid} and `prodNo` in
         <foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
             #{checkList}
         </foreach>
