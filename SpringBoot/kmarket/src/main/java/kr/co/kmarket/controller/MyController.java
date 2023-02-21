@@ -175,7 +175,7 @@ public class MyController {
         model.addAttribute("no", no);
 
         return "my/point";
-    } 
+    }
 
     @GetMapping("my/qna")
     public String qna(Principal principal, Model model){
