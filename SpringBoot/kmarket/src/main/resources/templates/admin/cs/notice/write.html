@@ -16,6 +16,8 @@
 						<article>
 	                        <form action="#" method="post">
 	                            <table>
+									<input type="hidden" name="uid" th:value="${#authentication.principal.user.uid}">
+									<input type="hidden" name="regip" th:value="${#authentication.details.remoteAddress}">
 	                                <tbody>
 	                                    <tr>
 	                                        <td>문의유형</td>

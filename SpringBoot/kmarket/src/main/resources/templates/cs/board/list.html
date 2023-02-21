@@ -133,7 +133,7 @@
                 <th:block th:each="art,index:${articles}">
                   <tr>
                     <td><a th:href="@{/cs/view(cate1=qna, cate2=${art.cate2}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
-                    <td>[[${art.uid}]]</td>
+                    <td>[[${art.uidMasking}]]</td>
                     <td>[[${art.rdate}]]</td>
                   </tr>
                 </th:block>

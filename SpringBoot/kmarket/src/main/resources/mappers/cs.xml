@@ -6,7 +6,7 @@
 
     <insert id="insertCsArticle" useGeneratedKeys="true" keyProperty="csNo">
         INSERT INTO `km_cs` SET
-            `cate1` = 'qna',
+            `cate1` = #{cate1},
             `cate2` = #{cate2},
             `type` = #{type},
             `title` = #{title},

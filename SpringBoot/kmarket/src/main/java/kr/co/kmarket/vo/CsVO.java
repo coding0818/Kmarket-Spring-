@@ -19,6 +19,7 @@ public class CsVO {
 
     private int csNo;
     private String uid;
+    private String uidMasking;
     private String cate1;
     private String cate2;
     private String type;
@@ -32,5 +33,5 @@ public class CsVO {
     public String getRdate() {
         return rdate.substring(2, 10);
     }
-    public String getUid() {return uid.replaceAll("(?<=.{3}).", "*");}
+    public String getUidMasking() {return uid.replaceAll("(?<=.{3}).", "*");}
 }
