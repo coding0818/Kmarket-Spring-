@@ -13,7 +13,7 @@ import lombok.*;
 public class OrderVO {
 
     private int ordNo;
-    private String ordUid;
+    private String uid;
     private int ordCount;
     private int ordPrice;
     private int ordDiscount;
@@ -30,4 +30,14 @@ public class OrderVO {
     private int ordComplete;
     private String ordDate;
 
+    // 추가
+    private int prodNo;
+    private int count;
+    private int price;
+    private int discount;
+    private int point;
+    private int delivery;
+    private int total;
+    private String ordState;
+    private String ordStatus;
 }

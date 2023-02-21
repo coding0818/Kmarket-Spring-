@@ -6,6 +6,7 @@ import kr.co.kmarket.vo.CateVO;
 import kr.co.kmarket.vo.OrderVO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,5 +77,15 @@ public class ProductService {
     // 주문하기 등록
     public int insertComplete(OrderVO vo){
         return dao.insertComplete(vo);
+    }
+
+    // 주문 상품 등록
+    public int insertCompleteItem(int ordNo, String ordState, String ordStatus, List<String> checkList){
+        return dao.insertCompleteItem(ordNo, ordState, ordStatus, checkList);
+    }
+
+    // 장바구니 주문 완료 상품 삭제
+    public int deleteCompleteCart(String uid, List<String> checkList){
+        return dao.deleteCompleteCart(uid, checkList);
     }
 }

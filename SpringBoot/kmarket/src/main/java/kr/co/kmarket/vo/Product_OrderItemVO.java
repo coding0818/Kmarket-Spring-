@@ -24,4 +24,6 @@ public class Product_OrderItemVO {
     private int delivery;
     private int total;
 
+
+
 }
