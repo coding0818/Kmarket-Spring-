@@ -14,7 +14,7 @@
 	                </nav>
 	                <section class="write">
 						<article>
-	                        <form action="#" method="post">
+	                        <form th:action="@{/admin/cs/notice/write}" method="post">
 	                            <table>
 									<input type="hidden" name="uid" th:value="${#authentication.principal.user.uid}">
 									<input type="hidden" name="regip" th:value="${#authentication.details.remoteAddress}">
