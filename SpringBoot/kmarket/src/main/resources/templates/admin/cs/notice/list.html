@@ -38,11 +38,11 @@
                         	<td><input type="checkbox" name="check" th:value="${art.csNo}"></td>
                             <td>[[${pageStartNum - index.index}]]</td>
                             <td>[[${art.cate1}]]</td>
-                            <td><a th:href="@{/admin/cs/notice/view(pg=${pg}, csNo=${art.csNo})}" th:text="${art.title}"></a></td>
+                            <td><a th:href="@{/admin/cs/notice/view(cate2=${cate2}, pg=${pg}, csNo=${art.csNo})}" th:text="${art.title}"></a></td>
                             <td>[[${art.hit}]]</td>
                             <td>[[${art.rdate}]]</td>
                             <td>
-                                <a th:href="@{/admin/cs/delete(cate1=${art.cate1}, csNo=${art.csNo})}" class='remove'>[삭제]</a><br>
+                                <a th:href="@{/admin/cs/delete(cate1=${art.cate1}, cate2=${cate2}, pg=${pg}, csNo=${art.csNo})}" class="remove" onclick="return delConfirm();">[삭제]</a><br>
                                 <a th:href="@{/admin/cs/notice/modify(csNo=${art.csNo})}">[수정]</a>
                             </td>
                         </tr>
