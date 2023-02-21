@@ -67,6 +67,19 @@ public class AdminNoticeController {
 
     @PostMapping("admin/cs/notice/modify")
     public String modify(CsVO vo) {
+        String cate2 = vo.getCate1();
+        if ("service".equals(cate2)){
+            vo.setType("고객서비스");
+        } else if ("safeDeal".equals(cate2)){
+            vo.setType("안전거래");
+        } else if ("xproduct".equals(cate2)){
+            vo.setType("위해상품");
+        } else if ("great".equals(cate2)){
+            vo.setType("이벤트당첨");
+        } else {
+            vo.setType("해당 없음");
+        }
+
         service.updateCsArticle(vo);
         int csNo = vo.getCsNo();
         return "redirect:/admin/cs/notice/view?pg=1&cate2=all&csNo="+csNo;
@@ -89,6 +102,20 @@ public class AdminNoticeController {
     @PostMapping("admin/cs/notice/write")
     public String write(CsVO vo) {
         vo.setCate1("notice");
+        String cate2 = vo.getCate2();
+        
+        if ("service".equals(cate2)){
+            vo.setType("고객서비스");
+        } else if ("safeDeal".equals(cate2)){
+            vo.setType("안전거래");
+        } else if ("xproduct".equals(cate2)){
+            vo.setType("위해상품");
+        } else if ("great".equals(cate2)){
+            vo.setType("이벤트당첨");
+        } else {
+            vo.setType("해당 없음");
+        }
+        
         service.insertCsArticle(vo);
         return "redirect:/admin/cs/notice/list?cate2=all&pg=1";
     }

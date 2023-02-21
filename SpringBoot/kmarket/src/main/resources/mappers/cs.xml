@@ -73,4 +73,10 @@
             WHERE `csNo` = #{csNo};
     </update>
 
+    <update id="updateCsComment">
+        UPDATE `km_cs` SET
+            `comment` = #{comment}
+        WHERE `csNo` = #{csNo};
+    </update>
+
 </mapper>

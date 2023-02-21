@@ -50,6 +50,7 @@ public class CsService {
     }
 
     public int updateCsArticle (CsVO vo) { return dao.updateCsArticle(vo); }
+    public int updateCsComment (String comment, int csNo) { return dao.updateCsComment(comment, csNo); }
 
     public int deleteCsArticle (int csNo) { return dao.deleteCsArticle(csNo); }
 

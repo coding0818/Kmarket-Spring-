@@ -37,14 +37,14 @@
 							        <tr>
 							        	<td>답변</td>
 							        	<td>
-							        		답변내용
+							        		[[${art.comment}]]
 							        	</td>
 							        </tr>
 							    </tbody>
 							</table>
 							 <div>
-							    <a th:href="@{/admin/cs/delete(cate1=${art.cate1}, csNo=${art.csNo})}" class="btnDelete" id="remove">삭제</a>
-							    <a href="#" class="btnList">목록</a>
+								 <a th:href="@{/admin/cs/delete(cate1=${art.cate1}, cate2=${cate2}, type=${type}, pg=${pg}, csNo=${art.csNo})}" class="btnDelete" id="remove" onclick="return delConfirm();">삭제</a>
+								 <a th:href="@{/admin/cs/qna/list(cate2=${cate2}, type=${type}, pg=${pg})}" class="btnList">목록</a>
 							</div>
 						</article>
 	                </section>

@@ -21,7 +21,7 @@
 	                                        <td>유형</td>
 	                                        <td>
 	                                            <select name="cate2" id="selectBox">
-													<th:block th:switch="${#strings.toString(vo.cate2)}">
+													<th:block th:switch="${#strings.toString(art.cate2)}">
 														<th:block th:case="service">
 															<option selected value="service">고객서비스</option>
 															<option value="safeDeal">안전거래</option>
