@@ -23,8 +23,8 @@
     <select id="selectCsArticles" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs`
             WHERE `cate1`=#{cate1} AND `cate2`=#{cate2}
-            ORDER BY `csNo`
-            DESC LIMIT #{start}, 10;
+            ORDER BY `csNo` DESC
+            LIMIT #{start}, 10;
     </select>
 
     <select id="selectFaqArticles" resultType="kr.co.kmarket.vo.CsVO">
@@ -35,15 +35,15 @@
     <select id="selectTypeArticles" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs`
            WHERE `cate1`=#{cate1} AND `cate2`=#{cate2} AND `type`=#{type}
-           ORDER BY `csNo`
-           DESC LIMIT #{start}, 10;
+           ORDER BY `csNo` DESC
+           LIMIT #{start}, 10;
     </select>
 
     <select id="selectCsArticlesAll" resultType="kr.co.kmarket.vo.CsVO">
         SELECT * FROM `km_cs`
             WHERE `cate1`=#{cate1}
-            ORDER BY `csNo`
-            DESC LIMIT #{start}, 10;
+            ORDER BY `csNo` DESC
+            LIMIT #{start}, 10;
     </select>
 
     <delete id="deleteCsArticle">

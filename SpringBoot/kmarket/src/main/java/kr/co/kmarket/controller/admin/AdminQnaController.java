@@ -24,20 +24,21 @@ public class AdminQnaController {
         List<CsVO> articles = null;
         long total = 0;
 
+        /*** 페이징 처리 ***/
+        int currentPage = service.getCurrentPage(pg);
+        int start = service.getLimitstart(currentPage);
+
         /*** selectbox로 검색한 것이 아닌 경우 ***/
-        if (cate2 == null){
+        if ("all".equals(cate2)){
             articles = service.selectCSArticlesAll(cate1, 0);
             total = service.getTotalCount(cate1, "all", null);
-
-        /*** 검색어가 있을 경우 ***/
+            /*** 검색어가 있을 경우 ***/
         } else {
             articles = service.selectTypeArticles(cate1, cate2, type, 0);
             total = service.getTotalCount(cate1, cate2, type);
         }
 
         /*** 페이징 처리 ***/
-        int currentPage = service.getCurrentPage(pg);
-        int start = service.getLimitstart(currentPage);
         int lastPage = service.getLastPageNum(total);
         int pageStartNum = service.getPageStartNum(total, start);
         int groups[] = service.getPageGroup(currentPage, lastPage);
@@ -50,6 +51,7 @@ public class AdminQnaController {
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);
         model.addAttribute("type", type);
+        model.addAttribute("pg", pg);
         return "admin/cs/qna/list";
     }
 
@@ -59,11 +61,12 @@ public class AdminQnaController {
     }
 
     @GetMapping("admin/cs/qna/view")
-    public String view(Model model, String cate2, String pg, int csNo) {
+    public String view(Model model, String cate2, String type, String pg, int csNo) {
 
         CsVO art = service.selectCsArticle(csNo);
 
         model.addAttribute("cate2", cate2);
+        model.addAttribute("type", type);
         model.addAttribute("pg", pg);
         model.addAttribute("csNo", csNo);
         model.addAttribute("art", art);

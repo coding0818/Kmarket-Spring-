@@ -46,7 +46,7 @@
                             <td>[[${pageStartNum - index.index}]]</td>
                             <td>[[${art.cate2}]]</td>
                             <td>[[${art.type}]]</td>
-                            <td><a th:href="@{/admin/cs/faq/view(pg=${pg}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
+                            <td><a th:href="@{/admin/cs/faq/view(cate2=${cate2}, type=${type}, pg=${pg}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
                             <td>[[${art.hit}]]</td>
                             <td>
                                 [[${art.rdate}]]
@@ -59,19 +59,19 @@
                        
                     </table>
                     <input type="button" class="delete" value="선택삭제" onclick="checkDelete()">
-                    <a href="#" class="write" id="write">작성하기</a>
+                    <a th:href="@{/admin/cs/faq/write}" class="write" id="write">작성하기</a>
 
                     <div class="paging">
                         <th:block th:if="${groups[0] > 1}">
-                            <span><a th:href="@{/admin/cs/faq/list(pg=${groups[0] - 1})}" class="prev"><&nbsp;이전</a></span>
+                            <span><a th:href="@{/admin/cs/faq/list(c2=${c2}, c3=${c3}, pg=${groups[0] - 1})}" class="prev"><&nbsp;이전</a></span>
                         </th:block>
                         <span class="num">
                         <th:block th:each="num:${#numbers.sequence(groups[0],groups[1])}">
-                            <a th:href="@{/admin/cs/faq/list(pg=${num})}" th:class="${num == currentPage ? 'on' : 'off'}">[[${num}]]</a>
+                            <a th:href="@{/admin/cs/faq/list(c2=${c2}, c3=${c3}, pg=${num})}" th:class="${num == currentPage ? 'on' : 'off'}">[[${num}]]</a>
                         </th:block>
                         </span>
                         <th:block th:if="${groups[1] < lastPage}">
-                            <span><a th:href="@{/admin/cs/faq/list(pg=${groups[1] + 1})}" class="next">다음&nbsp;></a></span>
+                            <span><a th:href="@{/admin/cs/faq/list(c2=${c2}, c3=${c3}, pg=${groups[1] + 1})}" class="next">다음&nbsp;></a></span>
                         </th:block>
                     </div>
                 </section>

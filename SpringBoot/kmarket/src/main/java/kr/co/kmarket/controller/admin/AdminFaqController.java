@@ -26,20 +26,22 @@ public class AdminFaqController {
         List<CsVO> articles = null;
         long total = 0;
 
+        /*** 페이징 처리 ***/
+        int currentPage = service.getCurrentPage(pg);
+        int start = service.getLimitstart(currentPage);
+
         /*** selectbox로 검색한 것이 아닌 경우 ***/
-        if (cate2 == null){
-            articles = service.selectCSArticlesAll(cate1, 0);
+        if ("all".equals(cate2)){
+            articles = service.selectCSArticlesAll(cate1, start);
             total = service.getTotalCount(cate1, "all", null);
 
         /*** 검색어가 있을 경우 ***/
         } else {
-            articles = service.selectTypeArticles(cate1, cate2, type, 0);
+            articles = service.selectTypeArticles(cate1, cate2, type, start);
             total = service.getTotalCount(cate1, cate2, type);
         }
 
         /*** 페이징 처리 ***/
-        int currentPage = service.getCurrentPage(pg);
-        int start = service.getLimitstart(currentPage);
         int lastPage = service.getLastPageNum(total);
         int pageStartNum = service.getPageStartNum(total, start);
         int groups[] = service.getPageGroup(currentPage, lastPage);
@@ -52,31 +54,35 @@ public class AdminFaqController {
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);
         model.addAttribute("type", type);
+        model.addAttribute("pg", pg);
         return "admin/cs/faq/list";
     }
 
     @GetMapping("admin/cs/faq/modify")
-    public String modify(Model model, int csNo, String pg) {
+    public String modify(Model model, String cate2, String type, int csNo, String pg) {
         CsVO art = service.selectCsArticle(csNo);
 
         model.addAttribute("art", art);
+        model.addAttribute("cate2", cate2);
+        model.addAttribute("type", type);
         model.addAttribute("pg", pg);
+        model.addAttribute("csNo", csNo);
         return "admin/cs/faq/modify";
     }
 
     @PostMapping("admin/cs/faq/modify")
-    public String modify(CsVO vo) {
+    public String modify(int csNo, CsVO vo) {
         service.updateCsArticle(vo);
-        int csNo = vo.getCsNo();
-        return "redirect:/admin/cs/faq/view?csNo="+csNo;
+        return "redirect:/admin/cs/faq/view?pg=1&cate2=all&type=all&csNo="+csNo;
     }
 
     @GetMapping("admin/cs/faq/view")
-    public String view(Model model, String cate2, String pg, int csNo) {
+    public String view(Model model, String cate2, String type, String pg, int csNo) {
 
         CsVO art = service.selectCsArticle(csNo);
 
         model.addAttribute("cate2", cate2);
+        model.addAttribute("type", type);
         model.addAttribute("pg", pg);
         model.addAttribute("csNo", csNo);
         model.addAttribute("art", art);
@@ -90,7 +96,7 @@ public class AdminFaqController {
     public String write(CsVO vo) {
         vo.setCate1("faq");
         service.insertCsArticle(vo);
-        return "redirect:/admin/cs/faq/list";
+        return "redirect:/admin/cs/faq/list?cate2=all&type=all&pg=1";
     }
 
 }

@@ -14,7 +14,7 @@
 	                </nav>
 	                <section class="modify">
 						<article>
-	                        <form action="#" method="post">
+	                        <form th:action="@{/admin/cs/notice/modify (pg=${pg}, csNo=${art.csNo})}" method="post">
 	                            <table>
 	                                <tbody>
 	                                    <tr>
