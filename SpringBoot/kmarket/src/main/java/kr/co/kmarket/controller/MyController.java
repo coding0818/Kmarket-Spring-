@@ -1,5 +1,6 @@
 package kr.co.kmarket.controller;
 
+import kr.co.kmarket.entity.MyOrderEntity;
 import kr.co.kmarket.entity.MyPointEntity;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.vo.*;
@@ -74,7 +75,7 @@ public class MyController {
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
-        int pointSum = service.selectSumPoint(principal.getName());
+        Integer pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
 
         model.addAttribute("pointList", pointList);
@@ -89,17 +90,22 @@ public class MyController {
     }
 
     @GetMapping("my/ordered")
-    public String ordered(Principal principal, Model model){
+    public String ordered(Principal principal, Model model, Pageable pageable){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
-        int pointSum = service.selectSumPoint(principal.getName());
+        Integer pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
+
+        Page<MyOrderEntity> orderList = service.findMyOrderEntityByUid(principal.getName(), pageable);
+
+        log.info("orderList : "+ orderList.getContent());
 
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
         model.addAttribute("pointSum", pointSum);
         model.addAttribute("csCount", csCount);
+        model.addAttribute("orderList", orderList.getContent());
         return "my/ordered";
     }
 
@@ -113,7 +119,7 @@ public class MyController {
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
-        int pointSum = service.selectSumPoint(principal.getName());
+        Integer pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
 
         Page<MyPointEntity> pointList = null;

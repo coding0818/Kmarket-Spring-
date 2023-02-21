@@ -15,7 +15,7 @@ public interface MyDAO {
     // 공통
     public int selectCountOrder(String uid);
     public int selectCountCoupon(String uid);
-    public int selectSumPoint(String uid);
+    public Integer selectSumPoint(String uid);
     public int selectCountCs(String uid);
 
     //home
