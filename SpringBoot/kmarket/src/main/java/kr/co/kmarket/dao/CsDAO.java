@@ -24,6 +24,7 @@ public interface CsDAO {
     public List<CsVO> selectTypeArticles(@Param("cate1") String cate1, @Param("cate2") String cate2, @Param("type") String type, @Param("start") int start);
     public List<CsVO> selectCsArticlesAll(@Param("cate1") String cate1, @Param("start") int start);
     public int updateCsArticle(CsVO vo);
+    public int updateCsComment(@Param("comment") String comment, @Param("csNo") int csNo);
     public int deleteCsArticle(int csNo);
 
     /*** 기본 CRUD 외 추가 CURD ***/

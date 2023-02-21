@@ -37,7 +37,7 @@
 							    </tbody>
 							</table>
 							 <div>
-							   <a th:href="@{/admin/cs/delete(cate1=${art.cate1}, csNo=${art.csNo})" class="btnDelete" id="remove">삭제</a>
+								 <a th:href="@{/admin/cs/delete(cate1=${art.cate1}, cate2=${cate2}, pg=${pg}, csNo=${art.csNo})}" class="btnDelete" id="remove" onclick="return delConfirm();">삭제</a>
 	                           <a th:href="@{/admin/cs/notice/modify(cate2=${cate2}, pg=${pg}, csNo=${art.csNo})}" class="btnModify">수정</a>
 	                           <a th:href="@{/admin/cs/notice/list(cate2=${cate2}, pg=${pg})}" class="btnList">목록</a>
 							</div>

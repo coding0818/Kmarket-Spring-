@@ -14,39 +14,39 @@
 	                </nav>
 	                <section class="reply">
 						<article>
-	                        <form action="#" method="post">
+	                        <form th:action="@{/admin/cs/qna/reply (csNo=${art.csNo})}" method="post">
 	                            <table>
 	                                <tbody>
 	                                    <tr>
 	                                        <td>유형</td>
 	                                        <td>
-	                                        	<p>회원 - 가입</p>
+	                                        	<p>[[${art.cate2}]] - [[${art.type}]]</p>
 	                                        </td>
 	                                    </tr>
 	                                    <tr>
 	                                        <td>제목</td>
 	                                        <td>
-	                                            <p>개인 회원과 법인 회원에 차이가 있나요?</p> 
+	                                            <p>[[${art.title}]]</p>
 	                                        </td>
 	                                    </tr>
 	                                    <tr>
 	                                        <td>내용</td>
 	                                        <td>
-	                                           <p>개인회원은 본인인증, 법인회원은 사업자 등록번호를 기준으로 사업자 인증 후 가입 가능합니다.개인회원은 본인인증, 법인회원은 사업자 등록번호를 기준으로 사업자 인증 후 가입 가능합니다.개인회원은 본인인증, 법인회원은 사업자 등록번호를 기준으로 사업자 인증 후 가입 가능합니다.style 수정하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p> 
+	                                           <p>[[${art.content}]]</p>
 	                                        </td>
 	                                    </tr>
 	                                    <tr>
 	                                        <td>답변</td>
 	                                        <td>
-	                                            <textarea name="replyContent" placeholder="내용을 입력하세요." required>확인완료</textarea>
+	                                            <textarea name="comment" placeholder="내용을 입력하세요." required></textarea>
 	                                        </td>
 	                                    </tr>
 	                                </tbody>
 	                            </table>
 	                             <div>
-	                             	<a href="#" class="btnDelete" id="remove">삭제</a>
+									 <a th:href="@{/admin/cs/delete(cate1=${art.cate1}, cate2=${cate2}, type=${type}, pg=${pg}, csNo=${art.csNo})}" class="btnDelete" id="remove" onclick="return delConfirm();">삭제</a>
 	                                <input type="submit" class="btnSubmit" value="답변등록">
-	                                <a href="#" class="btnList">목록</a>
+									 <a th:href="@{/admin/cs/qna/list(cate2=${cate2}, type=${type}, pg=${pg})}" class="btnList">목록</a>
 	                            </div>
 	                        </form>
 	                    </article>

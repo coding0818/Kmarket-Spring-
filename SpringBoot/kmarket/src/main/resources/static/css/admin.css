@@ -1825,3 +1825,5 @@ button[type=submit] {
     text-align: center;
     box-sizing: border-box;
 }
+
+#tb > tbody > tr > td.finish {color: #408fff}
