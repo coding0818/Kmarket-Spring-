@@ -101,4 +101,8 @@ public class MyService {
     public Page<MyPointEntity> findByUidAndPointDate2(String uid, String startdate, String enddate, Pageable pageable){
         return repo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
     }
+
+
+
+
 }

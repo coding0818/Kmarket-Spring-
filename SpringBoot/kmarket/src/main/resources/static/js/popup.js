@@ -1,9 +1,35 @@
-$(function(){
+$(document).ready(function(){
 
     // 상호명 클릭 시 - 판매자 정보 팝업 출력
     $('.latest .info .company > a').click(function(e){
         e.preventDefault();
         $('#popSeller').addClass('on');
+
+        let company = $(this).text();
+
+        console.log('company: ' + company);
+
+        let jsonData = {
+            'uid': [[${username}]]
+        }
+
+        console.log('jsonDate: ' + jsonData);
+
+        /*
+        $.ajax({
+            url:"/kmarket/my/getCompany",
+            type:"GET",
+            data: jsonData,
+            dataType: 'JSON',
+            success: (data)=>{
+                if(data.result > 0) {
+                        alert('success');
+                    } else {
+                        alert('error');
+                    }
+                }
+        });
+        */
     });
 
     // 상호명 - 판매자 정보 팝업 - 문의하기 클릭 시 - 문의하기 팝업 출력
