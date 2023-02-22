@@ -1,15 +1,58 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/my/_header}"/>
+<script th:inline="javascript">
+    $(function(){
+        $('.btnFindZip').click(function(){
+            zipcode();
+        });
+
+        $('#btnChangeHp').click(function(){
+            var patternPhone = /01[016789]-[^0][0-9]{3,4}-[0-9]{3,4}/;
+
+            let hp1 = $('input[name=hp1]').val();
+            let hp2 = $('input[name=hp2]').val();
+            let hp3 = $('input[name=hp3]').val();
+
+            let userType = $('input[name=userType]').val();
+            console.log("userType  :" + userType);
+
+            let hp = hp1 + "-" + hp2 + "-" + hp3;
+            console.log(hp);
+
+            let uid = [[${uid}]];
+
+            if(!patternPhone.test(hp)){
+                alert('핸드폰 번호를 확인 해주세요');
+                return;
+            }
+
+            let jsonData = {"hp":hp, "userType":userType, "uid":uid};
+
+            $.ajax({
+                url:'/kmarket/my/modifyHp',
+                method:'POST',
+                data:jsonData,
+                dataType:'json',
+                success:function(data){
+                    if(data.result == 1){
+                        alert("휴대폰 번호가 수정되었습니다.");
+                    }
+                }
+            });
+
+        });
+    });
+</script>
             <div class="info">
 				<ul>
                     <span class="menu_else"></span>
-                    <li class="on"><a href="#">전체주문내역</a></li>
+                    <li><a th:href="@{/my/ordered}">전체주문내역</a></li>
                     <!--<li><a href="#">관심상품</a></li>-->
-                    <li><a href="#">포인트내역</a></li>
-                    <li><a href="#">쿠폰</a></li>
-                    <li><a href="#">나의리뷰</a></li>
-                    <li><a href="#">문의하기</a></li>
-                    <li><a href="#">나의설정</a></li>
+                    <li><a th:href="@{/my/point}">포인트내역</a></li>
+                    <li><a th:href="@{/my/coupon}">쿠폰</a></li>
+                    <li><a th:href="@{/my/review}">나의리뷰</a></li>
+                    <li><a th:href="@{/my/qna}">문의하기</a></li>
+                    <li class="on"><a th:href="@{/my/info}">나의설정</a></li>
                 </ul>
 
                 <section>
@@ -20,7 +63,8 @@
                         <table border="0">
                             <tr>
                                 <td>사용자 ID</td>
-                                <td>cir***</td>
+                                <td>[[${maskingId}]]</td>
+                                <input type="hidden" name="userType" th:value="${userType}"/>
                             </tr>
                             <tr>
                                 <td>비밀번호</td>
@@ -30,17 +74,14 @@
                             </tr>
                             <tr>
                                 <td>이름</td>
-                                <td>김코딩</td>
-                            </tr>
-                            <tr>
-                                <td>생년월일</td>
-                                <td>1910년 11월 11일</td>
+                                <td th:if="${member != null}">[[${member.name}]]</td>
+                                <td th:if="${seller != null}">[[${seller.ceo}]]</td>
                             </tr>
                             <tr>
                                 <td>E-mail</td>
                                 <td>
-                                    <input type="text" name="email1" value="circle">@
-                                    <input type="text" name="email2" value="naver.com">
+                                    <input type="text" name="email1" th:value="${emailId}">@
+                                    <input type="text" name="email2" th:value="${emailDomain}">
                                     <select>
                                         <option>직접입력</option>
                                         <option>naver.com</option>
@@ -56,21 +97,29 @@
                                 <td>휴대폰</td>
                                 <td>
                                     <p class="hp">
-                                        <input type="text" name="hp1" value="010"/>-
-                                        <input type="text" name="hp2" value="1234"/>-
-                                        <input type="text" name="hp3" value="1001"/>
+                                        <input type="text" name="hp1" th:value="${hp1}"v/>-
+                                        <input type="text" name="hp2" th:value="${hp2}"/>-
+                                        <input type="text" name="hp3" th:value="${hp3}"/>
                                         <button id="btnChangeHp">수정하기</button>
                                     </p>
                                 </td>
                             </tr>
                             <tr>
                                 <td>주소</td>
-                                <td>
-                                    <input type="text" name="zip"/>
-                                    <button id="btnFindZip">주소검색</button>
+                                <td th:if="${member != null}">
+                                    <input type="text" name="zip" th:value="${member.zip}"/>
+                                    <button class="btnFindZip">주소검색</button>
                                     <p class="address">
-                                        <input type="text" name="addr1"/>
-                                        <input type="text" name="addr2"/>
+                                        <input type="text" name="addr1" th:value="${member.addr1}"/>
+                                        <input type="text" name="addr2" th:value="${member.addr2}"/>
+                                    </p>
+                                </td>
+                                <td th:if="${seller != null}">
+                                    <input type="text" name="zip" th:value="${seller.zip}"/>
+                                    <button class="btnFindZip">주소검색</button>
+                                    <p class="address">
+                                        <input type="text" name="addr1" th:value="${seller.addr1}"/>
+                                        <input type="text" name="addr2" th:value="${seller.addr2}"/>
                                     </p>
                                 </td>
                             </tr>
