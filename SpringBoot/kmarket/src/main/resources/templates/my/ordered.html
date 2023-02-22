@@ -1,15 +1,44 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/my/_header}"/>
+<script>
+    $(function(){
+        let now = new Date();
+        let one = new Date();
+        let two = new Date();
+        let thr = new Date();
+        let four = new Date();
+
+        let oneMonthAgo = new Date(now.setMonth(now.getMonth() -1)).getMonth()+1;
+        let twoMonthAgo = new Date(one.setMonth(one.getMonth() -2)).getMonth()+1;
+        let threeMonthAgo = new Date(two.setMonth(two.getMonth() -3)).getMonth()+1;
+        let fourMonthAgo = new Date(thr.setMonth(thr.getMonth() -4)).getMonth()+1;
+        let fiveMonthAgo = new Date(four.setMonth(four.getMonth() -5)).getMonth()+1;
+
+        console.log(oneMonthAgo);
+        console.log(twoMonthAgo);
+        console.log(threeMonthAgo);
+        console.log(fourMonthAgo);
+        console.log(fiveMonthAgo);
+
+        $('#one').append(oneMonthAgo);
+        $('#two').append(twoMonthAgo);
+        $('#three').append(threeMonthAgo);
+        $('#four').append(fourMonthAgo);
+        $('#five').append(fiveMonthAgo);
+
+
+    });
+</script>
     <div class="ordered">
         <ul>
             <span class="menu_else"></span>
-            <li class="on"><a href="#">전체주문내역</a></li>
+            <li class="on"><a th:href="@{/my/ordered}">전체주문내역</a></li>
             <!--<li><a href="#">관심상품</a></li>-->
-            <li><a href="#">포인트내역</a></li>
-            <li><a href="#">쿠폰</a></li>
-            <li><a href="#">나의리뷰</a></li>
-            <li><a href="#">문의하기</a></li>
-            <li><a href="#">나의설정</a></li>
+            <li><a th:href="@{/my/point}">포인트내역</a></li>
+            <li><a th:href="@{/my/coupon}">쿠폰</a></li>
+            <li><a th:href="@{/my/review}">나의리뷰</a></li>
+            <li><a th:href="@{/my/qna}">문의하기</a></li>
+            <li><a th:href="@{/my/info}">나의설정</a></li>
         </ul>
 
         <section>
@@ -20,16 +49,16 @@
                 <div class="byDate">
                     <span class="tit">기간별조회</span>
                     <ul class="date_3ea">
-                        <li><a href="#"><em>1</em>주일</a></li>
-                        <li><a href="#"><em>15</em>일</a></li>
-                        <li><a href="#" class="on"><em>1</em>개월</a></li>
+                        <li><a th:href="@{/my/ordered(division=1, no=1)}" th:class="${division == 1 && no == 1}?'on'"><em>1</em>주일</a></li>
+                        <li><a th:href="@{/my/ordered(division=1, no=2)}" th:class="${division == 1 && no == 2}?'on'"><em>15</em>일</a></li>
+                        <li><a th:href="@{/my/ordered(division=1, no=3)}" th:class="${division == 1 && no == 3}?'on'"><em>1</em>개월</a></li>
                     </ul>
                     <ul class="date_5ea">
-                        <li><a href="#"><em>11</em>월</a></li>
-                        <li><a href="#"><em>10</em>월</a></li>
-                        <li><a href="#"><em>9</em>월</a></li>
-                        <li><a href="#"><em>8</em>월</a></li>
-                        <li><a href="#"><em>7</em>월</a></li>
+                        <li><a th:href="@{/my/ordered(division=2, no=5)}" th:class="${division == 2 && no == 5}?'on'"><em id="five"></em>월</a></li>
+                        <li><a th:href="@{/my/ordered(division=2, no=4)}" th:class="${division == 2 && no == 4}?'on'"><em id="four"></em>월</a></li>
+                        <li><a th:href="@{/my/ordered(division=2, no=3)}" th:class="${division == 2 && no == 3}?'on'"><em id="three"></em>월</a></li>
+                        <li><a th:href="@{/my/ordered(division=2, no=2)}" th:class="${division == 2 && no == 2}?'on'"><em id="two"></em>월</a></li>
+                        <li><a th:href="@{/my/ordered(division=2, no=1)}" th:class="${division == 2 && no == 1}?'on'"><em id="one"></em>월</a></li>
                     </ul>
                     <form th:action="@{/my/ordered}" method="get">
                         <input type="hidden" name="division" value="3"/>

@@ -3,33 +3,34 @@ $(document).ready(function(){
     // 상호명 클릭 시 - 판매자 정보 팝업 출력
     $('.latest .info .company > a').click(function(e){
         e.preventDefault();
-        $('#popSeller').addClass('on');
 
         let company = $(this).text();
 
         console.log('company: ' + company);
 
-        let jsonData = {
-            'uid': [[${username}]]
-        }
+        let jsonData = {"company": company}
 
-        console.log('jsonDate: ' + jsonData);
-
-        /*
         $.ajax({
-            url:"/kmarket/my/getCompany",
-            type:"GET",
+            url:"/kmarket/my/company",
+            type:"POST",
             data: jsonData,
             dataType: 'JSON',
             success: (data)=>{
-                if(data.result > 0) {
-                        alert('success');
-                    } else {
-                        alert('error');
-                    }
-                }
+                console.log(data);
+                console.log(data.company.tel);
+                $('#popSeller .level').text(data.company.level);
+                $('#popSeller .company').text(company);
+                $('#popSeller .ceo').text(data.company.ceo);
+                $('#popSeller .tel').text(data.company.tel);
+                $('#popSeller .fax').text(data.company.fax);
+                $('#popSeller .email').text(data.company.email);
+                $('#popSeller .bizNum').text(data.company.bizRegNum);
+                $('#popSeller .address').text("["+data.company.zip+"] "+data.company.addr1 + data.company.addr2);
+            }
         });
-        */
+
+         $('#popSeller').addClass('on');
+
     });
 
     // 상호명 - 판매자 정보 팝업 - 문의하기 클릭 시 - 문의하기 팝업 출력
@@ -63,6 +64,7 @@ $(document).ready(function(){
     });
 
     // 상품평 작성 - 평점
+    let rating = 0;
     $(".my-rating").starRating({
         starSize: 20,
         useFullStars: true,
