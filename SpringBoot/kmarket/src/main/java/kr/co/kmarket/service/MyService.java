@@ -139,6 +139,15 @@ public class MyService {
 
     }
 
+
+    // coupon
+    public List<MyCouponVO> selectMyCoupons(String uid) {return dao.selectMyCoupons(uid);}
+    public int selectCountMyCoupons(String uid) {return dao.selectCountMyCoupons(uid);}
+
+    // qna
+    public CsVO selectQnas(String uid, int start) {return dao.selectQnas(uid, start);}
+    public int selectCountQnas(String uid) {return dao.selectCountQnas(uid);}
+
     public Page<MyOrderEntity> findMyOrderEntityByUidAndDate1(String uid, String date, Pageable pageable){
         return orderRepo.findByUidAndPointDate1(uid, date, pageable);
     }
@@ -146,6 +155,7 @@ public class MyService {
     public Page<MyOrderEntity> findMyOrderEntityByUidAndDate2(String uid, String startdate, String enddate, Pageable pageable){
         return orderRepo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
     }
+
 
     // review
     public Page<MyReviewEntity> findByUidOrderByRDateDesc(String uid, Pageable pageable){

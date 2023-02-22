@@ -78,6 +78,31 @@
     </select>
 
 
+
+    <!-- coupon -->
+    <select id="selectMyCoupons" resultType="kr.co.kmarket.vo.MyCouponVO">
+        SELECT * FROM `km_member_coupon` AS a
+            JOIN `km_coupon` AS b
+            ON a.`couponNo` = b.`couponNo` WHERE `uid`=#{uid};
+    </select>
+
+    <select id="selectCountMyCoupons" resultType="int">
+        SELECT COUNT(`no`) FROM `km_member_coupon` WHERE `uid`=#{uid};
+    </select>
+
+
+    <!-- qna -->
+    <select id="selectQnas" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs`
+            WHERE `cate1`='qna' AND `uid`=#{uid}
+            ORDER BY `csNo` DESC
+            LIMIT #{start}, 10;
+    </select>
+
+    <select id="selectCountQnas" resultType="int">
+        SELECT COUNT(`csNo`) FROM `km_cs` WHERE `cate1`='qna' AND `uid`=#{uid};
+    </select>
+
     <!-- home - 최근 주문 내역 - 주문번호 선택 시 팝업 창 주문상세 정보 출력 -->
     <select id="selectOrderDetails" resultType="kr.co.kmarket.vo.MyOrderVO">
         select a.ordDate, a.ordNo, a.ordPrice, a.ordCount, a.ordDiscount, a.ordTotPrice, a.recipName, a.recipHp, a.recipZip, a.recipAddr1, a.recipAddr2,
@@ -111,5 +136,6 @@
     <update id="updateUserHp">
         update `km_member_general` set `hp`=#{hp} where `uid`=#{uid};
     </update>
+
 
 </mapper>

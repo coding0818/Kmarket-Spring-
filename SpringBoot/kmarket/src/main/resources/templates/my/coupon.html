@@ -2,15 +2,15 @@
 <th:block th:replace="~{/my/_header}"/>
 
             <div class="coupon">
-				<ul>
+                <ul>
                     <span class="menu_else"></span>
-                    <li class="on"><a href="#">전체주문내역</a></li>
-                    <!--<li><a href="#">관심상품</a></li>-->
-                    <li><a href="#">포인트내역</a></li>
-                    <li><a href="#">쿠폰</a></li>
-                    <li><a href="#">나의리뷰</a></li>
-                    <li><a href="#">문의하기</a></li>
-                    <li><a href="#">나의설정</a></li>
+                    <li><a th:href="@{/my/ordered}">전체주문내역</a></li>
+                    <!--<li><a href="./favorite.html">관심상품</a></li>-->
+                    <li><a th:href="@{/my/point}">포인트내역</a></li>
+                    <li class="on"><a th:href="@{/my/coupon}">쿠폰</a></li>
+                    <li><a th:href="@{/my/review}">나의리뷰</a></li>
+                    <li><a th:href="@{/my/qna(pg=1)}">문의하기</a></li>
+                    <li><a th:href="@{/my/info}">나의설정</a></li>
                 </ul>
 
                 <section>
@@ -23,7 +23,7 @@
                             <dl>
                                 <dt>· 나의 보유쿠폰</dt>
                                 <dd>
-                                    <strong>2</strong>
+                                    <strong>[[${countCoupon}]]</strong>
                                     <span>장</span>
                                 </dd>
                             </dl>
@@ -37,20 +37,15 @@
                                 <th>유효기간</th>
                                 <th>상태</th>
                             </tr>
-                            <tr>
-                                <td class="tit">1만원 할인 중복쿠폰</td>
-                                <td class="discount"><span>10,000</span>원</td>
-                                <td class="condition"><span>10,100</span>원 이상 구매시</td>
-                                <td class="expire">~12/29</td>
-                                <td class="status">사용가능</td>
-                            </tr>
-                            <tr>
-                                <td class="tit">회원가입 축하 5천원 할인쿠폰</td>
-                                <td class="discount"><span>5,000</span>원</td>
-                                <td class="condition"><span>5,100</span>원 이상 구매시</td>
-                                <td class="expire">~12/29</td>
-                                <td class="status">사용가능</td>
-                            </tr>
+                            <th:block th:each="cp:${coupons}">
+                                <tr>
+                                    <td class="tit">[[${cp.couponName}]]</td>
+                                    <td class="discount"><span>[[${cp.discountPrice}]]</span>원</td>
+                                    <td class="condition">[[${cp.limitCondition}]]</td>
+                                    <td class="expire">~[[${cp.cutExDate}]]</td>
+                                    <td class="status">[[${cp.status}]]</td>
+                                </tr>
+                            </th:block>
                         </table>
                         
                         <ul class="info">

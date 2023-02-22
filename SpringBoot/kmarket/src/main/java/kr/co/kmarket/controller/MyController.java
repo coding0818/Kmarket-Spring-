@@ -1,6 +1,8 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.entity.MyPointEntity;
+
+import kr.co.kmarket.service.CsService;
 import kr.co.kmarket.entity.MyReviewEntity;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.vo.*;
@@ -29,18 +31,29 @@ public class MyController {
     @Autowired
     private MyService service;
 
+    @Autowired
+    private CsService cService;
+
     @GetMapping("my/coupon")
     public String coupon(Principal principal, Model model){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
-        int pointSum = service.selectSumPoint(principal.getName());
+        Integer pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
+        
+        /*** 보유 쿠폰 갯수 ***/
+        int countCoupon = service.selectCountMyCoupons(principal.getName());
+
+        /*** 쿠폰 상세 현황 ***/
+        List<MyCouponVO> coupons = service.selectMyCoupons(principal.getName());
 
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
         model.addAttribute("pointSum", pointSum);
         model.addAttribute("csCount", csCount);
+        model.addAttribute("countCoupon", countCoupon);
+        model.addAttribute("coupons", coupons);
         return "my/coupon";
     }
 
@@ -244,18 +257,36 @@ public class MyController {
     }
 
     @GetMapping("my/qna")
-    public String qna(Principal principal, Model model){
+    public String qna(Principal principal, Model model, String pg){
 
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
-        int pointSum = service.selectSumPoint(principal.getName());
+        Integer pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
+
+
+        /*** 페이징 처리 ***/
+        int currentPage = cService.getCurrentPage(pg);
+        int start = cService.getLimitstart(currentPage);
+
+        CsVO articles = service.selectQnas(principal.getName(), start);
+
+        int total = service.selectCountQnas(principal.getName());
+        int lastPage = cService.getLastPageNum(total);
+        int pageStartNum = cService.getPageStartNum(total, start);
+        int groups[] = cService.getPageGroup(currentPage, lastPage);
 
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
         model.addAttribute("pointSum", pointSum);
         model.addAttribute("csCount", csCount);
+        model.addAttribute("articles", articles);
+        model.addAttribute("pg", pg);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("pageStartNum", pageStartNum);
+        model.addAttribute("groups", groups);
 
         return "my/qna";
     }
