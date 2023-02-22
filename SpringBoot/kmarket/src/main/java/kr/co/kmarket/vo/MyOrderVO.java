@@ -29,6 +29,10 @@ public class MyOrderVO {
     private String ordState;
     private int ordStatus;
 
+    // 추가
+    private String recipHp;
+    private int stock;
+
     // order_item
     private int itemNo;
     private int prodNo;

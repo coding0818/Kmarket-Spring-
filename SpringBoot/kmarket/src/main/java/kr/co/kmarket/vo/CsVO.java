@@ -30,8 +30,16 @@ public class CsVO {
     private int hit;
     private String comment;
 
+    // 추가
+    private String email;
+
     public String getRdate() {
-        return rdate.substring(2, 10);
+        if(rdate == null){
+            return rdate;
+        }else{
+            return rdate.substring(2, 10);
+        }
+
     }
     public String getUidMasking() {return uid.replaceAll("(?<=.{3}).", "*");}
 }

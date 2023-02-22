@@ -1,8 +1,9 @@
 package kr.co.kmarket.controller;
 
-import kr.co.kmarket.entity.MyOrderEntity;
 import kr.co.kmarket.entity.MyPointEntity;
+
 import kr.co.kmarket.service.CsService;
+import kr.co.kmarket.entity.MyReviewEntity;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.vo.*;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -101,29 +103,6 @@ public class MyController {
         return "my/home";
     }
 
-
-    @ResponseBody
-    @PostMapping("my/getCompany")
-    public Map<String, Object> getCompany(@RequestParam String uid){
-        //Map<String, Object> map = new HashMap<String, Object>();
-        //map.put("company", uid);
-
-        log.info(uid);
-
-        service.selectSeller(uid);
-        //int result = service.selectSellerInpopup(company);
-
-       // Map<String, Object> resultMap = new HashMap<>();
-
-        //resultMap.put("result", result);
-
-        return null;
-    }
-
-
-
-
-
     @GetMapping("my/ordered")
     public String ordered(Principal principal, Model model,
                           @RequestParam(value = "division", required = false, defaultValue = "0") int division,
@@ -137,15 +116,64 @@ public class MyController {
         Integer pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
 
-      //  Page<MyOrderEntity> orderList = service.findMyOrderEntityByUid(principal.getName(), pageable);
+        Page<MyOrderEntity> orderList = null;
 
-       // log.info("orderList : "+ orderList.getContent());
+        // 기간별 조회
+        Calendar cal = Calendar.getInstance();
+        if(division == 1){
+            if(no == 1){
+                cal.add(Calendar.DATE, -7);
+            }else if(no == 2){
+                cal.add(Calendar.DATE, -15);
+            }else{
+                cal.add(Calendar.MONTH, -1);
+            }
+            Date date = new Date(cal.getTimeInMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String newdate = sdf.format(date);
+            log.info("date : "+date);
+            orderList = service.findMyOrderEntityByUidAndDate1(principal.getName(), newdate, pageable);
+        }else if(division == 2){
+            if(no == 1){
+                cal.add(Calendar.MONTH, -1);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            } else if (no == 2) {
+                cal.add(Calendar.MONTH, -2);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            } else if (no == 3) {
+                cal.add(Calendar.MONTH, -3);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            } else if (no == 4) {
+                cal.add(Calendar.MONTH, -4);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            } else{
+                cal.add(Calendar.MONTH, -5);
+                cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+            }
+            Date date = new Date(cal.getTimeInMillis());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sta = new SimpleDateFormat("yyyy-MM-01");
+            String startdate = sta.format(date);
+            String enddate = sdf.format(date);
+            log.info("startdate : "+startdate);
+            log.info("enddate : "+enddate);
+            orderList = service.findMyOrderEntityByUidAndDate2(principal.getName(), startdate, enddate, pageable);
+        }else if(division == 3){
+            orderList = service.findMyOrderEntityByUidAndDate2(principal.getName(), begin, end, pageable);
+        } else{orderList = service.findMyOrderEntityByUid(principal.getName(), pageable);}
+
+        int start = (int)(Math.floor(orderList.getNumber() / 5)*5+1);
+        log.info("orderList : "+ orderList.getContent());
 
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
         model.addAttribute("pointSum", pointSum);
         model.addAttribute("csCount", csCount);
-       // model.addAttribute("orderList", orderList.getContent());
+        model.addAttribute("orderList", orderList.getContent());
+        model.addAttribute("page", orderList);
+        model.addAttribute("start", start);
+        model.addAttribute("division", division);
+        model.addAttribute("no", no);
         return "my/ordered";
     }
 
@@ -264,17 +292,25 @@ public class MyController {
     }
 
     @GetMapping("my/review")
-    public String review(Principal principal, Model model){
+    public String review(Principal principal, Model model, Pageable pageable){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());
         int pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
 
+        Page<MyReviewEntity> reviewList = service.findByUidOrderByRDateDesc(principal.getName(), pageable);
+        int start = (int)(Math.floor(reviewList.getNumber() / 5)*5+1);
+
+        log.info("reviewList : "+reviewList.getContent());
+
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
         model.addAttribute("pointSum", pointSum);
         model.addAttribute("csCount", csCount);
+        model.addAttribute("reviewList", reviewList.getContent());
+        model.addAttribute("page", reviewList);
+        model.addAttribute("start", start);
         return "my/review";
     }
 
@@ -286,10 +322,64 @@ public class MyController {
         int pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
 
+        // 개인정보 조회
+        String userType = service.selectUserType(principal.getName());
+
+        if(userType.equals("seller")){
+            SellerVO seller = service.selectSeller(principal.getName());
+
+            int idx = seller.getEmail().indexOf("@");
+            String emailId = seller.getEmail().substring(0, idx);
+            String emailDomain = seller.getEmail().substring(idx+1);
+
+            int i2 = seller.getHp().lastIndexOf("-");
+            int i = seller.getHp().indexOf("-");
+            String hp1 = seller.getHp().substring(0, i);
+            String hp2 = seller.getHp().substring(i+1,i2);
+            String hp3 = seller.getHp().substring(i2+1);
+
+            model.addAttribute("seller", seller);
+            model.addAttribute("emailId", emailId);
+            model.addAttribute("emailDomain", emailDomain);
+            model.addAttribute("hp1", hp1);
+            model.addAttribute("hp2", hp2);
+            model.addAttribute("hp3", hp3);
+
+            log.info("seller name : " + principal.getName());
+            log.info("seller member : " + seller);
+
+        }else{
+            MemberVO user = service.selectUser(principal.getName());
+
+            int idx = user.getEmail().indexOf("@");
+            String emailId = user.getEmail().substring(0, idx);
+            String emailDomain = user.getEmail().substring(idx+1);
+
+            int i2 = user.getHp().lastIndexOf("-");
+            int i = user.getHp().indexOf("-");
+            String hp1 = user.getHp().substring(0, i);
+            String hp2 = user.getHp().substring(i+1,i2);
+            String hp3 = user.getHp().substring(i2+1);
+
+            model.addAttribute("member", user);
+            model.addAttribute("emailId", emailId);
+            model.addAttribute("emailDomain", emailDomain);
+            model.addAttribute("hp1", hp1);
+            model.addAttribute("hp2", hp2);
+            model.addAttribute("hp3", hp3);
+
+            log.info("user name : " + principal.getName());
+            log.info("user member : " + user);
+        }
+        String maskingId = principal.getName().replaceAll("(?<=.{2}).","*");
+
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
         model.addAttribute("pointSum", pointSum);
         model.addAttribute("csCount", csCount);
+        model.addAttribute("maskingId", maskingId);
+        model.addAttribute("userType", userType);
+        model.addAttribute("uid", principal.getName());
         return "my/info";
     }
 
@@ -321,8 +411,51 @@ public class MyController {
 
         return map;
     }
+    // home - 최근 주문 내역 - 주문번호 선택 시 팝업 창 주문상세 정보 출력
+    @ResponseBody
+    @PostMapping("my/orderDetails")
+    public Map<String, MyOrderVO> selectOrderDetails(@RequestParam String ordNo){
+        MyOrderVO vo = service.selectOrderDetails(ordNo);
+
+        Map<String, MyOrderVO> map = new HashMap<>();
+        map.put("ordNo", vo);
+
+        return map;
+    }
+
+    // home - 최근 주문 내역 - 상품명 선택 - 팝업 창 - 문의하기
+    @PostMapping("my/qnaToSeller")
+    public String toSellerQna(CsVO vo, HttpServletRequest req) throws Exception {
+
+        vo.setRegip(req.getRemoteAddr());
+
+        log.warn("here1 : " + vo);
+
+        service.insertQnaToSeller(vo);
+
+        log.warn("here2 : " + vo);
+
+        return "redirect:/my/home";
+    }
 
 
+
+
+    // info - hp 수정
+    @ResponseBody
+    @PostMapping("my/modifyHp")
+    public Map<String, Integer> modifyHp(String hp, String userType, String uid){
+        int result = 0;
+        if(userType.equals("seller")){
+            result = service.updateSellerHp(hp, uid);
+        }else{
+            result = service.updateUserHp(hp, uid);
+        }
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
 
 
 

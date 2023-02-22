@@ -11,35 +11,23 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "km_product_order_item")
+@Table(name="km_product_review")
 @Builder
-public class MyOrderItemEntity {
+public class MyReviewEntity {
 
-    // order_item
     @Id
-    private int itemNo;
+    private int revNo;
 
     @Column(name="prodNo", insertable = false, updatable = false)
     private int prodNo;
-
-    @Column(name="ordNo", insertable = false, updatable = false)
-    private Long ordNo;
     private String uid;
-    private int count;
-    private int discount;
-    private int price;
-    private int point;
-    private int delivery;
-    private int total;
-    private String ordState;
-    private int ordStatus;
-
+    private String content;
+    private int rating;
+    private String regip;
+    private String rdate;
+    private String prodName;
 
     @OneToOne
     @JoinColumn(name = "prodNo")
     private MyProdEntity prod;
-
-
-
-
 }

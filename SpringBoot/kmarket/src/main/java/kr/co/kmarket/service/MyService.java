@@ -3,8 +3,10 @@ package kr.co.kmarket.service;
 import kr.co.kmarket.dao.MyDAO;
 import kr.co.kmarket.entity.MyOrderEntity;
 import kr.co.kmarket.entity.MyPointEntity;
+import kr.co.kmarket.entity.MyReviewEntity;
 import kr.co.kmarket.repository.MyOrderRepo;
 import kr.co.kmarket.repository.MyPointRepo;
+import kr.co.kmarket.repository.MyReviewRepo;
 import kr.co.kmarket.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,9 @@ public class MyService {
 
     @Autowired
     private MyOrderRepo orderRepo;
+
+    @Autowired
+    private MyReviewRepo rRepo;
 
 
     // 공통
@@ -108,16 +113,32 @@ public class MyService {
         return pointRepo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
     }
 
+    // ordered
+    public Page<MyOrderEntity> findMyOrderEntityByUid(String uid, Pageable pageable){
+        return orderRepo.findByUid(uid, pageable);
+    }
+
     // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
     public SellerVO selectCompany (String company){
         return dao.selectCompany(company);
     }
 
+    // home - 최근 주문 내역 - 주문번호 선택 시 팝업 창 주문상세 정보 출력
+    public MyOrderVO selectOrderDetails(String ordNo){
+        return dao.selectOrderDetails(ordNo);
+    }
+    // home - 최근 주문 내역 - 상품명 선택 - 팝업 창 - 문의하기
+    public void insertQnaToSeller(CsVO vo) throws Exception {
+        dao.insertQnaToSeller(vo);
+
+
 
     // ordered
     public Page<MyOrderEntity> findMyOrderEntityByUid(String uid, Pageable pageable){
-        return orderRepo.findByUid(uid, pageable);
+        return orderRepo.findByUidOrderByOrdDateDesc(uid, pageable);
+
     }
+
 
     // coupon
     public List<MyCouponVO> selectMyCoupons(String uid) {return dao.selectMyCoupons(uid);}
@@ -127,4 +148,25 @@ public class MyService {
     public CsVO selectQnas(String uid, int start) {return dao.selectQnas(uid, start);}
     public int selectCountQnas(String uid) {return dao.selectCountQnas(uid);}
 
+    public Page<MyOrderEntity> findMyOrderEntityByUidAndDate1(String uid, String date, Pageable pageable){
+        return orderRepo.findByUidAndPointDate1(uid, date, pageable);
+    }
+
+    public Page<MyOrderEntity> findMyOrderEntityByUidAndDate2(String uid, String startdate, String enddate, Pageable pageable){
+        return orderRepo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
+    }
+
+
+    // review
+    public Page<MyReviewEntity> findByUidOrderByRDateDesc(String uid, Pageable pageable){
+        return rRepo.findByUidOrderByRdateDesc(uid, pageable);
+    }
+
+    // info
+    public int updateSellerHp(String hp, String uid){
+        return dao.updateSellerHp(hp, uid);
+    }
+    public int updateUserHp(String hp, String uid){
+        return dao.updateUserHp(hp, uid);
+    }
 }

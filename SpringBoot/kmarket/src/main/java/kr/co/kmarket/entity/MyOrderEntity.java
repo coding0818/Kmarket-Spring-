@@ -38,7 +38,8 @@ public class MyOrderEntity {
 
     @OneToMany
     @JoinColumn(name= "ordNo")
-    List<MyOrderItemEntity> orderItemEntity = new ArrayList<MyOrderItemEntity>();
+    List<MyOrderItemEntity> orderItem = new ArrayList<MyOrderItemEntity>();
+
 
 
 

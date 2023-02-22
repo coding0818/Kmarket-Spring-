@@ -37,6 +37,7 @@ public interface MyDAO {
     public List<MyPointVO> selectPointShort3(String uid);
 
      // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
+
     public SellerVO selectCompany (String company);
 
     // coupon
@@ -46,6 +47,17 @@ public interface MyDAO {
     // qna
     public CsVO selectQnas (@Param("uid") String uid, @Param("start") int start);
     public int selectCountQnas (String uid);
+
+
+    public SellerVO selectCompany(String company);
+    // home - 최근 주문 내역 - 주문번호 선택 시 팝업 창 주문상세 정보 출력
+    public MyOrderVO selectOrderDetails(String ordNo);
+    // home - 최근 주문 내역 - 상품명 선택 - 팝업 창 - 문의하기
+    public void insertQnaToSeller(CsVO vo);
+
+    // info
+    public int updateSellerHp(@Param("hp") String hp, @Param("uid") String uid);
+    public int updateUserHp(@Param("hp") String hp, @Param("uid") String uid);
 
 
 }
