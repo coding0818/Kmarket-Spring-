@@ -1,7 +1,9 @@
 package kr.co.kmarket.service;
 
 import kr.co.kmarket.dao.MyDAO;
+import kr.co.kmarket.entity.MyOrderEntity;
 import kr.co.kmarket.entity.MyPointEntity;
+import kr.co.kmarket.repository.MyOrderRepo;
 import kr.co.kmarket.repository.MyPointRepo;
 import kr.co.kmarket.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,11 @@ public class MyService {
     private MyDAO dao;
 
     @Autowired
-    private MyPointRepo repo;
+    private MyPointRepo pointRepo;
+
+    @Autowired
+    private MyOrderRepo orderRepo;
+
 
     // 공통
     public int selectCountOrder(String uid){
@@ -30,7 +36,7 @@ public class MyService {
         return dao.selectCountCoupon(uid);
     }
 
-    public int selectSumPoint(String uid){
+    public Integer selectSumPoint(String uid){
         return dao.selectSumPoint(uid);
     }
 
@@ -92,14 +98,14 @@ public class MyService {
     }
 
     public Page<MyPointEntity> findByUid(String uid, Pageable pageable){
-        return repo.findByUid(uid, pageable);
+        return pointRepo.findByUid(uid, pageable);
     }
     public Page<MyPointEntity> findByUidAndPointDate1(String uid, String date, Pageable pageable){
-        return repo.findByUidAndPointDate1(uid, date, pageable);
+        return pointRepo.findByUidAndPointDate1(uid, date, pageable);
     }
 
     public Page<MyPointEntity> findByUidAndPointDate2(String uid, String startdate, String enddate, Pageable pageable){
-        return repo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
+        return pointRepo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
     }
 
     // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
@@ -108,6 +114,10 @@ public class MyService {
     }
 
 
+    // ordered
+    public Page<MyOrderEntity> findMyOrderEntityByUid(String uid, Pageable pageable){
+        return orderRepo.findByUid(uid, pageable);
+    }
 
 
 }

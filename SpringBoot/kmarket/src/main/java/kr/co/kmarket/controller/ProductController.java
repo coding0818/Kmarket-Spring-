@@ -1,7 +1,6 @@
 package kr.co.kmarket.controller;
 
 import kr.co.kmarket.DTO.PagingDTO;
-import kr.co.kmarket.security.MySellerDetails;
 import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.service.ProductService;
@@ -9,8 +8,8 @@ import kr.co.kmarket.util.PagingUtil;
 import kr.co.kmarket.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.Console;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -203,7 +203,7 @@ public class ProductController {
         log.info("type : " +type);
 
 
-        if(type == "order"){
+        if(type.equals("order") ){
             // view에서 구매하기
            ProductVO order = (ProductVO) session.getAttribute("order");
            ProductVO prod = service.selectProduct(order.getProdNo());
@@ -323,11 +323,14 @@ public class ProductController {
 
     // 주문 처리
     @ResponseBody
+    @Transactional
     @PostMapping("product/complete")
-    public String insertComplete(OrderVO vo, Principal principal, HttpServletRequest req){
+    public Map<String, Integer> insertComplete(OrderVO vo, Principal principal, HttpServletRequest req){
         HttpSession session = req.getSession();
         String uid = principal.getName();
         String type = (String) session.getAttribute("type");
+
+        log.info("complete");
 
         vo.setUid(uid);
 
@@ -342,7 +345,9 @@ public class ProductController {
 
         vo.setOrdNo(randOrdNo);
 
-        session.setAttribute("order", vo);
+        log.info("randOrdNo : " + vo.getOrdNo());
+
+        session.setAttribute("finalOrder", vo);
 
         String userType = myService.selectUserType(principal.getName());
 
@@ -381,10 +386,13 @@ public class ProductController {
 
         }
 
+        log.info("vo : " + vo);
+
         // product_order insert
         int result = service.insertComplete(vo);
 
         List<String> checkList = (List<String>) session.getAttribute("cartCheckList");
+        service.insertCompleteItem(randOrdNo, uid, checkList);
 
 
         // 장바구니 삭제
@@ -392,6 +400,9 @@ public class ProductController {
             service.deleteCompleteCart(uid, checkList);
         }
 
-        return null;
+        Map<String, Integer> map = new HashMap<>();
+        map.put("result", result);
+
+        return map;
     }
 }

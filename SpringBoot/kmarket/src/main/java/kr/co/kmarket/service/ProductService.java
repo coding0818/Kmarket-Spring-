@@ -80,8 +80,8 @@ public class ProductService {
     }
 
     // 주문 상품 등록
-    public int insertCompleteItem(int ordNo, String ordState, String ordStatus, List<String> checkList){
-        return dao.insertCompleteItem(ordNo, ordState, ordStatus, checkList);
+    public int insertCompleteItem(int ordNo, String uid, List<String> checkList){
+        return dao.insertCompleteItem(ordNo, uid, checkList);
     }
 
     // 장바구니 주문 완료 상품 삭제

@@ -1,3 +1,8 @@
+/*** 그냥 삭제 버튼 눌렀을 때 confirm ***/
+function delConfirm() {
+    return confirm("정말 삭제하시겠습니까?");
+}
+
 /** 체크박스 모두선택 **/
 function selectAll(selectAll) {
     const checkboxes
@@ -27,7 +32,7 @@ $(function(){
 
 /*** 선택삭제 눌러서 삭제처리 ***/
 function checkDelete() {
-    let url = '/Kmarket/admin/cs/delete';
+    let url = '/kmarket/admin/cs/delete';
     let valueArr = new Array();
     let list = $("input[name='check']");
 
@@ -50,7 +55,7 @@ function checkDelete() {
             success: function(data){
                 if(data.result > 0){
                     alert('삭제되었습니다.');
-                    window.history.back();
+                    location.reload();
                 } else {
                     alert('삭제에 실패했습니다.');
                 }

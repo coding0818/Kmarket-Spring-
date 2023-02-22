@@ -42,11 +42,17 @@
                         </tr>
                         
                         <tr class="row" th:each="art,index:${articles}">
-                        	<td><input type="checkbox" name="check" value="${art.csNo}"></td>
-                            <td>[[${pageStartNum - index.index}]]</td>
+                        	<td><input type="checkbox" name="check" th:value="${art.csNo}"></td>
+                            <td>[[${pageStartNum - index.index + 1}]]</td>
                             <td>[[${art.cate2}]]</td>
                             <td>[[${art.type}]]</td>
-                            <td><a th:href="@{/admin/cs/qna/view(cate2=${cate2}, type=${type}, pg=${pg}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
+                            <th:block th:if="${#strings.isEmpty(art.comment)}">
+                                <td><a th:href="@{/admin/cs/qna/reply(cate2=${cate2}, type=${type}, pg=${pg}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
+                            </th:block>
+                            <th:block th:unless="${#strings.isEmpty(art.comment)}">
+                                <td><a th:href="@{/admin/cs/qna/view(cate2=${cate2}, type=${type}, pg=${pg}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
+                            </th:block>
+
                             <td>[[${art.uid}]]</td>
                             <td>
 								[[${art.rdate}]]
@@ -57,7 +63,7 @@
                                 </td>
                             </th:block>
                             <th:block th:unless="${#strings.isEmpty(art.comment)}">
-                                <td>
+                                <td class="finish">
                                     답변완료
                                 </td>
                             </th:block>
