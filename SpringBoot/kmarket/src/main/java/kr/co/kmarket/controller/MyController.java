@@ -89,8 +89,34 @@ public class MyController {
         return "my/home";
     }
 
+
+    @ResponseBody
+    @PostMapping("my/getCompany")
+    public Map<String, Object> getCompany(@RequestParam String uid){
+        //Map<String, Object> map = new HashMap<String, Object>();
+        //map.put("company", uid);
+
+        log.info(uid);
+
+        service.selectSeller(uid);
+        //int result = service.selectSellerInpopup(company);
+        Map<String, Object> resultMap = new HashMap<>();
+        //resultMap.put("result", result);
+
+        return resultMap;
+    }
+
+
+
+
+
     @GetMapping("my/ordered")
-    public String ordered(Principal principal, Model model, Pageable pageable){
+    public String ordered(Principal principal, Model model,
+                          @RequestParam(value = "division", required = false, defaultValue = "0") int division,
+                          @RequestParam(value = "no", required = false, defaultValue = "0") int no,
+                          @RequestParam(value = "begin", required = false, defaultValue = "0") String begin,
+                          @RequestParam(value = "end", required = false, defaultValue = "0") String end,
+                          @PageableDefault(size = 10, sort = "ordDate", direction = Sort.Direction.DESC) Pageable pageable){
         // header part
         int orderCount = service.selectCountOrder(principal.getName());
         int couponCount = service.selectCountCoupon(principal.getName());

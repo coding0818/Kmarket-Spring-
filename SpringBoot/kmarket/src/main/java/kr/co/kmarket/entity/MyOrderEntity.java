@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,7 +18,8 @@ import java.util.List;
 public class MyOrderEntity {
 
     @Id
-    private String ordNo;
+    @Column(name="ordNo", insertable = false, updatable = false)
+    private Long ordNo;
     private String uid ;
     private int ordCount;
     private int ordPrice;
@@ -34,11 +36,9 @@ public class MyOrderEntity {
     private int ordComplete;
     private String ordDate;
 
-
     @OneToMany
-    @JoinColumn(name = "ordNo")
-    private List<MyOrderItemEntity> orderItemEntity;
-
+    @JoinColumn(name= "ordNo")
+    List<MyOrderItemEntity> orderItemEntity = new ArrayList<MyOrderItemEntity>();
 
 
 
