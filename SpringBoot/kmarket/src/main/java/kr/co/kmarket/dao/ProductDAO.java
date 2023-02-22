@@ -1,6 +1,7 @@
 package kr.co.kmarket.dao;
 
 import kr.co.kmarket.vo.CateVO;
+import kr.co.kmarket.vo.MyReviewVO;
 import kr.co.kmarket.vo.OrderVO;
 import kr.co.kmarket.vo.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,7 +21,7 @@ public interface ProductDAO {
    // public List<ProductVO> selectSearchProducts()
 
     // 상품번호로 상품 조회하기
-    public ProductVO selectProduct(String prodNo);
+    public ProductVO selectProduct(int prodNo);
 
     // 상품 네비게이션
     public CateVO selectNavCate(@Param("cate1") String cate1, @Param("cate2") String cate2);
@@ -30,6 +31,12 @@ public interface ProductDAO {
 
     // 검색 페이징처리
     //public int selectSearchProduct(@Param("keyword") String keyword);
+
+    // 리뷰 리스트 조회
+    public List<MyReviewVO> selectReviewListByPaging(@Param("prodNo") int prodNo, @Param("start") int start);
+
+    // 리뷰 페이징 처리
+    public int selectReviewListCount(@Param("prodNo") int prodNo);
 
     // 장바구니 등록
     public int insertCart(ProductVO vo);

@@ -5,20 +5,17 @@ import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.service.ProductService;
 import kr.co.kmarket.util.PagingUtil;
+import kr.co.kmarket.util.ReviewPagingUtil;
 import kr.co.kmarket.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.Console;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -86,7 +83,7 @@ public class ProductController {
 
     // 단일 상품
     @GetMapping("product/view")
-    public String view(Model model, String prodNo, String cate1, String cate2){
+    public String view(Model model, int prodNo, String cate1, String cate2, String pg){
         // 카테고리 분류
         Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
@@ -98,6 +95,17 @@ public class ProductController {
         // 상품 네비게이션
         CateVO ncate = service.selectCate(cate1, cate2);
         model.addAttribute("ncate", ncate);
+
+        // 리뷰 페이징 처리
+        PagingDTO revPaging = new ReviewPagingUtil().getPagingDTO(pg, service.selectReviewListCount(prodNo));
+
+        // 리뷰 리스트 조회
+        List<MyReviewVO> reviews = service.selectReviewListByPaging(prodNo, revPaging.getStart());
+
+
+        model.addAttribute("prodNo", prodNo);
+        model.addAttribute("revPaging", revPaging);
+        model.addAttribute("reviews", reviews);
 
         return "product/view";
     }
@@ -214,7 +222,7 @@ public class ProductController {
            order.setThumb2(prod.getThumb2());
 
            List<String> checkList = new ArrayList<>();
-           checkList.add(order.getProdNo());
+           checkList.add(String.valueOf(order.getProdNo()));
            session.setAttribute("cartCheckList", checkList);
 
            List<ProductVO> product =service.selectCartOrder(checkList, uid);
@@ -325,7 +333,10 @@ public class ProductController {
     @ResponseBody
     @Transactional
     @PostMapping("product/complete")
-    public Map<String, Integer> insertComplete(OrderVO vo, Principal principal, HttpServletRequest req){
+    public Map<String, Object> insertComplete(@RequestBody OrderVO vo, Principal principal, HttpServletRequest req){
+
+        log.info("vo1 : " + vo);
+
         HttpSession session = req.getSession();
         String uid = principal.getName();
         String type = (String) session.getAttribute("type");
@@ -386,7 +397,7 @@ public class ProductController {
 
         }
 
-        log.info("vo : " + vo);
+        log.info("vo2 : " + vo);
 
         // product_order insert
         int result = service.insertComplete(vo);
@@ -400,7 +411,7 @@ public class ProductController {
             service.deleteCompleteCart(uid, checkList);
         }
 
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("result", result);
 
         return map;

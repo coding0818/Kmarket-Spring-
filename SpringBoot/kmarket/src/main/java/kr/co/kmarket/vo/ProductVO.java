@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 public class ProductVO {
 
-    private String prodNo;
+    private int prodNo;
     private String cate1;
     private String cate2;
     private String seller;

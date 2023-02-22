@@ -7,6 +7,9 @@
     let totalPrice = $('.final').children().children().children('tr:eq(6)').children('td:eq(1)').text().replace(',','');
 
     console.log("totalPrice : " + totalPrice);
+    console.log("delivery : " + delivery);
+    console.log("discount : " + discount);
+    console.log("savepoint : " + savePoint);
 
     $(function(){
         let applyPoint = document.getElementById('applyPoint');
@@ -51,6 +54,7 @@
             let addr2 = $('input[name=addr2]').val();
             totalPrice = $('.final').children().children().children('tr:eq(6)').children('td:eq(1)').text().replace(',','');
 
+            console.log("orderer : " +orderer);
             console.log("addr1 : " + addr1);
             console.log("addr2 : " + addr2);
             console.log("clickTotalPrice : " + totalPrice);
@@ -80,7 +84,7 @@
                     success: function(data){
                         console.log("data : " + data.result);
                         if(data.result == 1){
-                            location.href = "/kmarket/product/complete";
+                           location.href = "/Kmarket/product/complete";
                         }else {
                             alert('다시 시도해 주십시오.');
                         }
