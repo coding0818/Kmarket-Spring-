@@ -22,9 +22,9 @@ public class MyOrderItemEntity {
     @Column(name="prodNo", insertable = false, updatable = false)
     private int prodNo;
 
-    @Column(name="ordNo")
-    private String ordNo;
-
+    @Column(name="ordNo", insertable = false, updatable = false)
+    private Long ordNo;
+    private String uid;
     private int count;
     private int discount;
     private int price;
@@ -38,6 +38,8 @@ public class MyOrderItemEntity {
     @OneToOne
     @JoinColumn(name = "prodNo")
     private MyProdEntity prodEntity;
+
+
 
 
 }
