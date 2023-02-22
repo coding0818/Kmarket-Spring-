@@ -23,7 +23,11 @@ public class Product_OrderItemVO {
     private int point;
     private int delivery;
     private int total;
+    private String ordState;
+    private int ordStatus;
+    private String uid;
 
-
-
+    public void setProdNo(String prodNo) {
+        this.prodNo = Integer.parseInt(prodNo);
+    }
 }

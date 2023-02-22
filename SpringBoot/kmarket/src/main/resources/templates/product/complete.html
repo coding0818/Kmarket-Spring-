@@ -30,56 +30,22 @@
                             <th>수량</th>
                             <th>주문금액</th>
                         </tr>
-                        <tr>
+                        <tr th:each="prod:${complete}">
                             <td>
                                 <article>
                                     <img src="https://via.placeholder.com/80X80" alt="">
                                     <div>
                                         <h2>
-                                            <a href="#">상품명</a>
+                                            <a href="#">[[${prod.prodName}]]</a>
                                         </h2>
-                                        <p>상품설명</p>
+                                        <p>[[${prod.descript}]]</p>
                                     </div>
                                 </article>
                             </td>
-                            <td>17,000원</td>
-                            <td>1,000원</td>
-                            <td>1</td>
-                            <td>16,000원</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <article>
-                                    <img src="https://via.placeholder.com/80X80" alt="">
-                                    <div>
-                                        <h2>
-                                            <a href="#">상품명</a>
-                                        </h2>
-                                        <p>상품설명</p>
-                                    </div>
-                                </article>
-                            </td>
-                            <td>17,000원</td>
-                            <td>1,000원</td>
-                            <td>1</td>
-                            <td>16,000원</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <article>
-                                    <img src="https://via.placeholder.com/80X80" alt="">
-                                    <div>
-                                        <h2>
-                                            <a href="#">상품명</a>
-                                        </h2>
-                                        <p>상품설명</p>
-                                    </div>
-                                </article>
-                            </td>
-                            <td>17,000원</td>
-                            <td>1,000원</td>
-                            <td>1</td>
-                            <td>16,000원</td>
+                            <td>[[${#numbers.formatInteger(prod.price, 0, 'COMMA')}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.price + prod.delivery - prod.total, 0, 'COMMA')}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.count, 0, 'COMMA')}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.total, 0, 'COMMA')}]]</td>
                         </tr>
                         <tr class="total">
                             <td colspan="4"></td>
@@ -88,25 +54,25 @@
                                     <tr>
                                         <td>총 상품금액</td>
                                         <td>
-                                            <span>34,000원</span>
+                                            <span>[[${#numbers.formatInteger(order.ordPrice, 0, 'COMMA') + "원"}]]</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>총 할인금액</td>
                                         <td>
-                                            <span>-2,000원</span>
+                                            <span>[[${#numbers.formatInteger(order.ordDiscount, 0, 'COMMA') + "원"}]]</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>배송비</td>
                                         <td>
-                                            <span>3,000원</span>
+                                            <span>[[${#numbers.formatInteger(order.ordDelivery, 0, 'COMMA') + "원"}]]</span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>총 결제금액</td>
                                         <td>
-                                            <span>35,000</span>원
+                                            <span>[[${#numbers.formatInteger(order.ordTotPrice, 0, 'COMMA')}]]</span>원
                                         </td>
                                     </tr>
                                 </table>
@@ -120,19 +86,24 @@
                     <table border="0">
                         <tr>
                             <td>주문번호</td>
-                            <td>2008101324568</td>
+                            <td>[[${order.ordNo}]]</td>
                             <td rowspan="3">총 결제금액</td>
                             <td rowspan="3">
-                                <span>35,000</span>원
+                                <span>[[${#numbers.formatInteger(order.ordTotPrice, 0, 'COMMA')}]]</span>원
                             </td>
                         </tr>
                         <tr>
                             <td>결제방법</td>
-                            <td>신용카드</td>
+                            <td th:if="${order.ordPayment == 1}">신용카드</td>
+                            <td th:if="${order.ordPayment == 2}">체크카드</td>
+                            <td th:if="${order.ordPayment == 3}">실시간 계좌이체</td>
+                            <td th:if="${order.ordPayment == 4}">무통장 입금</td>
+                            <td th:if="${order.ordPayment == 5}">휴대폰 결제</td>
+                            <td th:if="${order.ordPayment == 6}">카카오페이</td>
                         </tr>
                         <tr>
                             <td>주문자/연락처</td>
-                            <td>홍길동/010-1234-1234</td>
+                            <td>[[${order.recipName}]]/[[${order.recipHp}]]</td>
                         </tr>
                     </table>
                 </article>
@@ -142,20 +113,20 @@
                     <table border="0">
                         <tr>
                             <td>수취인</td>
-                            <td>홍길동</td>
+                            <td>[[${order.recipName}]]</td>
                             <td>주문자 정보</td>
                         </tr>
                         <tr>
                             <td>연락처</td>
-                            <td>010-1234-1234</td>
+                            <td>[[${order.recipHp}]]</td>
                             <td rowspan="2">
-                                홍길동
-                                <br> 010-1234-1234
+                                [[${order.recipName}]]
+                                <br> [[${order.recipHp}]]
                             </td>
                         </tr>
                         <tr>
                             <td>배송지 주소</td>
-                            <td>부산광역시 강남구 대연동 123 10층</td>
+                            <td>[[${order.recipAddr1 + order.recipAddr2}]]</td>
                         </tr>
                     </table>
                 </article>

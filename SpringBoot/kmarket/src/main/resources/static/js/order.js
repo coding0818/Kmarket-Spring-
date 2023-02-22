@@ -79,12 +79,12 @@
             $.ajax({
                     url:'/kmarket/product/complete',
                     method:'POST',
-                    date: jsonData,
+                    data: jsonData,
                     dataType: 'JSON',
                     success: function(data){
                         console.log("data : " + data.result);
                         if(data.result == 1){
-                           location.href = "/Kmarket/product/complete";
+                           location.href = "/kmarket/product/complete";
                         }else {
                             alert('다시 시도해 주십시오.');
                         }

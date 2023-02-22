@@ -108,14 +108,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectCartOrder" resultType="kr.co.kmarket.vo.ProductVO">
         SELECT a.*, b.`cate1`, b.`cate2`,b.`thumb2`, b.`prodName`, b.`descript` FROM `km_product_cart` AS a JOIN
         `km_product` AS b ON a.`prodNo` = b.`prodNo`
-        WHERE `uid`=#{uid} AND a.`prodNo` IN
+        WHERE `uid`=#{uid} AND b.`prodNo` IN
         <foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
             #{checkList}
         </foreach>
     </select>
 
+    <!--뷰에서 주문하기-->
+    <select id="selectOrder" resultType="kr.co.kmarket.vo.ProductVO">
+        SELECT * FROM `km_product` where `prodNo` IN
+        <foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
+            #{checkList}
+        </foreach>
+    </select>
+
+
     <!--주문하기 등록-->
-    <insert id="insertComplete">
+    <insert id="insertComplete" useGeneratedKeys="true" keyProperty="ordNo">
         insert into `km_product_order` set
                             `ordNo`=#{ordNo},
                             `uid`=#{uid},
@@ -137,12 +146,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!--주문 상품 입력-->
     <insert id="insertCompleteItem">
+        <!--
         insert into `km_product_order_item` (`prodNo`, `ordNo`, `uid`, `count`, `price`, `discount`, `point`, `delivery`, `total`, `ordState`, `ordStatus`)
         select `prodNo`, #{ordNo}, `uid`, `count`, `price`, `discount`, `point`, `delivery`, `total`, "배송중", 2 from `km_product_cart`
         where `uid`=#{uid} and `prodNo` in
         <foreach collection="checkList" index="index" item="checkList" open="(" close=")" separator=",">
             #{checkList}
         </foreach>
+        -->
+        <!--
+        insert into `km_product_order_item`
+        SET
+        `prodNo`=#{prodNo},
+        `ordNo`=#{ordNo},
+        `uid`=#{},
+        `count`=#{},
+        `price`=#{},
+        `discount`=#{},
+        `point`=#{},
+        `delivery`=#{},
+        `total`=#{},
+        `ordState`=#{},
+        `ordStatus`=#{};
+        -->
     </insert>
 
     <!--장바구니 삭제-->
@@ -152,4 +178,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{checkList}
         </foreach>
     </delete>
+
 </mapper>
