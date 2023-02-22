@@ -119,5 +119,12 @@ public class MyService {
         return orderRepo.findByUid(uid, pageable);
     }
 
+    // coupon
+    public List<MyCouponVO> selectMyCoupons(String uid) {return dao.selectMyCoupons(uid);}
+    public int selectCountMyCoupons(String uid) {return dao.selectCountMyCoupons(uid);}
+
+    // qna
+    public CsVO selectQnas(String uid, int start) {return dao.selectQnas(uid, start);}
+    public int selectCountQnas(String uid) {return dao.selectCountQnas(uid);}
 
 }

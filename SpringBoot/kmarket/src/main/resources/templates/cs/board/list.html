@@ -84,12 +84,12 @@
                   <th:block th:each="art,index:${faq.value}">
                     <th:block th:if="${index.count} > 3">
                       <li class="hide">
-                        <a th:href="@{/cs/view(cate1=notice, cate2=${art.cate2}, csNo=${art.csNo})}"><span>Q.</span>[[${art.title}]]</a>
+                        <a th:href="@{/cs/view(cate1=faq, cate2=${art.cate2}, csNo=${art.csNo}, pg=${pg})}"><span>Q.</span>[[${art.title}]]</a>
                       </li>
                     </th:block>
                     <th:block th:unless="${index.count} > 3">
                       <li>
-                        <a th:href="@{/cs/view(cate1=notice, cate2=${art.cate2}, csNo=${art.csNo})}"><span>Q.</span>[[${art.title}]]</a>
+                        <a th:href="@{/cs/view(cate1=faq, cate2=${art.cate2}, csNo=${art.csNo}, pg=${pg})}"><span>Q.</span>[[${art.title}]]</a>
                       </li>
                     </th:block>
                   </th:block>
@@ -132,7 +132,7 @@
               <table>
                 <th:block th:each="art,index:${articles}">
                   <tr>
-                    <td><a th:href="@{/cs/view(cate1=qna, cate2=${art.cate2}, csNo=${art.csNo})}">[[${art.title}]]</a></td>
+                    <td><a th:href="@{/cs/view(cate1=qna, cate2=${art.cate2}, csNo=${art.csNo}, pg=${pg})}">[[${art.title}]]</a></td>
                     <td>[[${art.uidMasking}]]</td>
                     <td>[[${art.rdate}]]</td>
                   </tr>

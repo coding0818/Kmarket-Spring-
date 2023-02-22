@@ -1,15 +1,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/my/_header}"/>
             <div class="info">
-				<ul>
+                <ul>
                     <span class="menu_else"></span>
-                    <li class="on"><a href="#">전체주문내역</a></li>
-                    <!--<li><a href="#">관심상품</a></li>-->
-                    <li><a href="#">포인트내역</a></li>
-                    <li><a href="#">쿠폰</a></li>
-                    <li><a href="#">나의리뷰</a></li>
-                    <li><a href="#">문의하기</a></li>
-                    <li><a href="#">나의설정</a></li>
+                    <li><a th:href="@{/my/ordered}">전체주문내역</a></li>
+                    <!--<li><a href="./favorite.html">관심상품</a></li>-->
+                    <li><a th:href="@{/my/point}">포인트내역</a></li>
+                    <li><a th:href="@{/my/coupon}">쿠폰</a></li>
+                    <li><a th:href="@{/my/review}">나의리뷰</a></li>
+                    <li><a th:href="@{/my/qna(pg=1)}">문의하기</a></li>
+                    <li class="on"><a th:href="@{/my/info}">나의설정</a></li>
                 </ul>
 
                 <section>

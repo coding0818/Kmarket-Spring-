@@ -33,6 +33,10 @@ public class BoardController {
         List<String> types = new ArrayList<>();                // faq types
         Map<String, List<CsVO>> faqs = new HashMap<>();        // Map <type, type별 게시물>
 
+        if (pg == null){
+            pg = "1";
+        }
+
         /*** 페이징 처리 ***/
         int currentPage = service.getCurrentPage(pg);
         int start = service.getLimitstart(currentPage);
@@ -70,13 +74,15 @@ public class BoardController {
         }
 
 
-
+        String oriCate1 = cate1;
         cate1 = "_"+cate1;
         model.addAttribute("articles", articles);
         model.addAttribute("types", types);
         model.addAttribute("faqs", faqs);
         model.addAttribute("cate1", cate1);
+        model.addAttribute("oriCate1", oriCate1);
         model.addAttribute("cate2", cate2);
+        model.addAttribute("pg", pg);
         model.addAttribute("currentPage", currentPage);
         model.addAttribute("lastPage", lastPage);
         model.addAttribute("pageStartNum", pageStartNum);
@@ -89,8 +95,10 @@ public class BoardController {
 
         CsVO art = service.selectCsArticle(csNo);
 
+        String oriCate1 = cate1;
         cate1 = "_"+cate1;
         model.addAttribute("cate1", cate1);
+        model.addAttribute("oriCate1", oriCate1);
         model.addAttribute("cate2", cate2);
         model.addAttribute("pg", pg);
         model.addAttribute("csNo", csNo);
@@ -100,8 +108,10 @@ public class BoardController {
 
     @GetMapping("cs/write")
     public String write(Model model, String cate1, String cate2, String pg) {
+        String oriCate1 = cate1;
         cate1 = "_"+cate1;
         model.addAttribute("cate1", cate1);
+        model.addAttribute("oriCate1", oriCate1);
         model.addAttribute("cate2", cate2);
         model.addAttribute("pg", pg);
         return "cs/board/write";

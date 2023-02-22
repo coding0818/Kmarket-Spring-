@@ -69,4 +69,29 @@
         SELECT * FROM `km_member_seller` WHERE `company`=#{company};
     </select>
 
+
+    <!-- coupon -->
+    <select id="selectMyCoupons" resultType="kr.co.kmarket.vo.MyCouponVO">
+        SELECT * FROM `km_member_coupon` AS a
+            JOIN `km_coupon` AS b
+            ON a.`couponNo` = b.`couponNo` WHERE `uid`=#{uid};
+    </select>
+
+    <select id="selectCountMyCoupons" resultType="int">
+        SELECT COUNT(`no`) FROM `km_member_coupon` WHERE `uid`=#{uid};
+    </select>
+
+
+    <!-- qna -->
+    <select id="selectQnas" resultType="kr.co.kmarket.vo.CsVO">
+        SELECT * FROM `km_cs`
+            WHERE `cate1`='qna' AND `uid`=#{uid}
+            ORDER BY `csNo` DESC
+            LIMIT #{start}, 10;
+    </select>
+
+    <select id="selectCountQnas" resultType="int">
+        SELECT COUNT(`csNo`) FROM `km_cs` WHERE `cate1`='qna' AND `uid`=#{uid};
+    </select>
+
 </mapper>
