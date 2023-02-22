@@ -3,6 +3,7 @@ package kr.co.kmarket.service;
 import javassist.compiler.ast.Keyword;
 import kr.co.kmarket.dao.ProductDAO;
 import kr.co.kmarket.vo.CateVO;
+import kr.co.kmarket.vo.MyReviewVO;
 import kr.co.kmarket.vo.OrderVO;
 import kr.co.kmarket.vo.ProductVO;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class ProductService {
     private ProductDAO dao;
 
     // 상품번호로 상품 조회하기
-    public ProductVO selectProduct(String prodNo){
+    public ProductVO selectProduct(int prodNo){
         return dao.selectProduct(prodNo);
     }
 
@@ -45,6 +46,16 @@ public class ProductService {
     //public int selectSearchProduct(String keyword){
     //    return dao.selectSearchProduct(keyword);
     //}
+
+    // 리뷰 리스트 조회
+    public List<MyReviewVO> selectReviewListByPaging(int prodNo, int start){
+        return dao.selectReviewListByPaging(prodNo, start);
+    }
+
+    //리뷰 페이징 처리
+    public int selectReviewListCount(int prodNo){
+        return dao.selectReviewListCount(prodNo);
+    }
 
     // 장바구니 등록
     public int insertCart(ProductVO vo){

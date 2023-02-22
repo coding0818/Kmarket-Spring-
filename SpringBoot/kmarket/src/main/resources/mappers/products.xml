@@ -55,7 +55,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        </choose>
     </select>
 
-    <!-- 리뷰 조회하기-->
+    <!-- 리뷰 리스트 조회-->
+    <select id="selectReviewListByPaging" resultType="kr.co.kmarket.vo.MyReviewVO">
+        SELECT A.*, B.`prodName` from `km_product_review` AS A
+        JOIN `km_product` AS B
+        ON A.prodNo = B.prodNo
+        WHERE A.`prodNo`=#{prodNo}
+        order by `rdate` desc LIMIT #{start}, 5;
+    </select>
+    <!--리뷰 수 카운팅-->
+    <select id="selectReviewListCount" resultType="int">
+        select count(`prodNo`) from `km_product_review` where `prodNo`=#{prodNo};
+    </select>
 
 
     <!--장바구니 등록-->

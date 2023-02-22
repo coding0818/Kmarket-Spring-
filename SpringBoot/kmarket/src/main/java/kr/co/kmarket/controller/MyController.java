@@ -99,10 +99,10 @@ public class MyController {
 
         service.selectSeller(uid);
         //int result = service.selectSellerInpopup(company);
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("result", result);
+       // Map<String, Object> resultMap = new HashMap<>();
+        //resultMap.put("result", result);
 
-        return resultMap;
+        return null;
     }
 
 
@@ -118,15 +118,15 @@ public class MyController {
         Integer pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
 
-        Page<MyOrderEntity> orderList = service.findMyOrderEntityByUid(principal.getName(), pageable);
+      //  Page<MyOrderEntity> orderList = service.findMyOrderEntityByUid(principal.getName(), pageable);
 
-        log.info("orderList : "+ orderList.getContent());
+       // log.info("orderList : "+ orderList.getContent());
 
         model.addAttribute("orderCount", orderCount);
         model.addAttribute("couponCount", couponCount);
         model.addAttribute("pointSum", pointSum);
         model.addAttribute("csCount", csCount);
-        model.addAttribute("orderList", orderList.getContent());
+       // model.addAttribute("orderList", orderList.getContent());
         return "my/ordered";
     }
 
