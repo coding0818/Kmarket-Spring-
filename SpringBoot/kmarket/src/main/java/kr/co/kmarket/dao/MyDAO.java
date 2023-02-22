@@ -43,5 +43,8 @@ public interface MyDAO {
     // home - 최근 주문 내역 - 상품명 선택 - 팝업 창 - 문의하기
     public void insertQnaToSeller(CsVO vo);
 
+    // info
+    public int updateSellerHp(@Param("hp") String hp, @Param("uid") String uid);
+    public int updateUserHp(@Param("hp") String hp, @Param("uid") String uid);
 
 }

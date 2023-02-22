@@ -5,7 +5,7 @@
 <mapper namespace="kr.co.kmarket.dao.MyDAO">
     <!--공통nav-->
     <select id="selectCountOrder" resultType="int">
-        SELECT COUNT(`prodNo`) AS ordercount FROM `km_product_order_item` AS a JOIN `km_product_order` AS b ON a.ordNo=b.ordNo WHERE b.`uid`=#{uid} AND (`ordStatus`=2 OR `ordStatus`=1);
+        SELECT COUNT(`prodNo`) AS ordercount FROM `km_product_order_item` WHERE `uid`=#{uid} AND (`ordStatus`=2 OR `ordStatus`=1);
     </select>
     <select id="selectCountCoupon" resultType="int">
         SELECT COUNT(`couponNo`) FROM `km_member_coupon` WHERE `uid`=#{uid} AND `status`='사용가능';
@@ -38,7 +38,15 @@
         SELECT a.*, b.prodName from `km_product_review` AS a JOIN `km_product` AS b ON a.prodNo=b.prodNo where `uid`=#{uid} order by `rdate` desc limit 5;
     </select>
     <select id="selectOrders" resultType="kr.co.kmarket.vo.MyOrderVO">
-        SELECT a.*, b.*, c.prodName, c.company, c.thumb1, c.cate1, c.cate2 FROM `km_product_order_item` AS a JOIN `km_product_order` AS b ON a.ordNo=b.ordNo JOIN `km_product` AS c ON a.prodNo=c.prodNo WHERE b.uid=#{uid} ORDER BY b.`ordDate` DESC LIMIT 5;
+        SELECT a.*, b.*, c.prodName, c.company, c.thumb1, c.cate1, c.cate2
+        FROM `km_product_order` AS a
+        JOIN `km_product_order_item` AS b
+        ON a.ordNo=b.ordNo
+        JOIN `km_product` AS c
+        ON b.prodNo=c.prodNo
+        WHERE a.uid='ghdrl123'
+        GROUP BY a.`ordNo`
+        ORDER BY a.`ordDate` DESC, b.`itemNo` ASC LIMIT 5;
     </select>
     <select id="selectCs" resultType="kr.co.kmarket.vo.MyCsVO">
         select * from `km_cs` where `uid`=#{uid} order by `rdate` desc limit 5;
@@ -69,6 +77,7 @@
         SELECT * FROM `km_member_seller` WHERE `company`=#{company};
     </select>
 
+
     <!-- home - 최근 주문 내역 - 주문번호 선택 시 팝업 창 주문상세 정보 출력 -->
     <select id="selectOrderDetails" resultType="kr.co.kmarket.vo.MyOrderVO">
         select a.ordDate, a.ordNo, a.ordPrice, a.ordCount, a.ordDiscount, a.ordTotPrice, a.recipName, a.recipHp, a.recipZip, a.recipAddr1, a.recipAddr2,
@@ -93,5 +102,14 @@
         `regip`=#{regip},
         `rdate`=NOW();
     </insert>
+
+
+    <!--info-->
+    <update id="updateSellerHp">
+        update `km_member_seller` set `hp`=#{hp} where `uid`=#{uid};
+    </update>
+    <update id="updateUserHp">
+        update `km_member_general` set `hp`=#{hp} where `uid`=#{uid};
+    </update>
 
 </mapper>
