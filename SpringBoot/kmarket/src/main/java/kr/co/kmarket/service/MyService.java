@@ -3,8 +3,10 @@ package kr.co.kmarket.service;
 import kr.co.kmarket.dao.MyDAO;
 import kr.co.kmarket.entity.MyOrderEntity;
 import kr.co.kmarket.entity.MyPointEntity;
+import kr.co.kmarket.entity.MyReviewEntity;
 import kr.co.kmarket.repository.MyOrderRepo;
 import kr.co.kmarket.repository.MyPointRepo;
+import kr.co.kmarket.repository.MyReviewRepo;
 import kr.co.kmarket.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,9 @@ public class MyService {
 
     @Autowired
     private MyOrderRepo orderRepo;
+
+    @Autowired
+    private MyReviewRepo rRepo;
 
 
     // 공통
@@ -116,8 +121,27 @@ public class MyService {
 
     // ordered
     public Page<MyOrderEntity> findMyOrderEntityByUid(String uid, Pageable pageable){
-        return orderRepo.findByUid(uid, pageable);
+        return orderRepo.findByUidOrderByOrdDateDesc(uid, pageable);
     }
 
+    public Page<MyOrderEntity> findMyOrderEntityByUidAndDate1(String uid, String date, Pageable pageable){
+        return orderRepo.findByUidAndPointDate1(uid, date, pageable);
+    }
 
+    public Page<MyOrderEntity> findMyOrderEntityByUidAndDate2(String uid, String startdate, String enddate, Pageable pageable){
+        return orderRepo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
+    }
+
+    // review
+    public Page<MyReviewEntity> findByUidOrderByRDateDesc(String uid, Pageable pageable){
+        return rRepo.findByUidOrderByRdateDesc(uid, pageable);
+    }
+
+    // info
+    public int updateSellerHp(String hp, String uid){
+        return dao.updateSellerHp(hp, uid);
+    }
+    public int updateUserHp(String hp, String uid){
+        return dao.updateUserHp(hp, uid);
+    }
 }
