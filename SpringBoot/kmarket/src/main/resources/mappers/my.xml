@@ -63,6 +63,10 @@
         select count(`pointNo`) from `km_member_point` where `uid`=#{uid};
     </select>
 
-
+    <!-- home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력 -->
+    <!-- select * from `km_member_seller` where `uid`=(select `seller` from `km_product` where `prodNo`=#{prodNo}); -->
+    <select id="selectCompany" resultType="kr.co.kmarket.vo.SellerVO">
+        SELECT * FROM `km_member_seller` WHERE `company`=#{company};
+    </select>
 
 </mapper>

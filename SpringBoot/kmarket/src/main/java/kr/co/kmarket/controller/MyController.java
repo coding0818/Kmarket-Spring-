@@ -89,6 +89,7 @@ public class MyController {
         return "my/home";
     }
 
+
     @ResponseBody
     @PostMapping("my/getCompany")
     public Map<String, Object> getCompany(@RequestParam String uid){
@@ -104,7 +105,6 @@ public class MyController {
 
         return resultMap;
     }
-
 
 
 
@@ -275,5 +275,23 @@ public class MyController {
         int[] result = service.orderConfirm(ordNo, prodNo, vo);
         return "redirect:/my/home?result="+result[0]+result[1];
     }
+
+
+    // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
+    @ResponseBody
+    @PostMapping("my/company")
+    public Map<String, SellerVO> selectCompany(@RequestParam String company){
+
+        SellerVO vo = service.selectCompany(company);
+
+        Map<String, SellerVO> map = new HashMap<>();
+        map.put("company", vo);
+
+        return map;
+    }
+
+
+
+
 
 }
