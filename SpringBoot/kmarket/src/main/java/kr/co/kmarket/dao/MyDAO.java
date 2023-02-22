@@ -37,7 +37,7 @@ public interface MyDAO {
     public List<MyPointVO> selectPointShort3(String uid);
 
      // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
-    public SellerVO selectSellerInpopup (String company);
+    public SellerVO selectCompany (String company);
 
 
 }

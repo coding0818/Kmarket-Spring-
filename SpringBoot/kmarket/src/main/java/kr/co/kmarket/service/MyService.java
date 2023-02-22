@@ -102,6 +102,11 @@ public class MyService {
         return repo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
     }
 
+    // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
+    public SellerVO selectCompany (String company){
+        return dao.selectCompany(company);
+    }
+
 
 
 

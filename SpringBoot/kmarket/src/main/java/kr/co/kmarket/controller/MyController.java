@@ -88,27 +88,6 @@ public class MyController {
         return "my/home";
     }
 
-    @ResponseBody
-    @PostMapping("my/getCompany")
-    public Map<String, Object> getCompany(@RequestParam String uid){
-        //Map<String, Object> map = new HashMap<String, Object>();
-        //map.put("company", uid);
-
-        log.info(uid);
-
-        service.selectSeller(uid);
-        //int result = service.selectSellerInpopup(company);
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("result", result);
-
-        return resultMap;
-    }
-
-
-
-
-
-
     @GetMapping("my/ordered")
     public String ordered(Principal principal, Model model){
         // header part
@@ -264,5 +243,23 @@ public class MyController {
         int[] result = service.orderConfirm(ordNo, prodNo, vo);
         return "redirect:/my/home?result="+result[0]+result[1];
     }
+
+
+    // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
+    @ResponseBody
+    @PostMapping("my/company")
+    public Map<String, SellerVO> selectCompany(@RequestParam String company){
+
+        SellerVO vo = service.selectCompany(company);
+
+        Map<String, SellerVO> map = new HashMap<>();
+        map.put("company", vo);
+
+        return map;
+    }
+
+
+
+
 
 }
