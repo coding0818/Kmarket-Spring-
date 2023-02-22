@@ -1,9 +1,6 @@
 package kr.co.kmarket.dao;
 
-import kr.co.kmarket.vo.CateVO;
-import kr.co.kmarket.vo.MyReviewVO;
-import kr.co.kmarket.vo.OrderVO;
-import kr.co.kmarket.vo.ProductVO;
+import kr.co.kmarket.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -53,11 +50,14 @@ public interface ProductDAO {
     // 장바구니 선택 주문
     public List<ProductVO> selectCartOrder(@Param("checkList") List<String> checkList, @Param("uid") String uid);
 
+    // view에서 주문하기
+    public List<ProductVO> selectOrder(@Param("checkList") List<String> checkList);
+
     // 주문하기 등록
     public int insertComplete(OrderVO vo);
 
     // 주문 상품 삽입
-    public int insertCompleteItem(@Param("ordNo") int ordNo, @Param("uid") String uid, @Param("checkList") List<String> checkList);
+    public int insertCompleteItem(Product_OrderItemVO vo);
 
     // 장바구니 삭제
     public int deleteCompleteCart(@Param("uid") String uid, @Param("checkList") List<String> checkList);

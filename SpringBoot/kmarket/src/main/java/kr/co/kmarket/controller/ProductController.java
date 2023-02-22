@@ -225,26 +225,21 @@ public class ProductController {
            checkList.add(String.valueOf(order.getProdNo()));
            session.setAttribute("cartCheckList", checkList);
 
-           List<ProductVO> product =service.selectCartOrder(checkList, uid);
+           log.info("orderCheckList : " + checkList);
+           log.info("controllUid : " + uid);
+
+           List<ProductVO> product =service.selectOrder(checkList);
+            log.info("orderProduct : " + product);
             session.setAttribute("complete", product);
 
             String userType = myService.selectUserType(principal.getName());
 
-            log.info("userType : " + userType);
-
             if(userType.equals("seller")){
                 SellerVO seller = myService.selectSeller(principal.getName());
                 model.addAttribute("user", seller);
-
-                log.info("seller name : " + principal.getName());
-                log.info("seller member : " + seller);
-
             }else{
                 MemberVO user = myService.selectUser(principal.getName());
                 model.addAttribute("user", user);
-
-                log.info("user name : " + principal.getName());
-                log.info("user member : " + user);
             }
 
             model.addAttribute("prod", order);
@@ -266,6 +261,7 @@ public class ProductController {
 
             // 선택된 상품 조회
             List<ProductVO> prod = service.selectCartOrder(checkList, uid);
+            log.info("cartProduct : " + prod);
             session.setAttribute("complete", prod);
 
             // 상품 총합 계산
@@ -311,6 +307,7 @@ public class ProductController {
     public Map<String, Integer> selectCartOrder(@RequestParam(value = "checkList[]") List<String> checkList, HttpServletRequest req){
        HttpSession session = req.getSession();
        session.setAttribute("cartCheckList", checkList);
+       //session.setAttribute("type", "cart");
 
        log.info("PostcartCheckList : " +checkList);
 
@@ -320,11 +317,23 @@ public class ProductController {
     }
 
     @GetMapping("product/complete")
-    public String complete(Model model){
+    public String complete(Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+
         // 카테고리 분류
         Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
 
+        // 결제 완료 상품 조회
+        @SuppressWarnings("unchecked")
+        List<ProductVO> complete = (List<ProductVO>) session.getAttribute("complete");
+        log.info("complete : " +complete);
+        OrderVO order = (OrderVO) session.getAttribute("finalOrder");
+        log.info("finalOrder : " + order);
+        if(complete == null) {return "product/cart";}
+
+        model.addAttribute("complete", complete);
+        model.addAttribute("order", order);
 
         return "product/complete";
     }
@@ -333,15 +342,13 @@ public class ProductController {
     @ResponseBody
     @Transactional
     @PostMapping("product/complete")
-    public Map<String, Object> insertComplete(@RequestBody OrderVO vo, Principal principal, HttpServletRequest req){
+    public Map<String, Object> insertComplete(OrderVO vo, Principal principal, HttpServletRequest req){
 
         log.info("vo1 : " + vo);
 
         HttpSession session = req.getSession();
         String uid = principal.getName();
         String type = (String) session.getAttribute("type");
-
-        log.info("complete");
 
         vo.setUid(uid);
 
@@ -400,10 +407,32 @@ public class ProductController {
         log.info("vo2 : " + vo);
 
         // product_order insert
-        int result = service.insertComplete(vo);
+        int orderNo = service.insertComplete(vo);
 
         List<String> checkList = (List<String>) session.getAttribute("cartCheckList");
-        service.insertCompleteItem(randOrdNo, uid, checkList);
+       log.info("checkList : " + checkList);
+       log.info("randOrdNo : " + randOrdNo);
+       log.info("uid : " + uid);
+
+
+
+       for(String prodNo : checkList){
+           Product_OrderItemVO itemVO = new Product_OrderItemVO();
+           itemVO.setProdNo(prodNo);
+           itemVO.setOrdNo(orderNo);
+           itemVO.setUid(uid);
+           itemVO.setCount(vo.getCount());
+           itemVO.setPrice(vo.getPrice());
+           itemVO.setDiscount(vo.getDiscount());
+           itemVO.setPoint(vo.getPoint());
+           itemVO.setDelivery(vo.getDelivery());
+           itemVO.setTotal(vo.getTotal());
+           itemVO.setOrdState(vo.getOrdState());
+           itemVO.setOrdStatus(Integer.parseInt(vo.getOrdStatus()));
+
+           service.insertCompleteItem(itemVO);
+       }
+
 
 
         // 장바구니 삭제
@@ -412,7 +441,7 @@ public class ProductController {
         }
 
         Map<String, Object> map = new HashMap<>();
-        map.put("result", result);
+        map.put("result", orderNo);
 
         return map;
     }

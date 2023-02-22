@@ -2,10 +2,7 @@ package kr.co.kmarket.service;
 
 import javassist.compiler.ast.Keyword;
 import kr.co.kmarket.dao.ProductDAO;
-import kr.co.kmarket.vo.CateVO;
-import kr.co.kmarket.vo.MyReviewVO;
-import kr.co.kmarket.vo.OrderVO;
-import kr.co.kmarket.vo.ProductVO;
+import kr.co.kmarket.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,17 +79,26 @@ public class ProductService {
 
     // 장바구니 선택 주문
     public List<ProductVO> selectCartOrder(List<String> checkList, String uid){
+        log.info("serCheckList : " + checkList);
+        log.info("serUid : " + uid);
         return dao.selectCartOrder(checkList, uid);
+    }
+
+    // view에서 주문하기
+    public List<ProductVO> selectOrder(List<String> checkList){
+        return dao.selectOrder(checkList);
     }
 
     // 주문하기 등록
     public int insertComplete(OrderVO vo){
-        return dao.insertComplete(vo);
+        dao.insertComplete(vo);
+        return vo.getOrdNo();
     }
 
     // 주문 상품 등록
-    public int insertCompleteItem(int ordNo, String uid, List<String> checkList){
-        return dao.insertCompleteItem(ordNo, uid, checkList);
+    public int insertCompleteItem(Product_OrderItemVO vo){
+        log.info("vo : " + vo);
+        return dao.insertCompleteItem(vo);
     }
 
     // 장바구니 주문 완료 상품 삭제
