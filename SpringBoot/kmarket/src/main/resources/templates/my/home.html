@@ -37,8 +37,11 @@
                                     <a href="#" class="thumb"><img th:src="@{/thumb/{cate1}/{cate2}/{thumb1}(cate1=${order.cate1}, cate2=${order.cate2}, thumb1=${order.thumb1})}" alt=""></a>
                                     <ul>
                                         <li class="company"><a href="#">[[${order.company}]]</a></li>
-                                        <li class="prodName"><a href="#">[[${order.prodName}]]</a></li>
-                                        <li class="orderNo">수량 : <span class="prodCount">[[${order.count}]]</span>개 / 주문번호 : <a href="#">[[${order.ordNo}]]</a></li>
+                                        <li class="prodName" id="prodName"><a href="#">[[${order.prodName}]]</a></li>
+                                        <li class="orderNo">수량 :
+                                            <span class="prodCount">[[${order.count}]]</span>개 / 주문번호 :
+                                            <a href="#">[[${order.ordNo}]]</a>
+                                        </li>
                                         <li class="prodPrice">[[${order.price}]]</li>
                                     </ul>
                                 </td>

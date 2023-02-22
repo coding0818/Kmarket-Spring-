@@ -114,7 +114,7 @@
                             주문번호 : <span class="ordNo">1012211341</span>
                         </td>
                         <td>
-                            <img src="https://via.placeholder.com/80x80" alt="">
+                            <img th:src="@{https://via.placeholder.com/80x80}" alt="">
                             <ul>
                                 <li class="company">상호명</li>
                                 <li class="prodName">상품명</li>
@@ -176,34 +176,35 @@
             <button class="btnClose">X</button>
         </nav>
         <section>
-            <form action="#">
+            <form th:action="@{/my/qnaToSeller}" method="post">
+                <input type="hidden" name="uid" th:value="${#authentication.principal.user.uid}">
                 <table border="0">
                     <tr>
                         <th>문의종류</th>
                         <td class="kind">
-                            <label><input type="radio" name="kind"/>상품</label>
-                            <label><input type="radio" name="kind"/>배송</label>
-                            <label><input type="radio" name="kind"/>반품/취소</label>
-                            <label><input type="radio" name="kind"/>교환</label>
-                            <label><input type="radio" name="kind"/>기타</label>
+                            <label><input type="radio" name="type" value="상품"/>상품</label>
+                            <label><input type="radio" name="type" value="배송"/>배송</label>
+                            <label><input type="radio" name="type" value="반품/취소"/>반품/취소</label>
+                            <label><input type="radio" name="type" value="교환"/>교환</label>
+                            <label><input type="radio" name="type" value="기타"/>기타</label>
                         </td>
                     </tr>
                     <tr>
                         <th>Email</th>
                         <td class="email">
-                            <input type="text" name="email" value="chh**@gmail.com"/>
+                            <input type="text" name="email" placeholder="문의 답변 수신 이메일 입력"/>
                         </td>
                     </tr>
                     <tr>
                         <th>제목</th>
                         <td class="title">
-                            <input type="text" name="title" placeholder="제목입력"/>
+                            <input type="text" name="title" placeholder="문의 제목 입력"/>
                         </td>
                     </tr>
                     <tr>
                         <th>내용</th>
                         <td class="content">
-                            <textarea name="content" placeholder="내용입력"></textarea>
+                            <textarea name="content" placeholder="문의 내용 입력"></textarea>
                         </td>
                     </tr>
                 </table>
@@ -213,7 +214,7 @@
 
                 <div>
                     <input type="submit" class="btnPositive" value="등록하기"/>
-                    <button class="btnNegative btnCancel">취소</button>
+                    <button class="btnNegative btnCancel" type="button">취소</button>
                 </div>
             </form>
         </section>
@@ -237,7 +238,7 @@
 
             <div>
                 <button class="btnPositive btnConfirm">확인</button>
-                <button class="btnNegative btnCancel">취소</button>
+                <button class="btnNegative btnCancel" type="button">취소</button>
             </div>
         </section>
     </div>
@@ -256,7 +257,7 @@
                 <table border="0">
                     <tr>
                         <th>상품명</th>
-                        <td class="productName">상품명 출력</td>
+                        <td class="productName" id="productName">상품명 출력</td>
                     </tr>
                     <tr>
                         <th>만족도</th>

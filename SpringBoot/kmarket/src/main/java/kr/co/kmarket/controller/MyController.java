@@ -1,6 +1,5 @@
 package kr.co.kmarket.controller;
 
-import kr.co.kmarket.entity.MyOrderEntity;
 import kr.co.kmarket.entity.MyPointEntity;
 import kr.co.kmarket.entity.MyReviewEntity;
 import kr.co.kmarket.service.MyService;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -89,29 +89,6 @@ public class MyController {
         model.addAttribute("csCount", csCount);
         return "my/home";
     }
-
-
-    @ResponseBody
-    @PostMapping("my/getCompany")
-    public Map<String, Object> getCompany(@RequestParam String uid){
-        //Map<String, Object> map = new HashMap<String, Object>();
-        //map.put("company", uid);
-
-        log.info(uid);
-
-        service.selectSeller(uid);
-        //int result = service.selectSellerInpopup(company);
-
-       // Map<String, Object> resultMap = new HashMap<>();
-
-        //resultMap.put("result", result);
-
-        return null;
-    }
-
-
-
-
 
     @GetMapping("my/ordered")
     public String ordered(Principal principal, Model model,
@@ -403,6 +380,35 @@ public class MyController {
 
         return map;
     }
+    // home - 최근 주문 내역 - 주문번호 선택 시 팝업 창 주문상세 정보 출력
+    @ResponseBody
+    @PostMapping("my/orderDetails")
+    public Map<String, MyOrderVO> selectOrderDetails(@RequestParam String ordNo){
+        MyOrderVO vo = service.selectOrderDetails(ordNo);
+
+        Map<String, MyOrderVO> map = new HashMap<>();
+        map.put("ordNo", vo);
+
+        return map;
+    }
+
+    // home - 최근 주문 내역 - 상품명 선택 - 팝업 창 - 문의하기
+    @PostMapping("my/qnaToSeller")
+    public String toSellerQna(CsVO vo, HttpServletRequest req) throws Exception {
+
+        vo.setRegip(req.getRemoteAddr());
+
+        log.warn("here1 : " + vo);
+
+        service.insertQnaToSeller(vo);
+
+        log.warn("here2 : " + vo);
+
+        return "redirect:/my/home";
+    }
+
+
+
 
     // info - hp 수정
     @ResponseBody

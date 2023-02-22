@@ -113,15 +113,30 @@ public class MyService {
         return pointRepo.findByUidAndPointDate2(uid, startdate, enddate, pageable);
     }
 
+    // ordered
+    public Page<MyOrderEntity> findMyOrderEntityByUid(String uid, Pageable pageable){
+        return orderRepo.findByUid(uid, pageable);
+    }
+
     // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
     public SellerVO selectCompany (String company){
         return dao.selectCompany(company);
     }
 
+    // home - 최근 주문 내역 - 주문번호 선택 시 팝업 창 주문상세 정보 출력
+    public MyOrderVO selectOrderDetails(String ordNo){
+        return dao.selectOrderDetails(ordNo);
+    }
+    // home - 최근 주문 내역 - 상품명 선택 - 팝업 창 - 문의하기
+    public void insertQnaToSeller(CsVO vo) throws Exception {
+        dao.insertQnaToSeller(vo);
+
+
 
     // ordered
     public Page<MyOrderEntity> findMyOrderEntityByUid(String uid, Pageable pageable){
         return orderRepo.findByUidOrderByOrdDateDesc(uid, pageable);
+
     }
 
     public Page<MyOrderEntity> findMyOrderEntityByUidAndDate1(String uid, String date, Pageable pageable){
