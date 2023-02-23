@@ -40,4 +40,8 @@ public class OrderVO {
     private int total;
     private String ordState;
     private String ordStatus;
+
+    public void setProdNo(String prodNo) {
+        this.prodNo = Integer.parseInt(prodNo);
+    }
 }

@@ -154,7 +154,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{checkList}
         </foreach>
         -->
-        <!--
+
         insert into `km_product_order_item`
         SET
         `prodNo`=#{prodNo},
@@ -168,7 +168,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         `total`=#{total},
         `ordState`="배송중",
         `ordStatus`=2;
-        -->
+
     </insert>
 
     <!--장바구니 삭제-->

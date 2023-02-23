@@ -83,7 +83,7 @@
                     dataType: 'JSON',
                     success: function(data){
                         console.log("data : " + data.result);
-                        if(data.result == 1){
+                        if(data.result > 0){
                            location.href = "/kmarket/product/complete";
                         }else {
                             alert('다시 시도해 주십시오.');
