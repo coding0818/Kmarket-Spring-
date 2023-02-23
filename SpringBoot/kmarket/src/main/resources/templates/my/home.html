@@ -147,9 +147,7 @@
                             </tr>
                             <tr th:unless="${#lists.isEmpty(csList)}" th:each="cs,i:${csList}">
                                 <td>[[${i.count}]]</td>
-                                <td th:if="${cs.cate1 == 'faq'}">자주묻는질문</td>
-                                <td th:if="${cs.cate1 == 'notice'}">공지사항</td>
-                                <td th:if="${cs.cate1 == 'qna'}">문의하기</td>
+                                <td>[[${cs.cate1}]]</td>
                                 <td>[[${cs.type}]]</td>
                                 <td>[[${cs.title}]]</td>
                                 <td>[[${cs.rdate.substring(0, 10)}]]</td>

@@ -58,6 +58,8 @@ public interface MyDAO {
     // info
     public int updateSellerHp(@Param("hp") String hp, @Param("uid") String uid);
     public int updateUserHp(@Param("hp") String hp, @Param("uid") String uid);
-
-
+    public int updateSellerEmail(@Param("email") String email, @Param("uid") String uid);
+    public int updateUserEmail(@Param("email") String email, @Param("uid") String uid);
+    public int updateSellerInfo(@Param("hp") String hp, @Param("email") String email, @Param("zip") String zip, @Param("addr1") String addr1, @Param("addr2") String addr2, @Param("uid") String uid);
+    public int updateUserInfo(@Param("hp") String hp, @Param("email") String email, @Param("zip") String zip, @Param("addr1") String addr1, @Param("addr2") String addr2, @Param("uid") String uid);
 }

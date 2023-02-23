@@ -36,7 +36,7 @@
         </div>
         <div class="logo">
             <div>
-                <a href="../index.html"><img src="../img/header_logo.png" alt="로고"/></a>
+                <a th:href="@{/index}"><img th:src="@{/img/header_logo.png}" alt="로고"/></a>
                 <form action="#">
                     <input type="text" name="search"/>
                     <button><i class="fa fa-search"></i></button>
@@ -49,15 +49,15 @@
             <div>
                 <a th:href="@{/my/home}"><img th:src="@{/img/my_logo.jpg}" alt="나의쇼핑정보"></a>
                 <ol>
-                    <li><a href="#">주문·배송<span class="delivery">[[${orderCount}]]</span></a></li>
-                    <li><a href="#">할인쿠폰<span class="coupon">[[${couponCount}]]</span></a></li>
+                    <li><a th:href="@{/my/ordered}">주문·배송<span class="delivery">[[${orderCount}]]</span></a></li>
+                    <li><a th:href="@{/my/coupon}">할인쿠폰<span class="coupon">[[${couponCount}]]</span></a></li>
                     <th:block th:if="${pointSum != null}">
-                        <li><a href="#">포인트<span class="point">[[${pointSum}]]</span></a></li>
+                        <li><a th:href="@{/my/point}">포인트<span class="point">[[${pointSum}]]</span></a></li>
                     </th:block>
                     <th:block th:unless="${pointSum != null}">
-                        <li><a href="#">포인트<span class="point">0</span></a></li>
+                        <li><a th:href="@{/my/point}">포인트<span class="point">0</span></a></li>
                     </th:block>
-                    <li><a href="#">문의내역<span class="qna">[[${csCount}]]</span></a></li>
+                    <li><a th:href="@{/my/qna}">문의내역<span class="qna">[[${csCount}]]</span></a></li>
                 </ol>
             </div>
         </nav>

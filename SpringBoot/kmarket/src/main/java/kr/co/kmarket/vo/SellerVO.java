@@ -21,10 +21,10 @@ public class SellerVO {
     private String addr2;
     private String company;
     private String ceo;
+    private String name;
     private String bizRegNum;
     private String comRegNum;
     private String tel;
-    private String manager;
     private String hp;
     private String fax;
     private String email;

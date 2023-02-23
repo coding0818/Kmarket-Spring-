@@ -339,7 +339,7 @@ public class MyController {
             String hp2 = seller.getHp().substring(i+1,i2);
             String hp3 = seller.getHp().substring(i2+1);
 
-            model.addAttribute("seller", seller);
+            model.addAttribute("member", seller);
             model.addAttribute("emailId", emailId);
             model.addAttribute("emailDomain", emailDomain);
             model.addAttribute("hp1", hp1);
@@ -458,6 +458,34 @@ public class MyController {
         return resultMap;
     }
 
+    @ResponseBody
+    @PostMapping("my/modifyEmail")
+    public Map<String, Integer> modifyEmail(String email, String userType, String uid){
+        int result = 0;
+        if(userType.equals("seller")){
+            result = service.updateSellerEmail(email, uid);
+        }else{
+            result = service.updateUserEmail(email, uid);
+        }
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
 
+        return resultMap;
+    }
+
+    @ResponseBody
+    @PostMapping("my/modifyInfo")
+    public Map<String, Integer> modifyInfo(String hp, String email, String zip, String addr1, String addr2, String userType, String uid){
+        int result = 0;
+        if(userType.equals("seller")){
+            result = service.updateSellerInfo(hp, email, zip, addr1, addr2, uid);
+        }else{
+            result = service.updateUserInfo(hp, email, zip, addr1, addr2, uid);
+        }
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
 
 }
