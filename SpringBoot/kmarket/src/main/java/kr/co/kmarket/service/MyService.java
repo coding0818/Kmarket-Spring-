@@ -10,6 +10,7 @@ import kr.co.kmarket.repository.MyReviewRepo;
 import kr.co.kmarket.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -118,6 +119,10 @@ public class MyService {
         return orderRepo.findByUidOrderByOrdDateDesc(uid, pageable);
     }
 
+    // coupon
+    public List<MyCouponVO> selectMyCoupons(String uid){return dao.selectMyCoupons(uid);}
+    public int selectCountMyCoupons(String uid){return dao.selectCountMyCoupons(uid);}
+
     // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
     public SellerVO selectCompany (String company){
         return dao.selectCompany(company);
@@ -129,20 +134,15 @@ public class MyService {
     }
     // home - 최근 주문 내역 - 상품명 선택 - 팝업 창 - 문의하기
     public void insertQnaToSeller(CsVO vo) throws Exception {
-        dao.insertQnaToSeller(vo);
+        dao.insertQnaToSeller(vo);}
 
 
 
-    // ordered
-    public Page<MyOrderEntity> findMyOrderEntityByUid(String uid, Pageable pageable){
-        return orderRepo.findByUidOrderByOrdDateDesc(uid, pageable);
-
-    }
 
 
-    // coupon
-    public List<MyCouponVO> selectMyCoupons(String uid) {return dao.selectMyCoupons(uid);}
-    public int selectCountMyCoupons(String uid) {return dao.selectCountMyCoupons(uid);}
+
+
+
 
     // qna
     public CsVO selectQnas(String uid, int start) {return dao.selectQnas(uid, start);}
