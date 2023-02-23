@@ -1,5 +1,6 @@
 package kr.co.kmarket.controller;
 
+import kr.co.kmarket.entity.MyOrderEntity;
 import kr.co.kmarket.entity.MyPointEntity;
 
 import kr.co.kmarket.service.CsService;
