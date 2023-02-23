@@ -220,7 +220,7 @@
             <a th:href="@{/product/view (cate1=${best.cate1}, cate2=${best.cate2}, prodNo=${best.prodNo})}">
               <div class="thumb">
                 <i>1</i>
-                <img th:src="@{#}" alt="item1">
+                <img th:src="@{/thumb/{cate1}/{cate2}/{thumb1} (cate1=${best.cate1}, cate2=${best.cate2}, thumb1=${best.thumb1})}" alt="item1">
               </div>
               <h2>[[${best.prodName}]]</h2>
               <div class="org_price">

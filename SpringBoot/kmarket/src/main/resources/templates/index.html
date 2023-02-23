@@ -99,7 +99,7 @@
                     <article th:each="score:${index.score}">
                         <a th:href="@{/product/view (cate1=${score.cate1}, cate2=${score.cate2}, prodNo=${score.prodNo})}">
                             <div class="thumb">
-                                <img src="https://via.placeholder.com/230x230" alt="t1">
+                                <img th:src="@{/thumb/{cate1}/{cate2}/{thumb1} (cate1=${score.cate1}, cate2=${score.cate2}, thumb1=${score.thumb1})}" alt="t1">
                             </div>
                             <h2>[[${score.prodName}]]</h2>
                             <p>[[${score.descript}]]</p>
@@ -120,7 +120,7 @@
                     <article th:each="newProd:${index.new}">
                         <a th:href="@{/product/view (cate1=${newProd.cate1}, cate2=${newProd.cate2}, prodNo=${newProd.prodNo})}">
                             <div class="thumb">
-                                <img src="https://via.placeholder.com/230x230" alt="t1">
+                                <img th:src="@{/thumb/{cate1}/{cate2}/{thumb1} (cate1=${newProd.cate1}, cate2=${newProd.cate2}, thumb1=${newProd.thumb1})}" alt="t1">
                             </div>
                             <h2>[[${newProd.prodName}]]</h2>
                             <p>[[${newProd.descript}]]</p>
@@ -141,7 +141,7 @@
                     <article th:each="discount:${index.discount}">
                         <a th:href="@{/product/view (cate1=${discount.cate1}, cate2=${discount.cate2}, prodNo=${discount.prodNo})}">
                             <div class="thumb">
-                                <img src="https://via.placeholder.com/230x230" alt="t1">
+                                <img th:src="@{/thumb/{cate1}/{cate2}/{thumb1} (cate1=${discount.cate1}, cate2=${discount.cate2}, thumb1=${discount.thumb1})}" alt="t1">
                             </div>
                             <h2>[[${discount.prodName}]]</h2>
                             <p>[[${discount.descript}]]</p>
