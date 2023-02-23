@@ -105,23 +105,17 @@ $(document).ready(function(){
     $('.latest .confirm > .review').click(function(e){
         e.preventDefault();
 
+        let prodNo = $(this).next().val();
         let prodName = $('#prodName').text();
 
+        console.log('prodNo: '+ prodName);
         console.log('prodName: '+prodName);
 
+        $('#prodNo').val(prodNo);
         $('#productName').text(prodName);
 
         $('#popReview').addClass('on');
     });
-
-    // 팝업 내 닫기 버튼 클릭 시 - 팝업 닫기
-    $('.btnClose').click(function(){
-        $(this).closest('.popup').removeClass('on');
-    });
-    // 팝업 내 취소 버튼 클릭 시 - 팝업 닫기
-    $('.btnCancel').click(function(){
-       $(this).closest('.popup').removeClass('on');
-   });
 
     // 상품평 작성 - 평점
     let rating = 0;
@@ -135,6 +129,7 @@ $(document).ready(function(){
         callback: function(currentRating, $el){
             alert('rated ' + currentRating);
             console.log('DOM element ', $el);
+            $('#rating').val(currentRating);
         }
     });
 
@@ -142,6 +137,52 @@ $(document).ready(function(){
     $('#popReview .btnPositive').click(function(e){
         e.preventDefault();
 
-        let prodNo = $('.latest .confirm > .review').attr('data-no');
+        let uid = $('#reviewUid').val();
+        let prodName = $('#productName').text();
+        let prodNo = $('#prodNo').val();
+        let rating = $('#rating').val();
+        let content = $('#reviewContent').val();
+
+        console.log('uid---: '+uid);
+        console.log('prodName---: '+prodName);
+        console.log('prodNo---: '+prodNo);
+        console.log('rating---: '+rating);
+        console.log('content---: '+content);
+
+        const jsonData = {
+            "uid": uid,
+            "prodName": prodName,
+            "prodNo": prodNo,
+            "rating": rating,
+            "content": content
+        }
+
+        console.log("ajax before");
+
+        $.ajax({
+            url: "/kmarket/my/insertReview",
+            type: "POST",
+            data: jsonData,
+            dataType: "json",
+            success: (data)=>{
+                if(data.result > 0){
+                    alert('상품평 작성이 완료되었습니다.');
+                    $(this).closest('.popup').removeClass('on');
+                }else {
+                    alert('Error');
+                }
+            }
+        });
     });
+
+    // 팝업 내 닫기 버튼 클릭 시 - 팝업 닫기
+    $('.btnClose').click(function(){
+        $(this).closest('.popup').removeClass('on');
+    });
+    // 팝업 내 취소 버튼 클릭 시 - 팝업 닫기
+    $('.btnCancel').click(function(){
+       $(this).closest('.popup').removeClass('on');
+   });
+
+
 });
