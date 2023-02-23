@@ -11,7 +11,8 @@ import java.util.List;
 @Mapper
 public interface PolicyDAO {
 
-    public List<TermsPolicyVO> selectPolicies(@Param("cate") String cate, @Param("chapter") String chapter);
+    public List<TermsPolicyVO> selectPolicies(@Param("cate") String cate, @Param("chapterNo") int chapterNo);
     public List<TermsPolicyVO> selectPolicyGroups(String cate);
+    public String selectPolicyGroup (int chapterNo);
 
 }

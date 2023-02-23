@@ -83,9 +83,9 @@
           <li><a th:href="@{/admin/product/list}"> -- 관리자 상품 목록</a></li> <!-- 잠깐 넣어놓을게요 -->
         </ul>
         <ul>
-          <li><a href="#">공지사항</a></li>
-          <li><a href="#">자주묻는질문</a></li>
-          <li><a href="#">문의하기</a></li>
+          <li><a th:href="@{/cs/list(cate1=notice, cate2=all, pg=1)}">공지사항</a></li>
+          <li><a th:href="@{/cs/list(cate1=faq, cate2=user, pg=1)}">자주묻는질문</a></li>
+          <li><a th:href="@{/cs/write(cate1=qna)}">문의하기</a></li>
           <li><a th:href="@{/cs/index}">고객센터</a></li>
         </ul>
       </div>

@@ -6,7 +6,7 @@
 
     <select id="selectPolicies" resultType="kr.co.kmarket.vo.TermsPolicyVO">
         SELECT * FROM `km_policy_terms`
-        WHERE `cate` = #{cate} AND `chapter`=#{chapter}
+        WHERE `cate` = #{cate} AND `chapterNo`=#{chapterNo}
         ORDER BY `group` ASC;
     </select>
     <select id="selectPolicyGroups" resultType="kr.co.kmarket.vo.TermsPolicyVO">
@@ -14,6 +14,9 @@
             FROM `km_policy_terms`
             WHERE `cate` = #{cate}
             order by `chapterNo` ASC;
+    </select>
+    <select id="selectPolicyGroup" resultType="String">
+        SELECT DISTINCT `chapter` FROM `km_policy_terms` WHERE `chapterNo`=#{chapterNo};
     </select>
 
 </mapper>
