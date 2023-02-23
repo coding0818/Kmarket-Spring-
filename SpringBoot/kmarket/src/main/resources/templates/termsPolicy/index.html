@@ -30,14 +30,14 @@
                             <h2>개인정보수집 방침</h2>
                         </th:block>
                     </th:block>
-                    <th:block th:each="map:${map}">
+                    <th:block th:each="map:${sortMap}">
                         <p>
-                        <span class="chapter">[[${map.key}]]</span>
+                        <span class="chapter">[[${map.key}]]</span><br/>
                         <th:block th:each="art:${map.value}">
                             <span class="tit">[[${art.tit}]]</span>
                             <span class="content">
                                 [[${art.content}]]
-                            </span>
+                            </span><br/><br/>
                         </th:block>
                         </p>
                     </th:block>
