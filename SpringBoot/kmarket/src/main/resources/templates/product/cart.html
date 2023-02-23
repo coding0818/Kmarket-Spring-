@@ -38,7 +38,7 @@
                                 <td><input type="checkbox" th:class="${prod.prodNo}" name="prodNo" th:value="${prod.prodNo}" th:onclick="checkProd([[${prod.prodNo}]])"></td>
                                 <td><article>
                                     <a th:href="@{/product/view (cate1=${prod.cate1}, cate2=${prod.cate2}, prodNo=${prod.prodNo})}">
-                                        <img src="	https://via.placeholder.com/80x80" alt="1">
+                                        <img th:src="@{/thumb/{cate1}/{cate2}/{thumb1} (cate1=${prod.cate1}, cate2=${prod.cate2}, thumb1=${prod.thumb1})}" alt="1">
                                     </a>
                                     <div>
                                         <h2><a th:href="@{/product/view (cate1=${prod.cate1}, cate2=${prod.cate2}, prodNo=${prod.prodNo})}">[[${prod.prodName}]]</a></h2>
