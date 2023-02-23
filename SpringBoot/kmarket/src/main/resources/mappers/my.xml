@@ -106,7 +106,7 @@
     <!-- home - 최근 주문 내역 - 주문번호 선택 시 팝업 창 주문상세 정보 출력 -->
     <select id="selectOrderDetails" resultType="kr.co.kmarket.vo.MyOrderVO">
         select a.ordDate, a.ordNo, a.ordPrice, a.ordCount, a.ordDiscount, a.ordTotPrice, a.recipName, a.recipHp, a.recipZip, a.recipAddr1, a.recipAddr2,
-        b.ordState,
+        b.ordState, b.prodNo,
         c.cate1, c.cate2, c.prodName, c.company, c.thumb1, c.price
         from `km_product_order` as a
         join `km_product_order_item` as b on a.ordNo = b.ordNo
@@ -124,6 +124,18 @@
         `email`=#{email},
         `title`=#{title},
         `content`=#{content},
+        `regip`=#{regip},
+        `rdate`=NOW();
+    </insert>
+
+    <!-- home 상품평 작성하기 -->
+    <insert id="insertReview">
+        insert into `km_product_review` set
+        `prodNo`=#{prodNo},
+        `uid`=#{uid},
+        `content`=#{content},
+        `prodName`=#{prodName},
+        `rating`=#{rating},
         `regip`=#{regip},
         `rdate`=NOW();
     </insert>

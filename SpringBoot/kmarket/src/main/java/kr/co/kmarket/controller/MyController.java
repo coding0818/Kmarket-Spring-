@@ -15,10 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -427,18 +424,28 @@ public class MyController {
     // home - 최근 주문 내역 - 상품명 선택 - 팝업 창 - 문의하기
     @PostMapping("my/qnaToSeller")
     public String toSellerQna(CsVO vo, HttpServletRequest req) throws Exception {
-
         vo.setRegip(req.getRemoteAddr());
-
-        log.warn("here1 : " + vo);
-
         service.insertQnaToSeller(vo);
-
-        log.warn("here2 : " + vo);
-
         return "redirect:/my/home";
     }
 
+    // home - 상품평 작성하기
+    @ResponseBody
+    @PostMapping("my/insertReview")
+    public Map<String, Integer> insertReview(MyReviewVO vo, HttpServletRequest req) throws  Exception{
+
+        log.warn("here11111");
+
+        vo.setRegip(req.getRemoteAddr());
+        int result = service.insertReview(vo);
+
+        log.warn("here22222");
+
+        Map<String, Integer> resultMap = new HashMap<>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
 
 
 

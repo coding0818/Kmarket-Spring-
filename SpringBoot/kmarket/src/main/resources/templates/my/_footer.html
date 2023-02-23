@@ -250,14 +250,17 @@
     <div>
         <nav>
             <h1>상품평 작성하기</h1>
+            <input type="hidden" id="prodNo">
+            <input type="hidden" id="rating">
+            <input type="hidden" name="uid" id="reviewUid" th:value="${#authentication.principal.user.uid}">
             <button class="btnClose">X</button>
         </nav>
         <section>
-            <form action="#">
+            <form>
                 <table border="0">
                     <tr>
                         <th>상품명</th>
-                        <td class="productName" id="productName">상품명 출력</td>
+                        <td class="productName" id="productName" name="prodName">상품명 출력</td>
                     </tr>
                     <tr>
                         <th>만족도</th>
@@ -268,7 +271,7 @@
                     <tr>
                         <th>내용</th>
                         <td class="review">
-                            <textarea name="review" placeholder="내용입력"></textarea>
+                            <textarea name="review" id="reviewContent" placeholder="내용입력"></textarea>
                         </td>
                     </tr>
                 </table>
@@ -278,7 +281,7 @@
 
                 <div>
                     <input type="submit" class="btnPositive" value="작성완료"/>
-                    <button class="btnNegative btnCancel">취소</button>
+                    <button class="btnNegative btnCancel" type="button">취소</button>
                 </div>
             </form>
         </section>
