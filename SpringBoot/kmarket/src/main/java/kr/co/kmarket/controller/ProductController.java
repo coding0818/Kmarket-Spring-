@@ -325,9 +325,12 @@ public class ProductController {
         model.addAttribute("cate", cate);
 
         // 결제 완료 상품 조회
+
         @SuppressWarnings("unchecked")
-        List<ProductVO> complete = (List<ProductVO>) session.getAttribute("complete");
-        log.info("complete : " +complete);
+        List<Product_OrderItemVO> complete = (List<Product_OrderItemVO>) session.getAttribute("ordComplete");
+        log.info("ordComplete : " +complete);
+
+
         OrderVO order = (OrderVO) session.getAttribute("finalOrder");
         log.info("finalOrder : " + order);
         if(complete == null) {return "product/cart";}
@@ -347,6 +350,8 @@ public class ProductController {
         log.info("vo1 : " + vo);
 
         HttpSession session = req.getSession();
+        //List<ProductVO> product = (List<ProductVO>) session.getAttribute("complete");
+        //String prodName=product.get(0).getProdName();
         String uid = principal.getName();
         String type = (String) session.getAttribute("type");
 
@@ -414,24 +419,27 @@ public class ProductController {
        log.info("randOrdNo : " + randOrdNo);
        log.info("uid : " + uid);
 
-
+        List<Product_OrderItemVO> items = new ArrayList<>();
 
        for(String prodNo : checkList){
            Product_OrderItemVO itemVO = new Product_OrderItemVO();
            itemVO.setProdNo(prodNo);
            itemVO.setOrdNo(orderNo);
            itemVO.setUid(uid);
-           itemVO.setCount(vo.getCount());
-           itemVO.setPrice(vo.getPrice());
-           itemVO.setDiscount(vo.getDiscount());
-           itemVO.setPoint(vo.getPoint());
-           itemVO.setDelivery(vo.getDelivery());
-           itemVO.setTotal(vo.getTotal());
+           itemVO.setCount(vo.getOrdCount());
+           itemVO.setPrice(vo.getOrdPrice());
+           itemVO.setDiscount(vo.getOrdDiscount());
+           itemVO.setPoint(vo.getUsedPoint());
+           itemVO.setDelivery(vo.getOrdDelivery());
+           itemVO.setTotal(vo.getOrdTotPrice());
 
+           items.add(itemVO);
 
+           log.info("itemVO : " + itemVO);
            service.insertCompleteItem(itemVO);
        }
 
+        session.setAttribute("ordComplete", items);
 
 
         // 장바구니 삭제
