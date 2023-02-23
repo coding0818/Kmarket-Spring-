@@ -18,7 +18,7 @@
             `bizRegNum`=#{bizRegNum},
             `comRegNum`=#{comRegNum},
             `tel`=#{tel},
-            `manager`=#{manager},
+            `name`=#{name},
             `hp`=#{hp},
             `fax`=#{fax},
             `email`=#{email},

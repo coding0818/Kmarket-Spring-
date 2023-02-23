@@ -136,6 +136,16 @@
     <update id="updateUserHp">
         update `km_member_general` set `hp`=#{hp} where `uid`=#{uid};
     </update>
-
-
+    <update id="updateSellerEmail">
+        update `km_member_seller` set `email`=#{email} where `uid`=#{uid};
+    </update>
+    <update id="updateUserEmail">
+        update `km_member_general` set `email`=#{email} where `uid`=#{uid};
+    </update>
+    <update id="updateSellerInfo">
+        update `km_member_seller` set `hp`=#{hp}, `email`=#{email}, `zip`=#{zip}, `addr1`=#{addr1}, `addr2`=#{addr2} where `uid`=#{uid};
+    </update>
+    <update id="updateUserInfo">
+        update `km_member_general` set `hp`=#{hp}, `email`=#{email}, `zip`=#{zip}, `addr1`=#{addr1}, `addr2`=#{addr2} where `uid`=#{uid};
+    </update>
 </mapper>

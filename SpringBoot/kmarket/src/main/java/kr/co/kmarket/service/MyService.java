@@ -137,13 +137,6 @@ public class MyService {
         dao.insertQnaToSeller(vo);}
 
 
-
-
-
-
-
-
-
     // qna
     public CsVO selectQnas(String uid, int start) {return dao.selectQnas(uid, start);}
     public int selectCountQnas(String uid) {return dao.selectCountQnas(uid);}
@@ -168,5 +161,17 @@ public class MyService {
     }
     public int updateUserHp(String hp, String uid){
         return dao.updateUserHp(hp, uid);
+    }
+    public int updateSellerEmail(String email, String uid){
+        return dao.updateSellerEmail(email, uid);
+    }
+    public int updateUserEmail(String email, String uid){
+        return dao.updateUserEmail(email, uid);
+    }
+    public int updateSellerInfo(String hp, String email, String zip, String addr1, String addr2, String uid){
+        return dao.updateSellerInfo(hp, email, zip, addr1, addr2, uid);
+    }
+    public int updateUserInfo(String hp, String email, String zip, String addr1, String addr2, String uid){
+        return dao.updateUserInfo(hp, email, zip, addr1, addr2, uid);
     }
 }

@@ -22,11 +22,11 @@
             }
 
             if(!uid.match(idReg)){
-                $('.msgSId').css('color', 'red').text('유효한 아이디가 아닙니다.');
+                $('.msgId').css('color', 'red').text('유효한 아이디가 아닙니다.');
                 isUidOk = false;
                 return;
             }else{
-                $('.msgSId').css('color', 'green').text('사용가능한 아이디입니다.');
+                $('.msgId').css('color', 'green').text('사용가능한 아이디입니다.');
                 isUidOk = true;
             }
         });
@@ -107,7 +107,7 @@
                                 </th>
                                 <td>
                                     <input type="password" name="pass2" placeholder="비밀번호를 입력" required>
-                                    <span class="msgPass">비밀번호 재입력</span>
+                                    <span class="msgPass2">비밀번호 재입력</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -143,6 +143,7 @@
                                 </th>
                                 <td>
                                     <input type="email" name="email" placeholder="이메일 입력" required>
+                                    <span class="msgEmail"></span>
                                 </td>
                             </tr>
                             <tr>
