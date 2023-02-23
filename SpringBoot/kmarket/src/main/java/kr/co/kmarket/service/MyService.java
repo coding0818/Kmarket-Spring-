@@ -115,7 +115,7 @@ public class MyService {
 
     // ordered
     public Page<MyOrderEntity> findMyOrderEntityByUid(String uid, Pageable pageable){
-        return orderRepo.findByUid(uid, pageable);
+        return orderRepo.findByUidOrderByOrdDateDesc(uid, pageable);
     }
 
     // home - 최근 주문 내역 - 상품명 선택 시 팝업 창 판매자 정보 출력
@@ -158,7 +158,7 @@ public class MyService {
 
 
     // review
-    public Page<MyReviewEntity> findByUidOrderByRDateDesc(String uid, Pageable pageable){
+    public Page<MyReviewEntity> findByUidOrderByRdateDesc(String uid, Pageable pageable){
         return rRepo.findByUidOrderByRdateDesc(uid, pageable);
     }
 
