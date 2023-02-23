@@ -49,7 +49,7 @@ public interface MyDAO {
     public int selectCountQnas (String uid);
 
 
-    public SellerVO selectCompany(String company);
+    
     // home - 최근 주문 내역 - 주문번호 선택 시 팝업 창 주문상세 정보 출력
     public MyOrderVO selectOrderDetails(String ordNo);
     // home - 최근 주문 내역 - 상품명 선택 - 팝업 창 - 문의하기

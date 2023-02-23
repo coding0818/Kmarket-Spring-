@@ -299,7 +299,7 @@ public class MyController {
         int pointSum = service.selectSumPoint(principal.getName());
         int csCount = service.selectCountCs(principal.getName());
 
-        Page<MyReviewEntity> reviewList = service.findByUidOrderByRDateDesc(principal.getName(), pageable);
+        Page<MyReviewEntity> reviewList = service.findByUidOrderByRdateDesc(principal.getName(), pageable);
         int start = (int)(Math.floor(reviewList.getNumber() / 5)*5+1);
 
         log.info("reviewList : "+reviewList.getContent());
