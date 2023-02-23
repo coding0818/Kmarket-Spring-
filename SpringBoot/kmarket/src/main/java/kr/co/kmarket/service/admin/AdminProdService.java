@@ -34,7 +34,7 @@ public class AdminProdService {
     private AdminProdRepo repo;
 
 
-    // ------------------------------------------ 상품 등록 ------------------------------------------
+    // 상품 등록
     public void registerProduct(ProductVO vo) throws Exception{
 
         // vo의 thumb1~3 가져오기
@@ -57,7 +57,7 @@ public class AdminProdService {
 
     }
 
-    // ------------------------------------------  파일 ----------------------------------------------
+    // 파일
     @Value("${spring.servlet.multipart.location}")
     private String uploadPath;
 
@@ -120,49 +120,39 @@ public class AdminProdService {
 
     }
 
-    // ------------------------------------------ 상품 목록 (판매자가 조회 시)-------------------------
+    // 상품 목록 (판매자가 조회 시)
     public List<ProductVO> selectProducts(String seller, int start){
         System.out.println("service: " + seller);
         return dao.selectProducts(seller, start);
     }
-    // ------------------------------------------ 상품 목록 (관리자가 조회 시)-------------------------
+    // 상품 목록 (관리자가 조회 시)
     public List<ProductVO> selectProductsAdmin(int start){
         System.out.println("service - admin");
         return dao.selectProductsAdmin(start);
     }
-    // ------------------------------------------ 상품 목록 (키워드 검색) ------------------------------
+    // 상품 목록 (키워드 검색)
     public List<ProductVO> search(String prodName){
 
-        log.warn("키워드: " + prodName);
-        log.warn("레포 들어가기 전");
-
-        //List<ProdEntity> products = repo.findByProdNameContains(prodName);
-        List<ProdEntity> products = repo.findAll();
-        // findBy...를 쓰면 전체 null
-        // findAll을 쓰면 prodNo, prodName이 null
-
-
-        log.warn("레포 후 1 : " + products);
+        List<ProdEntity> products = repo.findByProdNameContains(prodName);
+        //List<ProdEntity> products = repo.findAll();
 
         List<ProductVO> productVOList = new ArrayList<>();
 
         if(products.isEmpty()){
-            log.warn("레포 후 - null");
+            log.warn("repo - null");
             return productVOList;
         }
 
         for (ProdEntity product : products){
-            log.warn("레포 후 2");
             productVOList.add(this.convertEntityToVO(product));
         }
-
-        log.warn("레포 나온 후 서비스: " + productVOList);
 
         return productVOList;
     }
 
     private ProductVO convertEntityToVO(ProdEntity product){
         return ProductVO.builder()
+                .prodNo(product.getProdNo())
                 .cate1(product.getCate1())
                 .cate2(product.getCate2())
                 .seller(product.getSeller())
@@ -176,7 +166,7 @@ public class AdminProdService {
                 .build();
     }
 
-    // --------------------  페이징  -----------------------
+    // 페이징
     // 전체 게시글 개수
     public int selectCountProduct(String seller) {
         return dao.selectCountProduct(seller);
@@ -187,7 +177,7 @@ public class AdminProdService {
         return dao.updateProduct(vo);
     }
     // 상품 삭제
-    public int deleteProduct(int prodNo){
+    public int deleteProduct(String prodNo){
         return dao.deleteProduct(prodNo);
     }
 

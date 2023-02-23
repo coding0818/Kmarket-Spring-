@@ -65,12 +65,13 @@ $(document).ready(function(){
             dataType: "json",
             success: (data) => {
                 console.log(data);
-                console.log(ordNo);
-                console.log(data.ordNo.ordCount);
+                console.log(data.ordNo.cate1);
                 $('#popOrder .date').text(data.ordNo.ordDate.substring(0,10));
                 $('#popOrder .ordNo').text(ordNo);
-                let imgPath = "@{/thumb/{cate1}/{cate2}/{thumb1}(cate1=${order.cate1}, cate2=${order.cate2}, thumb1=${order.thumb1})}"
-                $('#popOrder .order img').attr('th:src', imgPath);
+                // 13-10-72de5445-708a-40de-9e52-ee9c0a6de72d.jpg
+                // /kmarket/thumb/13/10/13-10-72de5445-708a-40de-9e52-ee9c0a6de72d.jpg
+                let imgPath = "/kmarket/thumb/"+data.ordNo.cate1+"/"+data.ordNo.cate2+"/"+data.ordNo.thumb1;
+                $('#popOrder .order img').attr('src', imgPath);
                 $('#popOrder .company').text(data.ordNo.company);
                 $('#popOrder .prodName').text(data.ordNo.prodName);
                 $('#popOrder .prodCount').text(data.ordNo.ordCount);
