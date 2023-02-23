@@ -51,23 +51,23 @@
                         <table>
                             <tr>
                                 <td>총</td>
-                                <td>[[${#numbers.formatInteger(total.count, 0, 'COMMA') + "건"}]]</td>
+                                <td>[[${prodCartVO.count}]]</td>
                             </tr>
                             <tr>
                                 <td>상품금액</td>
-                                <td>[[${#numbers.formatInteger(total.price, 0, 'COMMA')}]]</td>
+                                <td>[[${prodCartVO.price}]]</td>
                             </tr>
                             <tr>
                                 <td>할인금액</td>
-                                <td>[[${#numbers.formatInteger(total.price + total.delivery - total.total, 0, 'COMMA')}]]</td>
+                                <td>[[${prodCartVO.discount}]]</td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
-                                <td>[[${#numbers.formatInteger(total.delivery, 0, 'COMMA')}]]</td>
+                                <td>[[${prodCartVO.delivery}]]</td>
                             </tr>
                             <tr>
                                 <td>포인트 적립</td>
-                                <td>[[${#numbers.formatInteger(total.point, 0, 'COMMA')}]]</td>
+                                <td>[[${prodCartVO.point}]]</td>
                             </tr>
                             <tr>
                                 <td>포인트 할인</td>
@@ -75,7 +75,7 @@
                             </tr>
                             <tr>
                                 <td>전체주문금액</td>
-                                <td>[[${#numbers.formatInteger(total.total, 0, 'COMMA')}]]</td>
+                                <td>[[${prodCartVO.total}]]</td>
                             </tr>
                         </table>
                         <input type="submit" value="결제하기">

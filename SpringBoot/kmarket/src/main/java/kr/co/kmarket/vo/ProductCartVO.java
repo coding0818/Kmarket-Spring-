@@ -6,6 +6,8 @@ package kr.co.kmarket.vo;
  * */
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,5 +24,7 @@ public class ProductCartVO {
     private int delivery;
     private int total;
     private String rdate;
+
+    private List<String> checkList;
 
 }
