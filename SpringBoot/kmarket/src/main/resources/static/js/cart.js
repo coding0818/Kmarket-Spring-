@@ -50,56 +50,54 @@
 
         // 전체선택
         $('input[name=all]').click(function(){
-        // 리스트 초기화
-        checkList = [];
+            // 리스트 초기화
+            checkList = [];
 
-        // 전체 선택 시 전부 체크
-        $('input[name=prodNo]').prop('checked', true);
+            // 전체 선택 시 전부 체크
+            $('input[name=prodNo]').prop('checked', true);
 
-        // checkList에 담는 이유는 선택삭제시 필요
-        $('input[name=prodNo]:checked').each(function(){checkList.push($(this).val()); });
+            // checkList에 담는 이유는 선택삭제시 필요
+            $('input[name=prodNo]:checked').each(function(){checkList.push($(this).val()); });
 
-        $.ajax({
-                url:'/kmarket/product/cart/total',
-                method:'post',
-                success: function(data){
-                // 전체 버튼 체크
-                if($('input[name=all]').is(':checked')){
+            $.ajax({
+                    url:'/kmarket/product/cart/total',
+                    method:'post',
+                    success: function(data){
+                    // 전체 버튼 체크
+                    if($('input[name=all]').is(':checked')){
 
-                    $('input[name=prodNo]').prop('checked', true);
+                        $('input[name=prodNo]').prop('checked', true);
 
-                    console.log("true");
+                        console.log("true");
 
-                    // 이전에 선택이 되어진 상태에서 전체 선택을 눌렀을 시
-                    totalChange(0, 0, 0, 0, 0)
+                        // 이전에 선택이 되어진 상태에서 전체 선택을 눌렀을 시
+                        totalChange(0, 0, 0, 0, 0)
 
-                    // 전체 선택 상태에서 일부 상품을 체크 혹은 해제 했을때 새롭게 계산을 하여야 하기에 변수 수정
-                    prodCount = data.result.count
-                    totalPrice = data.result.price
-                    totalDelivery = data.result.delivery
-                    totalPoint = data.result.point
-                    totalTotal = data.result.total
+                        // 전체 선택 상태에서 일부 상품을 체크 혹은 해제 했을때 새롭게 계산을 하여야 하기에 변수 수정
+                        prodCount = data.result.count
+                        totalPrice = data.result.price
+                        totalDelivery = data.result.delivery
+                        totalPoint = data.result.point
+                        totalTotal = data.result.total
 
-                    console.log("prodCount : " +prodCount );
+                        console.log("prodCount : " +prodCount );
 
-                    totalChange(prodCount, totalPrice, totalPoint, totalDelivery, totalTotal);
+                        totalChange(prodCount, totalPrice, totalPoint, totalDelivery, totalTotal);
 
-                    }else {
-                        $('input[name=prodNo]').prop('checked', false);
-                        console.log("false");
-                        totalChange(0, 0, 0, 0, 0);
-                        totalCount = 0
-                        totalPrice = 0
-                        totalDelivery = 0
-                        totalPoint = 0
-                        totalTotal = 0
-                        checkList = [];
+                        }else {
+                            $('input[name=prodNo]').prop('checked', false);
+                            console.log("false");
+                            totalChange(0, 0, 0, 0, 0);
+                            totalCount = 0
+                            totalPrice = 0
+                            totalDelivery = 0
+                            totalPoint = 0
+                            totalTotal = 0
+                            checkList = [];
+                        }
                     }
-                }
 
-        });
-
-
+            });
         });
 
         // 선택 삭제
@@ -142,13 +140,33 @@
 
             });
 
-            // 주문하기
-            $('.cart > form').submit(function(e){
-            checkList = [];
+        // 주문하기
+        $('.cart > form').submit(function(e){
+            e.preventDefault();
+            let checkList = [];
 
-            $('input[name=prodNo]:checked').each(function(){ checkList.push($(this).val()); });
+            $('input[name=prodNo]:checked').each(function(){
+                checkList.push($(this).val());
+            });
 
-            console.log("checkList : " + checkList);
+            let count = $('.total .count').text().replace(",", "");
+            let price = $('.total .price').text().replace(",", "");
+            let discount = $('.total .discount').text().replace(",", "");
+            let delivery = $('.total .delivery').text().replace(",", "");
+            let point = $('.total .point').text().replace(",", "");
+            let total = $('.total .total').text().replace(",", "");
+
+            let jsonData = {
+                'checkList': checkList,
+                'count': count,
+                'price': price,
+                'discount': discount,
+                'delivery': delivery,
+                'point': point,
+                'total': total
+            };
+
+            console.log("jsonData : " + jsonData);
 
             if(!$('input[name=prodNo]').is(':checked')){ alert('상품을 선택하세요'); return;}
 
@@ -157,21 +175,17 @@
                     $.ajax({
                             url:'/kmarket/product/order',
                             method:'POST',
-                            data:{'checkList':checkList},
+                            data: jsonData,
                             dataType:'JSON',
                             success: function(data){
                                 console.log("data : " + data.result);
                                 if(data.result == 1){
-                                     location.href = "/kmarket/product/order";
+                                    location.href = "/kmarket/product/order";
                                 }
-
                             }
-
-
                     });
-
                 }
-                e.preventDefault();
+
             });
 
     });
