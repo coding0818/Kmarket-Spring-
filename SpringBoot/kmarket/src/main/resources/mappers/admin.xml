@@ -72,5 +72,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         SELECT MAX(`prodNo`) FROM `km_product`;
     </select>
 
-
+    <!-- **************************** 상품 삭제 **************************** -->
+    <delete id="deleteProduct">
+        DELETE FROM `km_product` WHERE `prodNo`=#{prodNo};
+    </delete>
 </mapper>

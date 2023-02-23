@@ -22,7 +22,7 @@
         <section>
             <div>
                 <form id="searchForm" th:action="@{/admin/product/search}" method="GET">
-                    <select>
+                    <select name="option">
                         <option value="prodName">상품명</option>
                         <option value="prodNo">상품코드</option>
                         <option value="company">제조사</option>
@@ -58,8 +58,8 @@
                     <td colspan="11" style="color:red">등록된 상품이 없습니다.</td>
                 </th:block>
                 <th:block th:unless="${products == null}">
-                    <tr th:each="product:${products}">
-                        <td><input type="checkbox" name="상품코드"></td>
+                    <tr th:each="product:${products}" id="product">
+                        <td><input type="checkbox" name="check" th:value="${product.prodNo}"></td>
                         <td><img th:src="|@{/}thumb/${product.cate1}/${product.cate2}/${product.thumb1}" class="thumb"></td>
                         <td th:text="${product.prodNo}">201603292</td>
                         <td th:text="${product.prodName}">FreeMovement BLUEFORCE</td>
@@ -70,8 +70,8 @@
                         <td th:text="${product.seller}">홍길동</td>
                         <td th:text="${#numbers.formatInteger(product.hit, 0, 'COMMA')}">126</td>
                         <td>
-                            <a href="#">[삭제]</a>
-                            <a href="#">[수정]</a>
+                            <a href="#" class="remove" th:data-no="${product.prodNo}">[삭제]</a>
+                            <a href="#" class="modify" th:data-no="${product.prodNo}">[수정]</a>
                         </td>
                     </tr>
                 </th:block>

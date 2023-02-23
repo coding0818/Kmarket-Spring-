@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -36,7 +38,7 @@ public class AdminProdController {
     @Autowired
     private IndexService inservice;
 
-    // ------------------------------------------ 상품 목록 ------------------------------------------
+    //  상품 목록
     @GetMapping("admin/product/list")
     public String list(Model model, String pg, HttpServletRequest req, @AuthenticationPrincipal MySellerDetails sellerDetails) {
 
@@ -68,7 +70,7 @@ public class AdminProdController {
 
         return "admin/product/list";
     }
-    // ------------------------------------------ 상품 목록 (키워드 검색) ------------------------------------------
+    // 상품 목록 (키워드 검색)
     @GetMapping("admin/product/search")
     public String search(@RequestParam(value = "keyword") String keyword,
                          @AuthenticationPrincipal MySellerDetails sellerDetails,
@@ -76,25 +78,14 @@ public class AdminProdController {
         SellerEntity seller = sellerDetails.getUser();
         String uid = seller.getUid();
 
-        log.warn("서비스 들어가기 전");
-
         List<ProductVO> productVOList = service.search(keyword);
-        // 모델 전송
-
-        //log.info("productList : "+productList.size());
-        //log.info("productList : "+productList.get(0).getProdName());
-
-        log.warn("서비스에서 나온 후 컨트롤러");
-        log.warn("prdoucts : "+productVOList);
 
         model.addAttribute("products", productVOList);
 
         return "admin/product/searchList";
     }
 
-
-
-    // ------------------------------------------ 상품 등록하기 '화면' ------------------------------------------
+    // 상품 등록하기 '화면'
     @GetMapping("admin/product/register")
     public String register(Model model){
         List<CateVO> cates =inservice.selectCate1();
@@ -104,7 +95,7 @@ public class AdminProdController {
         return "admin/product/register";
     }
 
-    // ------------------------------------------ 상품 등록하기 ------------------------------------------
+    // 상품 등록하기
     @PostMapping("admin/product/register")
     public String register(ProductVO vo, HttpServletRequest req) throws Exception {
 
@@ -119,7 +110,7 @@ public class AdminProdController {
         return "redirect:/admin/product/register";
     }
 
-    // --------------------------------------2차 카테고리 설정----------------------------------------------
+    // 2차 카테고리 설정
     @ResponseBody
     @GetMapping("admin/product/select")
     public List<CateVO> select(String cate1){
@@ -127,4 +118,35 @@ public class AdminProdController {
         return cate2s;
     }
 
+    // 상품 삭제
+    @ResponseBody
+    @PostMapping("admin/product/oneDelete")
+    public Map<String, Object> productOneDelete(@RequestParam("chkNo") String chkNo){
+        int result = 0;
+
+        result = service.deleteProduct(chkNo);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", result);
+
+        return map;
+    }
+
+    // 상품 선택 삭제
+    @ResponseBody
+    @PostMapping("admin/product/delete")
+    public Map<String, Object> productDelete(@RequestParam("valueArr") String[] valueArr){
+        log.info("delete Product ...");
+        int size = valueArr.length;
+        int result = 0;
+
+        for(int i=0; i<size; i++){
+            result = service.deleteProduct(valueArr[i]);
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", result);
+
+        return map;
+    }
 }
