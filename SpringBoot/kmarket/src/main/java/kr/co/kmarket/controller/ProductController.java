@@ -427,8 +427,7 @@ public class ProductController {
            itemVO.setPoint(vo.getPoint());
            itemVO.setDelivery(vo.getDelivery());
            itemVO.setTotal(vo.getTotal());
-           itemVO.setOrdState(vo.getOrdState());
-           itemVO.setOrdStatus(Integer.parseInt(vo.getOrdStatus()));
+
 
            service.insertCompleteItem(itemVO);
        }
