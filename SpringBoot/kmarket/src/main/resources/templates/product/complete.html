@@ -33,7 +33,7 @@
                         <tr th:each="prod:${complete}">
                             <td>
                                 <article>
-                                    <img src="https://via.placeholder.com/80X80" alt="">
+                                    <img th:src="@{/thumb/{cate1}/{cate2}/{thumb1} (cate1=${prod.cate1}, cate2=${prod.cate2}, thumb1=${prod.thumb1})}" alt="">
                                     <div>
                                         <h2>
                                             <a href="#">[[${prod.prodName}]]</a>
@@ -43,9 +43,9 @@
                                 </article>
                             </td>
                             <td>[[${#numbers.formatInteger(prod.price, 0, 'COMMA')}]]</td>
-                            <td>[[${#numbers.formatInteger(prod.price + prod.delivery - prod.total, 0, 'COMMA')}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.price * prod.discount / 100, 0, 'COMMA')}]]</td>
                             <td>[[${#numbers.formatInteger(prod.count, 0, 'COMMA')}]]</td>
-                            <td>[[${#numbers.formatInteger(prod.total, 0, 'COMMA')}]]</td>
+                            <td>[[${#numbers.formatInteger(prod.price -(prod.price * prod.discount / 100), 0, 'COMMA')}]]</td>
                         </tr>
                         <tr class="total">
                             <td colspan="4"></td>

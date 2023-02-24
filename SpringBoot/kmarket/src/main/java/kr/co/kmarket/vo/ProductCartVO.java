@@ -26,5 +26,13 @@ public class ProductCartVO {
     private String rdate;
 
     private List<String> checkList;
+    private String prodName;
+    private String descript;
+    private String cate1;
+    private String cate2;
+    private String thumb2;
+    private String thumb1;
+    private String type;
+    private String seller;
 
 }

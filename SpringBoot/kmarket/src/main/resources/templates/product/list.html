@@ -56,16 +56,16 @@
                     </tr>
                 </table>
                 <div class="paging">
-                    <span th:if="${paging.groupStart gt 1}" class="prev">
-                        <a th:href="@{/product/list(cate1=${cate1}, cate2=${cate2}, pg=${paging.groupStart-1}, keyword=${keyword})}">< 이전</a>
+                    <span th:if="${groups[0] > 1}" class="prev">
+                        <a th:href="@{/product/list(cate1=${cate1}, cate2=${cate2}, pg=${groups[0]-1})}">< 이전</a>
                     </span>
                     <span class="num">
-                        <th:block th:each="i:${#numbers.sequence(paging.groupStart, paging.groupEnd)}">
-                            <a th:href="@{/product/list (cate1=${cate1}, cate2=${cate2}, pg=${i}, keyword=${keyword})}" th:classappend="${paging.currentPage eq i ? 'on' : ''}">[[${i}]]</a>
+                        <th:block th:each="i:${#numbers.sequence(groups[0], groups[1])}">
+                            <a th:href="@{/product/list (cate1=${cate1}, cate2=${cate2}, pg=${i}, sort=${sort})}" th:classappend="${i == currentPage} ? 'on'">[[${i}]]</a>
                         </th:block>
                     </span>
-                    <span th:if="${paging.groupEnd lt paging.lastPage}" class="next">
-                        <a th:href="@{/product/list(cate1=${cate1}, cate2=${cate2}, pg=${paging.groupEnd+1}, keyword=${keyword})}">다음 ></a>
+                    <span th:if="${groups[1] < lastPage}" class="next">
+                        <a th:href="@{/product/list(cate1=${cate1}, cate2=${cate2}, pg=${group[0]+1})}">다음 ></a>
                     </span>
                 </div>
             </section>

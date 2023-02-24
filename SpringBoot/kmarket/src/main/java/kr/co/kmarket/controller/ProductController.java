@@ -35,7 +35,7 @@ public class ProductController {
 
     // Index
     @GetMapping("product/list")
-    public String list(Model model, String cate1, String cate2, String pg, String sort, String keyword){
+    public String list(Model model, String cate1, String cate2, String pg, String sort){
         // 카테고리 분류
         Map<String, List<CateVO>> cate = iservice.selectCates();
         model.addAttribute("cate", cate);
@@ -52,23 +52,29 @@ public class ProductController {
 
         model.addAttribute("ncate", ncate);
 
-        // 페이징
-        PagingDTO paging = new PagingUtil().getPagingDTO(pg, service.selectCountProduct(cate1, cate2, keyword));
-
-        log.info("select : " + service.selectCountProduct(cate1, cate2, keyword) );
-        log.info("keyword : " +keyword);
-        log.info("paging : " +paging);
+        int   currentPage  = service.getCurrentPage(pg);
+        int   start        = service.getLimitStart(currentPage);
+        long  total        = service.getTotalCount(cate1, cate2);
+        int   lastPage     = service.getLastPageNum((int) total);
+        int   pageStartNum = service.getPageStartNum((int) total, start);
+        int[] groups       = service.getPageGroup(currentPage, lastPage);
 
         // cate별 상품리스트 조회하기
-        List<ProductVO> products = service.selectProducts(cate1, cate2, paging.getStart(), sort, keyword);
+        List<ProductVO> products = service.selectProducts(cate1, cate2, start, sort);
 
         log.info("products : " + products);
 
         model.addAttribute("prods", products);
-        model.addAttribute("paging", paging);
+        //model.addAttribute("paging", paging);
         model.addAttribute("cate1", cate1);
         model.addAttribute("cate2", cate2);
-        model.addAttribute("keyword", keyword);
+        model.addAttribute("sort", sort);
+        //model.addAttribute("keyword", keyword);
+
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("lastPage", lastPage);
+        model.addAttribute("pageStartNum", pageStartNum+1);
+        model.addAttribute("groups", groups);
 
         return "product/list";
     }
@@ -129,11 +135,9 @@ public class ProductController {
     // 장바구니 등록
     @ResponseBody
     @PostMapping("product/cart")
-    public Map<String, Integer> insertCart(ProductVO vo, HttpServletRequest req, Principal principal){
+    public Map<String, Object> insertCart(ProductCartVO vo, HttpServletRequest req, Principal principal){
 
-        log.info("vo : "+vo);
-        log.info("sellerDetails : " +principal);
-
+        log.info("here1 vo : "+vo);
         HttpSession session =req.getSession();
 
         vo.setSeller(principal.getName());
@@ -152,7 +156,7 @@ public class ProductController {
         }
 
 
-        Map<String, Integer> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("result", result);
 
         return map;
@@ -213,24 +217,22 @@ public class ProductController {
 
         if(type.equals("order") ){
             // view에서 구매하기
-           ProductVO order = (ProductVO) session.getAttribute("order");
-           ProductVO prod = service.selectProduct(order.getProdNo());
-           order.setProdName(prod.getProdName());
-           order.setDescript(prod.getDescript());
-           order.setCate1(prod.getCate1());
-           order.setCate2(prod.getCate2());
-           order.setThumb2(prod.getThumb2());
+            ProductCartVO order = (ProductCartVO) session.getAttribute("order");
+            ProductVO prod = service.selectProduct(order.getProdNo());
+            order.setProdName(prod.getProdName());
+            order.setDescript(prod.getDescript());
+            order.setCate1(prod.getCate1());
+            order.setCate2(prod.getCate2());
+            order.setThumb1(prod.getThumb1());
 
-           List<String> checkList = new ArrayList<>();
-           checkList.add(String.valueOf(order.getProdNo()));
-           session.setAttribute("cartCheckList", checkList);
+            session.setAttribute("cartCheckList", order);
 
-           log.info("orderCheckList : " + checkList);
-           log.info("controllUid : " + uid);
 
-           List<ProductVO> product =service.selectOrder(checkList);
-            log.info("orderProduct : " + product);
-            session.setAttribute("complete", product);
+            List<String> checkList = order.getCheckList();
+            List<ProductVO> products = service.selectOrder(checkList);
+            log.info("orderProduct : " + products);
+            session.setAttribute("complete", products);
+
 
             String userType = myService.selectUserType(principal.getName());
 
@@ -243,7 +245,7 @@ public class ProductController {
             }
 
             model.addAttribute("prod", order);
-            model.addAttribute("total", order);
+            model.addAttribute("prodCartVO", order);
 
 
         }else if(type.equals("cart")){
@@ -261,10 +263,10 @@ public class ProductController {
 
             // 선택된 상품 조회
             List<String> checkList = prodCartVO.getCheckList();
-            List<ProductVO> prod = service.selectCartOrder(checkList, uid);
-            log.info("cartProduct : " + prod);
+            List<ProductVO> products = service.selectCartOrder(checkList, uid);
+            log.info("cartProduct : " + products);
 
-            session.setAttribute("complete", prod);
+            session.setAttribute("complete", products);
 
             // 상품 총합 계산
             /*
@@ -297,7 +299,7 @@ public class ProductController {
                 log.info("user member : " + user);
             }
 
-            model.addAttribute("prod", prod);
+            model.addAttribute("prod", products);
             model.addAttribute("prodCartVO", prodCartVO);
 
         }
@@ -418,14 +420,15 @@ public class ProductController {
 
         // product_order insert
         int orderNo = service.insertComplete(vo);
-
         ProductCartVO productCartVo = (ProductCartVO) session.getAttribute("cartCheckList");
        log.info("productCartVO : " + productCartVo);
        log.info("randOrdNo : " + randOrdNo);
        log.info("uid : " + uid);
 
-       //List<String> checkList = productCartVO.getCheckList();
+
+       //List<ProductCartVO> prods = (List<ProductCartVO>) session.getAttribute("ordComplete");
        List<ProductVO> prods = (List<ProductVO>)session.getAttribute("complete");
+       log.info("ordComplete : " + prods);
        List<Product_OrderItemVO> items = new ArrayList<>();
 
        for(ProductVO prodvo : prods){
@@ -433,6 +436,11 @@ public class ProductController {
            itemVO.setProdNo(String.valueOf(prodvo.getProdNo()));
            itemVO.setOrdNo(orderNo);
            itemVO.setUid(uid);
+           itemVO.setCate1(prodvo.getCate1());
+           itemVO.setCate2(prodvo.getCate2());
+           itemVO.setThumb1(prodvo.getThumb1());
+           itemVO.setProdName(prodvo.getProdName());
+           itemVO.setDescript(prodvo.getDescript());
            itemVO.setCount(prodvo.getCount());
            itemVO.setPrice(prodvo.getPrice());
            itemVO.setDiscount(prodvo.getDiscount());
