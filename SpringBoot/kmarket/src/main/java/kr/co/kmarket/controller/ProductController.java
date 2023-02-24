@@ -4,7 +4,6 @@ import kr.co.kmarket.DTO.PagingDTO;
 import kr.co.kmarket.service.IndexService;
 import kr.co.kmarket.service.MyService;
 import kr.co.kmarket.service.ProductService;
-import kr.co.kmarket.util.PagingUtil;
 import kr.co.kmarket.util.ReviewPagingUtil;
 import kr.co.kmarket.vo.*;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Slf4j
+@SuppressWarnings("unchecked")
 @Controller
 public class ProductController {
 

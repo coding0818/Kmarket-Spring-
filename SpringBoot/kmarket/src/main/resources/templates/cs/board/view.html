@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{/cs/_header}"/>
-<th:block th:replace="~{/cs/board/__${cate1}__}"/>
+<th:block th:replace="~{cs/_header}"/>
+<th:block th:replace="~{cs/board/__${cate1}__}"/>
               <article class="viewTitle">
               <th:block th:switch="${#strings.toString(cate1)}">
                 <th:block th:case="_notice">
@@ -44,5 +44,5 @@
           </section>
         </div>
       </section>
-<th:block th:replace="~{/cs/_footer}"/>
+<th:block th:replace="~{cs/_footer}"/>
 </html>

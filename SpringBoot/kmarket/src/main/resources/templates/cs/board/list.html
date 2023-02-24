@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<th:block th:replace="~{/cs/_header}"/>
-<th:block th:replace="~{/cs/board/__${cate1}__}"/>
+<th:block th:replace="~{cs/_header}"/>
+<th:block th:replace="~{cs/board/__${cate1}__}"/>
 
         <article>
           <th:block th:switch="${#strings.toString(cate1)}">
@@ -157,5 +157,5 @@
           </section>
           </div>
           </section>
-<th:block th:replace="~{/cs/_footer}"/>
+<th:block th:replace="~{cs/_footer}"/>
 </html>

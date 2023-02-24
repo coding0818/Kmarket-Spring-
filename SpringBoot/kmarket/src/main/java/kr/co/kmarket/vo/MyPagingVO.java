@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 public class MyPagingVO {
     private String uid;
-    private int pageSize = 5;
+    final private int pageSize = 5;
 
     // 현재페이지, 시작페이지, 페이지당 글개수, 끝페이지, 게시글 총개수, 마지막페이지, SQL쿼리에 쓸 start, end
     private int nowPage, startPage, cntPerPage, endPage, total, lastPage, start, end;
