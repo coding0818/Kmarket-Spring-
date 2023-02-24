@@ -28,6 +28,9 @@ public class Product_OrderItemVO {
     private String uid;
     private String prodName;
     private String descript;
+    private String thumb1;
+    private String cate1;
+    private String cate2;
 
     public void setProdNo(String prodNo) {
         this.prodNo = Integer.parseInt(prodNo);

@@ -74,7 +74,7 @@
                 "ordPayment": $('input[name=payment]:checked').val()
             }
 
-            console.log("jsonData : " +jsonData);
+            console.log("jsonData : " +JSON.stringify(jsonData));
 
             $.ajax({
                     url:'/kmarket/product/complete',

@@ -12,7 +12,7 @@ import java.util.List;
 public interface ProductDAO {
 
     // cate별 상품리스트 조회하기
-    public List<ProductVO> selectProducts(@Param("cate1") String cate1, @Param("cate2") String cate2, @Param("start") int start, @Param("sort") String sort, @Param("keyword") String keyword);
+    public List<ProductVO> selectProducts(@Param("cate1") String cate1, @Param("cate2") String cate2, @Param("start") int start, @Param("sort") String sort);
 
     // 검색 상품리스트 조회하기
    // public List<ProductVO> selectSearchProducts()
@@ -24,7 +24,7 @@ public interface ProductDAO {
     public CateVO selectNavCate(@Param("cate1") String cate1, @Param("cate2") String cate2);
 
     // 페이징처리
-    public int selectCountProduct(@Param("cate1") String cate1, @Param("cate2") String cate2, @Param("keyword") String keyword);
+    public int getTotalCount(@Param("cate1") String cate1, @Param("cate2") String cate2);
 
     // 검색 페이징처리
     //public int selectSearchProduct(@Param("keyword") String keyword);
@@ -36,7 +36,7 @@ public interface ProductDAO {
     public int selectReviewListCount(@Param("prodNo") int prodNo);
 
     // 장바구니 등록
-    public int insertCart(ProductVO vo);
+    public int insertCart(ProductCartVO vo);
 
     //장바구니 목록
     public List<ProductVO> selectCart(String uid);

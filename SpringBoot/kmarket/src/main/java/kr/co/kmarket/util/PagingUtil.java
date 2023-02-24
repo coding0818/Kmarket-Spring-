@@ -1,7 +1,9 @@
 package kr.co.kmarket.util;
 
 import kr.co.kmarket.DTO.PagingDTO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class PagingUtil {
 
     // --------------------  페이징  -----------------------

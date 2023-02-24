@@ -66,7 +66,7 @@ $(function(){
     var order = document.getElementById('order')
         order.addEventListener('click', function(){
 
-
+            let checkList = [];
 
             let prodNo   = document.getElementById('prodNo').innerText;   // 상품 번호
             console.log("prodNo : " +prodNo);
@@ -83,13 +83,15 @@ $(function(){
             console.log("delivery : "+delivery);
             let totalPrice = document.getElementById('totalPrice').innerText.split(',').join('');   //최종가격
             console.log("totalPrice : "+totalPrice);
+            checkList.push(prodNo);
 
             let jsonData = {
+                    "checkList" : checkList,
                     "type" : 'order',
                     "prodNo": prodNo,
                     "count" : count,
                     "price" : price * count,
-                    "discount" : discount,
+                    "discount" : price * discount / 100,
                     "point" : point,
                     "delivery" : delivery,
                     "total" : totalPrice

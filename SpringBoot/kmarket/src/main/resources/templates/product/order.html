@@ -32,7 +32,7 @@
                         <tr th:each="prod : ${prod}">
                             <td><article>
                                 <a href="#">
-                                    <img src="	https://via.placeholder.com/80x80" alt="1">
+                                    <img th:src="@{/thumb/{cate1}/{cate2}/{thumb1} (cate1=${prod.cate1}, cate2=${prod.cate2}, thumb1=${prod.thumb1})}" alt="1">
                                 </a>
                                 <div>
                                     <h2><a href="#">[[${prod.prodName}]]</a></h2>
